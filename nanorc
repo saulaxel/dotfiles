@@ -1,0 +1,117 @@
+## ConfiguraciOn simple para el editor nano
+##
+## Se debe configurar nano con --enable-nanorc para que
+## este archivo sea leido.
+##
+
+## Indentado automAtico
+set autoindent 
+
+## Copia automAtica de seguridad al directorio ""
+#lset backup
+#set backupdir ""
+
+## Hacer busqueda hacia atras por default
+# set backwards
+
+## Usar texto grueso en la cabecera en lugar del texto 
+## con fondo invertido
+set boldtext
+
+## Juego de caracteres que se pueden considerar de cierre
+set brackets ""')>]}"
+
+## Hacer busquedas que diferencien minusculas y mayusculas
+set casesensitive
+
+## Muestra la posicion del cursor en la barra de estado
+#set const
+
+## Usar "cut" por defecto para terminar la lInea
+# set cut
+
+## Definir el ancho de una lInea como ancho de pantalla +- fill
+#set fill -25
+
+## Definir juego de caracteres cerrados y abiertos
+set matchbrackets "(<[{¿¡)>]}?!"
+
+## Usar la lInea vacia del final como un espacio mAs para
+## la ediciOn
+set morespace
+
+## Habilita el ratOn
+set mouse
+
+## Permitir multiples buffers (debe existir la 
+## configuraciOn --enable-multibuffer para que funcione)
+#set multibuffer
+
+## No convertir archivos en formatos DOS/Mac
+#set noconvert
+
+## No seguir symlinks cuando se editan archivos
+#set nofollow
+
+## No mostrar la ayuda al final de la pantalla
+#set hohelp
+
+## No aniadir nuevas lIneas al final de los archivos
+# set nonewlines
+
+## No representar una lInea larga como varias lIneas
+# set nowrap
+
+## Establecer directorio de trabajo para limitar la 
+## ediciOn con nano fuera del mismo
+#set operatingdir ""
+
+## Preservar las teclas XON y XOFF (^Q y ^S)
+#set preserve
+
+## Conjunto de caracteres de cierre de puntuaciOn
+set punct "!.?"
+
+## Hacer aparecer una barra de estatus pasajera
+#set quickblank
+
+## Arreglar la confuciOn entre Backspace y Delete
+#set rebinddelete
+
+## Arreglar la confuciOn de los numeros del teclado
+#set rebindkeypad
+
+## Hacer busquedas con expresiones regulares
+set regexp
+
+## Lo saltos producidos por la tecla home son mas utiles
+set smarthome
+
+## Usar navegaciOn suavizada
+set smooth
+
+## DefiniciOn de un checador de ortografIa externo
+#set soekker "aspell -x -c"
+
+## Permitir que nano se suspenda
+set suspend
+
+## Usar tabulaciOnes de 4 espacios
+set tabsize 4
+
+## Convertir tabulaciOnes a espacios
+set tabstospaces
+
+## Guardar automAticamente al salir
+#set tempfile
+
+## Hacer que nano sea para solo lectura (no se pa k la vdd)
+#set view
+
+## RepresentaciOn grAfica de los espacios
+set whitespace ". "
+
+## Detectar los extremos de una palabra por medio de la
+## puntuaciOn
+#set wordbounds
+
