@@ -1,6 +1,10 @@
-" ConfiguraciOn bAsica (y necesaria)
+" ConfiguraciOn bAsica
 set nocompatible
 filetype off
+"autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+"autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x09 = Caps_Lock'
+"autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
+"autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x09 = Escape'
 
 " ConfiguraciOn de la paleta de colores de solarized
 syntax enable
@@ -17,6 +21,8 @@ colorscheme solarized
 " resaltado de la lInea actual
 highlight CursorLine ctermbg=black
 set cursorline
+highlight CursorColumn ctermbg=black
+set cursorcolumn
 
 " Resaltado de la columna no 80 para usarla como guia
 highlight ColorColumn ctermbg=black
@@ -35,12 +41,18 @@ Plugin 'AutoComplPop'
 Plugin 'mattn/emmet-vim'
 Plugin 'matchit.zip'
 Plugin 'Solarized'
-Plugin 'AutoClose'
+Plugin 'jiangmiao/auto-pairs'
 Plugin 'The-NERD-Commenter'
 Plugin 'jade.vim'
 Plugin 'KabbAmine/vCoolor.vim'
 Plugin 'Tabular'
+Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
+Plugin 'Shougo/neocomplete'
+Plugin 'Shougo/neosnippet'
+Plugin 'Shougo/neosnippet-snippets'
+Plugin 'https://github.com/gregsexton/MatchTag.git'
+"Plugin 'https://github.com/Valloric/MatchTagAlways.git'
 
 Plugin 'https://github.com/shinokada/SWTC.vim.git'
 
@@ -48,10 +60,62 @@ Plugin 'https://github.com/shinokada/SWTC.vim.git'
 call vundle#end()
 filetype plugin indent on
 
-" ConfiguraciOn de airline
+" ConfiguraciOn de airline (La barra de informaciOn de abajo)
 set laststatus=2
 let g:airline#extensions#tabline#enable = 1
 let g:airline_powerline_fonts = 1
+
+" ConfiguraciOn de neocomplete
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#syntax#min_keyword_lenght = 3
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'.gosh_completions'
+    \ }
+
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+inoremap <expr><C-g> neocomplete#undo_completion()
+
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+      return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+endfunction
+
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+if !exists('g:neocomplete#sources#omni#input_patterns')
+    let g:neocomplete#sources#omni#input_patterns = {}
+endif
+
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
+imap <C-e> <Plug>(neosnippet_expand_or_jump)
+smap <C-e> <Plug>(neosnippet_expand_or_jump)
+xmap <C-e> <Plug>(neosnippet_expand_target)
+
+"smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+            \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#snippet_directory='~/.vim/bundle/vim-snippets/snippets'
+
+if has('conceal')
+    set conceallevel=2 concealcursor=niv
+endif
 
 " ConfiguraciOn del texto plano
 set number
@@ -60,15 +124,15 @@ set showbreak=+++
 set textwidth=100
 set showmatch
 set visualbell
-
-" Hacer apareces una regla para numerar lIneas y que cuente desde tu posiciOn
 set ruler
+
+" NumeraciOn de lIneas desde tu posiciOn actual
 set relativenumber
  
 " ConfiguraciOn para la busqueda
 set hlsearch
-set smartcase
-set ignorecase
+"set smartcase
+"set ignorecase
 set incsearch
  
 " ConfiguraciOn para el indentado automAtico
@@ -113,22 +177,17 @@ nnoremap <C-k> -l
 nnoremap <C-j> +l
 inoremap <leader>pk <Esc>:VCoolor<Return>a
 inoremap <leader>scp <Esc>:!gpick<Return>a
-iabbrev FORI for(int i = 0; i < c; ++i) {<NewLine>}<Esc>kfch
-autocmd Filetype c iabbrev pf printf("");<Esc>3h
-autocmd Filetype c iabbrev sc scanf("",);<Esc>4h
-autocmd Filetype java iabbrev pl System.out.println();<Esc>h1
 
 " Manejo de tabulaciones
-nnoremap tn :tabnew<Space>
+nnoremap <leader>tn :tabnew<Space>
 
-nnoremap tk :tabnext<CR>
-nnoremap tj :tabprev<CR>
-nnoremap th :tabfirst<CR>
-nnoremap tl :tablast<CR>
+nnoremap <leader>tk :tabnext<CR>
+nnoremap <leader>tj :tabprev<CR>
+nnoremap <leader>th :tabfirst<CR>
+nnoremap <leader>tl :tablast<CR>
 
 " Teclas para activar y desactivar numeraciOn relativa
 map <F5> :set relativenumber!<Return>
-""map <F6> :set norelativenumber<Return>
 
 " Debug en lenguajes compilados
 map <F7> :cprevious<Return>
@@ -142,8 +201,8 @@ map <F12> :NERDTree<Return>
 "echom "(>^.^<)"
 
 " Modo dificil
-inoremap <Esc> <nop>
-inoremap <Up> <nop>
-inoremap <Down> <nop>
-inoremap <Left> <nop>
-inoremap <Right> <nop>
+"inoremap <Esc> <nop>
+"inoremap <Up> <nop>
+"inoremap <Down> <nop>
+"inoremap <Left> <nop>
+"inoremap <Right> <nop>
