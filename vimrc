@@ -121,7 +121,7 @@ endif
 " ConfiguraciOn del texto plano
 set number
 set linebreak
-set showbreak=+++
+set showbreak=...\ 
 set textwidth=100
 set showmatch
 set visualbell
@@ -176,6 +176,9 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 inoremap kj <Esc>
 nnoremap <C-k> -l
 nnoremap <C-j> +l
+nnoremap <leader>< <i{
+nnoremap <leader>> >i{
+noremap .tab <Esc>:Tabularize /*<cr>{jr/}a/<esc>
 inoremap <leader>pk <Esc>:VCoolor<Return>a
 inoremap <leader>scp <Esc>:!gpick<Return>a
 
@@ -207,3 +210,4 @@ map <F12> :NERDTree<Return>
 "inoremap <Down> <nop>
 "inoremap <Left> <nop>
 "inoremap <Right> <nop>
+
