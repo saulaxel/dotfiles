@@ -47,6 +47,7 @@ Plugin 'Solarized'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'The-NERD-Commenter'
 Plugin 'jade.vim'
+Plugin 'ap/vim-css-color'
 Plugin 'KabbAmine/vCoolor.vim'
 Plugin 'Tabular'
 Plugin 'tpope/vim-surround'
@@ -56,6 +57,7 @@ Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
 Plugin 'https://github.com/gregsexton/MatchTag.git'
 "Plugin 'https://github.com/Valloric/MatchTagAlways.git'
+
 
 Plugin 'https://github.com/shinokada/SWTC.vim.git'
 
