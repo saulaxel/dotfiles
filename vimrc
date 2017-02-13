@@ -1,7 +1,9 @@
 " ConfiguraciOn bAsica
 set nocompatible
+scriptencoding utf-8
 filetype off
 
+" Transformar la tecla Escape en Block Mayus y Block Mayus en Escape
 "autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 "autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x09 = Caps_Lock'
 "autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
@@ -132,8 +134,8 @@ set relativenumber
  
 " ConfiguraciOn para la busqueda
 set hlsearch
-"set smartcase
-"set ignorecase
+set smartcase
+set ignorecase
 set incsearch
  
 " ConfiguraciOn para el indentado automAtico
@@ -151,7 +153,8 @@ set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮
 " Extras 
 set undolevels=1000
 set backspace=indent,eol,start 
-
+set splitright
+set splitbelow
 
 " Definiendo el make
 autocmd Filetype c set makeprg=gcc\ %
@@ -176,6 +179,7 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 inoremap kj <Esc>
 nnoremap <C-k> -l
 nnoremap <C-j> +l
+nnoremap Y y$
 nnoremap <leader>< <i{
 nnoremap <leader>> >i{
 noremap .tab <Esc>:Tabularize /*<cr>{jr/}a/<esc>
@@ -189,6 +193,12 @@ nnoremap <leader>tk :tabnext<CR>
 nnoremap <leader>tj :tabprev<CR>
 nnoremap <leader>th :tabfirst<CR>
 nnoremap <leader>tl :tablast<CR>
+
+" Mapeos del modo comando
+cnoremap w!! w !sudo tee % >/dev/null " Escribir archivos que requieren sudo
+
+cnoremap Q q                          " Evitar el uso erroneo de mayusculas
+cnoremap W w                          " al intentar salIr o guardar un archivo
 
 " Teclas para activar y desactivar numeraciOn relativa
 map <F5> :set relativenumber!<Return>
