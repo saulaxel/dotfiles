@@ -2,10 +2,10 @@
 set nocompatible
 filetype off
 
-autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x09 = Caps_Lock'
-autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
-autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x09 = Escape'
+"autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+"autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x09 = Caps_Lock'
+"autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
+"autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x09 = Escape'
 
 " ConfiguraciOn de la paleta de colores de solarized
 syntax enable
