@@ -1,0 +1,8 @@
+Neosnippet-snippets
+===================
+
+The standard snippets repository for
+[neosnippet](https://github.com/Shougo/neosnippet.vim).
+
+My files are base on the standard snippets with minimal 
+addings.
