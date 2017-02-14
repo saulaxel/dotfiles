@@ -40,7 +40,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'scrooloose/nerdtree.git'
 Plugin 'Syntastic'
-Plugin 'AutoComplPop'
+"Plugin 'AutoComplPop'
 Plugin 'mattn/emmet-vim'
 Plugin 'matchit.zip'
 Plugin 'Solarized'
