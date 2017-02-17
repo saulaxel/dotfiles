@@ -13,7 +13,7 @@ snippet basic2
 
 	void display_usage(void);
 
-	int32_t main(int32_t argc, char *argv) {
+	int32_t main(int32_t argc, char *argv[]) {
 		if(argc <= n) {
 			display_usage();
 			exit(EXIT_FAILURE);
@@ -218,9 +218,7 @@ options     head
 
 snippet fopen
 abbr fopen("...", "...");
-    fopen("${1:PATH}", "${2:MODE}")
-    ${0:TARGET}
-    fclose(${3:FD});
+    fopen("${1:PATH}", "${2:MODE}")${3}
 
 snippet fgets
 abbr fgets(row, length, file);

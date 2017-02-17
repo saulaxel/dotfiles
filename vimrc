@@ -139,6 +139,7 @@ set hlsearch
 set smartcase
 set ignorecase
 set incsearch
+set nohidden
  
 " ConfiguraciOn para el indentado automAtico
 set autoindent
