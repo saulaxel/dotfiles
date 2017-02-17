@@ -183,7 +183,7 @@ inoremap kj <Esc>
 nnoremap <C-k> -l
 nnoremap <C-j> +l
 nnoremap Y y$
-noremap .tab <Esc>:Tabularize /*<cr>{jr/:s/ /=/g<cr>}a/<esc>:s/ /=/g<cr>
+noremap .tab <Esc>:Tabularize /*<cr>{jr/:s/ /=/g<cr>}a/<esc>:s/ /=/g<cr>:nohlsearch
 inoremap <leader>pk <Esc>:VCoolor<Return>a
 inoremap <leader>scp <Esc>:!gpick<Return>a
 
