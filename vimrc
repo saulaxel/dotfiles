@@ -195,10 +195,12 @@ nnoremap <leader>th :tabfirst<CR>
 nnoremap <leader>tl :tablast<CR>
 
 " Mapeos del modo comando
-cnoremap w!! w !sudo tee % >/dev/null " Escribir archivos que requieren sudo
-
-cnoremap Q q                          " Evitar el uso erroneo de mayusculas
-cnoremap W w                          " al intentar salIr o guardar un archivo
+" Escribir archivos que requieren sudo
+cnoremap w!! w !sudo tee % >/dev/null
+" Evitar el uso erroneo de mayusculas
+" al intentar salIr o guardar un archivo
+cnoremap Q q
+cnoremap W w
 
 " Teclas para activar y desactivar numeraciOn relativa
 map <F5> :set relativenumber!<Return>

@@ -25,4 +25,6 @@ fi;
 
 vim +PluginInstall +PluginClean +qall
 
+cp ./vim/snips/emmet.vim ~/.vim/bundle/emmet-vim/autoload
+
 exit 0;
