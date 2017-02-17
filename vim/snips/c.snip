@@ -36,20 +36,20 @@ snippet     if
 options     head
 abbr        if () {}
     if(${1:#:condition}) {
-        ${0:TARGET}
-    }
+        ${2:TARGET}
+    }$0
 
 snippet else
 options     head
     else {
-        ${0:TARGET}
-    }
+        ${1:TARGET}
+    }$0
 
 snippet elseif
 options     head
     else if(${1:#:condition}) {
-        ${0:TARGET}
-    }
+        ${2:TARGET}
+    }$0
 
 snippet     ifelse
 options     head
@@ -134,7 +134,7 @@ abbr        enum {}
 snippet main1
 options head
 	int main(void) {
-		${1:TARGET}
+		${0:TARGET}
 		return 0;
 	}
 
