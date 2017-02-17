@@ -37,19 +37,17 @@ options     head
 abbr        if () {}
     if(${1:#:condition}) {
         ${2:TARGET}
-    }$0
+    }${0}
 
 snippet else
-options     head
     else {
         ${1:TARGET}
-    }$0
+    }${0}
 
 snippet elseif
-options     head
     else if(${1:#:condition}) {
         ${2:TARGET}
-    }$0
+    }${0}
 
 snippet     ifelse
 options     head
