@@ -19,6 +19,7 @@ endif
 set t_Co=16
 let g:solarized_termcolors=16
 colorscheme solarized
+
 " Fin de la configuraciOn de la paleta de colores
 
 " resaltado de la lInea actual
@@ -183,7 +184,8 @@ inoremap kj <Esc>
 nnoremap <C-k> -l
 nnoremap <C-j> +l
 nnoremap Y y$
-noremap .tab <Esc>:Tabularize /*<cr>{jr/:s/ /=/g<cr>}a/<esc>:s/ /=/g<cr>:nohlsearch<cr>r 
+noremap <leader>cbox <Esc>:Tabularize /*<cr>{jr/:s/ /=/g<cr>}a/<esc>:s/ /=/g<cr>:nohlsearch<cr>r 
+nnoremap .a mm:let @a=@"<cr>"byiw:%s/<C-r>a/<C-r>b/g<cr>`m:delmarks m
 inoremap <leader>pk <Esc>:VCoolor<Return>a
 inoremap <leader>scp <Esc>:!gpick<Return>a
 
