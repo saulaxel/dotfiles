@@ -182,6 +182,7 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 inoremap kj <Esc>
 nnoremap <C-k> -l
 nnoremap <C-j> +l
+nnoremap <space> za
 nnoremap Y y$
 noremap .tab <Esc>:Tabularize /*<cr>{jr/}a/<esc>
 inoremap <leader>pk <Esc>:VCoolor<Return>a
