@@ -1,36 +1,63 @@
-snippet basic1
+snippet     basic1
+options     head
+abbr        main()
 	#include <stdio.h>
+	#include <stdint.h>
+	#{1}
 
-	int main(void) {
-		${1}
+	int32_t main(void) {
+		${2}
 		return 0;
 	}
 
-snippet basic2
+snippet     basic2
+options     head
+abbr        int32_t main(...)
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <stdint.h>
-
-	void display_usage(void);
-
+	#{1}
+	
 	int32_t main(int32_t argc, char *argv[]) {
-		if(argc <= n) {
-			display_usage();
-			exit(EXIT_FAILURE);
-		}
-
-		${1}
+		${0}
 
 		return EXIT_SUCCESS;
 	}
 
+snippet     complete
+options     head
+abbr        int32_t main(...) { EXIT... }
+	#include <stdio.h>
+	#include <stdlib.h>
+	#include <stdint.h>
+	#{1}
+	
+	void display_usage(void);
+	void print_error(const char *);
+	
+	int32_t main(int32_t argc, char **argv) {
+		if( argc < #{2:2} ) {
+			display_usage();
+			return EXIT_SUCCESS;
+		}
+		#{0}
+
+		return EXIT_SUCCESS;
+	}
+	
 	void display_usage(void) {
-		${2}
+		puts("${3}");
 		return;
+	}
+	
+	void print_error(const char * message) {
+		printf(message);
+
+		exit(EXIT_FAILURE);
 	}
 
 snippet     p
-        puts("${1}")
+    puts("${1}")
 
 snippet     if
 options     head
@@ -39,7 +66,8 @@ abbr        if () {}
         ${2:TARGET}
     }${0}
 
-snippet else
+snippet     else
+abbr        else {}
     else {
         ${1:TARGET}
     }${0}
