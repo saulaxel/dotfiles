@@ -3,7 +3,7 @@ options     head
 abbr        main()
 	#include <stdio.h>
 	#include <stdint.h>
-	#{1}
+	${1}
 
 	int32_t main(void) {
 		${2}
@@ -16,7 +16,7 @@ abbr        int32_t main(...)
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <stdint.h>
-	#{1}
+	${1}
 	
 	int32_t main(int32_t argc, char *argv[]) {
 		${0}
@@ -30,7 +30,7 @@ abbr        int32_t main(...) { EXIT... }
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <stdint.h>
-	#{1}
+	${1}
 	
 	void display_usage(void);
 	void print_error(const char *);
