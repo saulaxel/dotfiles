@@ -4,6 +4,10 @@ if ! hash vim 2>/dev/null; then
     sudo apt-get install vim;
 fi;
 
+if ! hash vim-nox 2>/dev/null; then
+    sudo apt-get install vim-nox;
+fi;
+
 if ! hash nano 2>/dev/null; then
     sudo apt-get install nano;
 fi;
