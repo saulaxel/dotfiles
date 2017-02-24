@@ -204,7 +204,7 @@
     nnoremap <C-j> +l
     nnoremap <space> za
     nnoremap Y y$
-    noremap <leader>cbox <Esc>:Tabularize /*<cr>{jr/:s/ /=/g<cr>}ba/<esc>:s/ /=/g<cr>:nohlsearch<cr>r 
+    nnoremap <leader>cbox :Tabularize /*<cr>{jr/:s/ /=/g<cr>}ba/<esc>:s/ /=/g<cr>:nohlsearch<cr>r 
     nnoremap .a mm:let @a=@"<cr>"byiW:%s/<C-r>a/<C-r>b/g<cr>`m:delmarks m<cr>
     inoremap <leader>pk <Esc>:VCoolor<Return>a
     inoremap <leader>scp <Esc>:!gpick<Return>a

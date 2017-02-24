@@ -1,4 +1,5 @@
 #!/bin/bash
+
 if ! hash vim 2>/dev/null; then
     sudo apt-get install vim;
 fi;
@@ -26,5 +27,6 @@ fi;
 vim +PluginInstall +PluginClean +qall
 
 cp ./vim/snips/emmet.vim ~/.vim/bundle/emmet-vim/autoload
+cp ./vim/snips/NERD_commenter.vim ~/.vim/bundle/The-NERD-Commenter/plugin
 
 exit 0;
