@@ -64,13 +64,13 @@
     " Fin de la configuraciOn de la paleta de colores
 
     " resaltado de la lInea actual
-    highlight CursorLine ctermbg=white
+    highlight CursorLine ctermbg=black
     set cursorline
-    highlight CursorColumn ctermbg=white
+    highlight CursorColumn ctermbg=black
     set cursorcolumn
 
     " Resaltado de la columna no 80 para usarla como guia
-    highlight ColorColumn ctermbg=cyan
+    highlight ColorColumn ctermbg=black
     set colorcolumn=80
 " }
 
