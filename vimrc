@@ -103,8 +103,7 @@
     Plugin 'https://github.com/gregsexton/MatchTag.git'
     "Plugin 'https://github.com/Valloric/MatchTagAlways.git'
 
-
-    Plugin 'https://github.com/shinokada/SWTC.vim.git'
+    "Plugin 'https://github.com/shinokada/SWTC.vim.git'
 
     " Todos los plugins deben ir antes de la siguiente lInea
     call vundle#end()
@@ -117,7 +116,17 @@
     " ConfiguraciOn de airline (La barra de informaciOn de abajo)
     set laststatus=2
     let g:airline#extensions#tabline#enable = 1
-    let g:airline_powerline_fonts = 1
+
+    if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+    endif
+
+    let g:airline_powerline_fonts = 0
+    let g:airline_left_sep='▶'
+    let g:airline_right_sep='◀'
+    let g:airline_symbols.crypt = '🔒'
+    let g:airline_symbols.branch = '⎇'
+    let g:airline_symbols.readonly = ''
 
     " ConfiguraciOn de neocomplete
     let g:acp_enableAtStartup = 0
