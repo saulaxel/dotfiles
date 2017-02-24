@@ -110,6 +110,9 @@
     call vundle#end()
     filetype plugin indent on
 
+    " ConfiguraciOn de neocomplete
+    highlight Pmenu ctermbg=7
+    highlight PmenuSel ctermbg=8
 
     " ConfiguraciOn de airline (La barra de informaciOn de abajo)
     set laststatus=2
