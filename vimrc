@@ -41,7 +41,7 @@
     set splitbelow
 " }
 
-" ConfiguraciOn del sistema (Usese con precauciOn){
+" ConfiguraciOn del sistema (Usese con precauciOn) {
     " Transformar la tecla Escape en Block Mayus y Block Mayus en Escape
     "autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
     "autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x09 = Caps_Lock'
@@ -64,13 +64,13 @@
     " Fin de la configuraciOn de la paleta de colores
 
     " resaltado de la lInea actual
-    highlight CursorLine ctermbg=black
+    highlight CursorLine ctermbg=white
     set cursorline
-    highlight CursorColumn ctermbg=black
+    highlight CursorColumn ctermbg=white
     set cursorcolumn
 
     " Resaltado de la columna no 80 para usarla como guia
-    highlight ColorColumn ctermbg=black
+    highlight ColorColumn ctermbg=cyan
     set colorcolumn=80
 " }
 
@@ -175,6 +175,14 @@
         highlight CursorLine ctermbg=black
         highlight CursorColumn ctermbg=black
     endfunction
+
+    function! ModoDificil()
+        inoremap <Esc> <nop>
+        inoremap <Up> <nop>
+        inoremap <Down> <nop>
+        inoremap <Left> <nop>
+        inoremap <Right> <nop>
+    endfunction
 " }
 
 " Comandos automAticos {
@@ -241,11 +249,4 @@
 " Cosas inutiles {
     " Gato
     "echom "(>^.^<)"
-
-    " Modo dificil
-    "inoremap <Esc> <nop>
-    "inoremap <Up> <nop>
-    "inoremap <Down> <nop>
-    "inoremap <Left> <nop>
-    "inoremap <Right> <nop>
 " }
