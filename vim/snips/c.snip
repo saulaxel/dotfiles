@@ -51,7 +51,7 @@ abbr        int32_t main(...) { EXIT... }
 	}
 	
 	void print_error(const char * message) {
-		printf(message);
+		fprintf(stderr, "%s", message);
 
 		exit(EXIT_FAILURE);
 	}

@@ -4,13 +4,13 @@ if ! hash vim 2>/dev/null; then
     sudo apt-get install vim;
 fi;
 
-#if ! hash vim-nox 2>/dev/null; then
-    #sudo apt-get install vim-nox;
-#fi;
+sudo apt-get install vim-nox;
 
 if ! hash nano 2>/dev/null; then
     sudo apt-get install nano;
 fi;
+
+sudo apt-get install tmux;
 
 if [ ! -d ~/.vim/bundle ] || [ ! -d ~/.vim/colors ]; then
 
