@@ -190,6 +190,7 @@
         syntax enable
         highlight CursorLine ctermbg=black
         highlight CursorColumn ctermbg=black
+        highlight ColorColumn ctermbg=cyan
     endfunction
 
     function! ModoDificil()
