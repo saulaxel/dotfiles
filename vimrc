@@ -64,14 +64,18 @@
     " Fin de la configuraciOn de la paleta de colores
 
     " resaltado de la lInea actual
-    highlight CursorLine ctermbg=black
+    highlight CursorLine ctermbg=white
     set cursorline
-    highlight CursorColumn ctermbg=black
+    highlight CursorColumn ctermbg=white
     set cursorcolumn
 
     " Resaltado de la columna no 80 para usarla como guia
-    highlight ColorColumn ctermbg=black
+    highlight ColorColumn ctermbg=cyan
     set colorcolumn=80
+
+    " Colores para las tabulaciones
+    highlight TabLine ctermfg=blue ctermbg=gray
+    highlight TabLineSel ctermfg=black ctermbg=darkGray
 " }
 
 " Plugins y sus configuraciones {
