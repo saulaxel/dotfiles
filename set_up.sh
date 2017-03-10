@@ -1,17 +1,36 @@
 #!/bin/bash
 
+# Set the package manager
+
+if [ $(uname -r | grep -i 'ubuntu') ]; then
+    pkg_man=apt-get install
+elif [ $(uname -r | grep -i 'arch') ]; then
+    pkg_man=pacman -S
+elif [ $(uname -r | grep -i 'fedora') ]; then
+    pkg_man=yum install
+fi
+
+# Install dependencies
 if ! hash vim 2>/dev/null; then
-    sudo apt-get install vim;
+    sudo $pkg_man install vim;
+    sudo $pkg_man install vim-nox;
 fi;
 
-sudo apt-get install vim-nox;
 
 if ! hash nano 2>/dev/null; then
-    sudo apt-get install nano;
+    sudo $pkg_man install nano;
 fi;
 
-sudo apt-get install tmux;
+#sudo apt-get install tmux;
 
+# Make a back-up
+mkdir ~/.dotfiles_backup
+mv ~./.vimrc ~/.dotfiles_backup
+mv ~./.vim ~/.dotfiles_backup
+mv ~./.nanorc ~/.dotfiles_backup
+mv ~./.bashrc ~/.dotfiles_backup
+
+# Starts real set-up
 if [ ! -d ~/.vim/bundle ] || [ ! -d ~/.vim/colors ]; then
 
     mkdir -p ~/.vim/bundle;
