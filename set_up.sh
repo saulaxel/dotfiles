@@ -10,6 +10,13 @@ elif [ $(uname -r | grep -i 'fedora') ]; then
     pkg_man=yum install
 fi
 
+# Set the shell
+if [ $(echo $SHELL | grep -i bash) ]; then
+    shell=bash
+elif [ $(echo $SHELL | grep -i zsh ) ]; then
+    shell=zsh
+if
+
 # Install dependencies
 if ! hash vim 2>/dev/null; then
     sudo $pkg_man install vim;
@@ -38,6 +45,11 @@ if [ ! -d ~/.vim/bundle ] || [ ! -d ~/.vim/colors ]; then
 fi;
 
 cp ./vimrc ~/.vimrc;
+
+if ![ $(cat "."$shell"rc" | grep "BASH_CONFIG_INCLUDED") ]; then
+    cat bashrc >> "."$shell"rc"
+fi
+
 cp ./bashrc ~/.bashrc;
 cp ./nanorc ~/.nanorc;
 
