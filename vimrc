@@ -121,16 +121,20 @@
     set laststatus=2
     let g:airline#extensions#tabline#enable = 1
 
-    if !exists('g:airline_symbols')
-        let g:airline_symbols = {}
-    endif
+    if 1:
+        let g:airline_powerline_fonts = 1;
+    else:
+        if !exists('g:airline_symbols')
+            let g:airline_symbols = {}
+        endif
 
-    let g:airline_powerline_fonts = 0
-    let g:airline_left_sep='▶'
-    let g:airline_right_sep='◀'
-    let g:airline_symbols.crypt = '🔒'
-    let g:airline_symbols.branch = '⎇'
-    let g:airline_symbols.readonly = ''
+        let g:airline_powerline_fonts = 0
+        let g:airline_left_sep='▶'
+        let g:airline_right_sep='◀'
+        let g:airline_symbols.crypt = '🔒'
+        let g:airline_symbols.branch = '⎇'
+        let g:airline_symbols.readonly = ''
+    endif
 
     " ConfiguraciOn de neocomplete
     let g:acp_enableAtStartup = 0

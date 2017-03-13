@@ -3,19 +3,20 @@
 # Set the package manager
 
 if [ $(uname -r | grep -i 'ubuntu') ]; then
-    pkg_man=apt-get install
+    pkg_man="apt-get install"
 elif [ $(uname -r | grep -i 'arch') ]; then
-    pkg_man=pacman -S
+    pkg_man="pacman -S"
 elif [ $(uname -r | grep -i 'fedora') ]; then
     pkg_man=yum install
 fi
 
-# Set the shell
+# Set the shell config file
+
 if [ $(echo $SHELL | grep -i bash) ]; then
-    shell=bash
+    shell=$HOME"/.bashrc"
 elif [ $(echo $SHELL | grep -i zsh ) ]; then
-    shell=zsh
-if
+    shell=$HOME"/.zshrc"
+fi
 
 # Install dependencies
 if ! hash vim 2>/dev/null; then
@@ -31,23 +32,23 @@ fi;
 #sudo apt-get install tmux;
 
 # Make a back-up
-mkdir ~/.dotfiles_backup
-mv ~./.vimrc ~/.dotfiles_backup
-mv ~./.vim ~/.dotfiles_backup
-mv ~./.nanorc ~/.dotfiles_backup
-mv ~./.bashrc ~/.dotfiles_backup
+if [ ! -d ~/.dotfiles_backup ]; then
+    mkdir ~/.dotfiles_backup
+fi
+cp ~/.vimrc ~/.dotfiles_backup
+cp ~/.nanorc ~/.dotfiles_backup
+cp ~/.bashrc ~/.dotfiles_backup
 
 # Starts real set-up
 if [ ! -d ~/.vim/bundle ] || [ ! -d ~/.vim/colors ]; then
-
     mkdir -p ~/.vim/bundle;
     mkdir ~/.vim/colors;
 fi;
 
 cp ./vimrc ~/.vimrc;
 
-if ![ $(cat "."$shell"rc" | grep "BASH_CONFIG_INCLUDED") ]; then
-    cat bashrc >> "."$shell"rc"
+if [ "$(cat $shell | grep "BASH_CONFIG_INCLUDED")" == "" ]; then
+    cat bashrc >> $shell
 fi
 
 cp ./bashrc ~/.bashrc;
@@ -61,7 +62,7 @@ vim +PluginInstall +PluginClean +qall
 
 cp ./vim/snips/emmet.vim ~/.vim/bundle/emmet-vim/autoload
 cp ./vim/snips/NERD_commenter.vim ~/.vim/bundle/The-NERD-Commenter/plugin
-cp ./vim/snips/*.snip ~/.vim/bundle/neosnippet-snippets/neosnippets;
-cp ./vim/colors/solarized.vim ~/.vim/colors;
+cp ./vim/snips/*.snip ~/.vim/bundle/neosnippet-snippets/neosnippets
+cp ./vim/colors/solarized.vim ~/.vim/colors
 
 exit 0;
