@@ -34,10 +34,11 @@ fi;
 # Make a back-up
 if [ ! -d ~/.dotfiles_backup ]; then
     mkdir ~/.dotfiles_backup
+
+    cp ~/.vimrc ~/.dotfiles_backup
+    cp ~/.nanorc ~/.dotfiles_backup
+    cp ~/.bashrc ~/.dotfiles_backup
 fi
-cp ~/.vimrc ~/.dotfiles_backup
-cp ~/.nanorc ~/.dotfiles_backup
-cp ~/.bashrc ~/.dotfiles_backup
 
 # Starts real set-up
 if [ ! -d ~/.vim/bundle ] || [ ! -d ~/.vim/colors ]; then
@@ -51,7 +52,6 @@ if [ "$(cat $shell | grep "BASH_CONFIG_INCLUDED")" == "" ]; then
     cat bashrc >> $shell
 fi
 
-cp ./bashrc ~/.bashrc;
 cp ./nanorc ~/.nanorc;
 
 if [ ! -d ~/.vim/bundle/Vundle.vim ]; then
