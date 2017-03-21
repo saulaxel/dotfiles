@@ -64,6 +64,7 @@
     " Fin de la configuraciOn de la paleta de colores
 
     " Resaltado del elemento hermano
+    highlight MatchParen ctermbg=7 ctermfg=8
 
     " Resaltado de la lInea actual
     highlight CursorLine ctermbg=white
