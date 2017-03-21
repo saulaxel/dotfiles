@@ -121,9 +121,9 @@
     set laststatus=2
     let g:airline#extensions#tabline#enable = 1
 
-    if 1:
-        let g:airline_powerline_fonts = 1;
-    else:
+    if 1 > 0
+        let g:airline_powerline_fonts = 1
+    else
         if !exists('g:airline_symbols')
             let g:airline_symbols = {}
         endif

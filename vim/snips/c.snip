@@ -2,23 +2,21 @@ snippet     basic1
 options     head
 abbr        main()
 	#include <stdio.h>
-	#include <stdint.h>
 	${1}
 
-	int32_t main(void) {
+	int main(void) {
 		${2}
 		return 0;
 	}
 
 snippet     basic2
 options     head
-abbr        int32_t main(...)
+abbr        int main(...)
 	#include <stdio.h>
 	#include <stdlib.h>
-	#include <stdint.h>
 	${1}
 	
-	int32_t main(int32_t argc, char *argv[]) {
+	int main(int argc, char ** argv) {
 		${0}
 
 		return EXIT_SUCCESS;
@@ -26,16 +24,15 @@ abbr        int32_t main(...)
 
 snippet     complete
 options     head
-abbr        int32_t main(...) { EXIT... }
+abbr        int main(...) { EXIT... }
 	#include <stdio.h>
 	#include <stdlib.h>
-	#include <stdint.h>
 	${1}
 	
 	void display_usage(void);
 	void print_error(const char *);
 	
-	int32_t main(int32_t argc, char **argv) {
+	int main(int argc, char **argv) {
 		if( argc < #{2:2} ) {
 			display_usage();
 			return EXIT_SUCCESS;
@@ -72,12 +69,12 @@ abbr        else {}
         ${1:TARGET}
     }${0}
 
-snippet elseif
+snippet elif
     else if(${1:#:condition}) {
         ${2:TARGET}
     }${0}
 
-snippet     ifelse
+snippet     ifel
 options     head
 abbr        if () {} else {}
     if(${1:#:condition}) {
@@ -87,6 +84,13 @@ abbr        if () {} else {}
     }
 
 snippet     for
+options     head
+abbr        for () {}
+    for(${1:i} = ${2:0}; $1 < ${3}; $1++) {
+        ${0:#:TARGET}
+    }
+
+snippet     fort
 options     head
 abbr        for () {}
     for(${1:int} ${2:i} = ${3:0}; $2 < ${4}; $2++) {
