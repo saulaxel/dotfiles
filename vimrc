@@ -63,7 +63,9 @@
 
     " Fin de la configuraciOn de la paleta de colores
 
-    " resaltado de la lInea actual
+    " Resaltado del elemento hermano
+
+    " Resaltado de la lInea actual
     highlight CursorLine ctermbg=white
     set cursorline
     highlight CursorColumn ctermbg=white

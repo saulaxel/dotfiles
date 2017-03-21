@@ -7,7 +7,7 @@ if [ $(uname -r | grep -i 'ubuntu') ]; then
 elif [ $(uname -r | grep -i 'arch') ]; then
     pkg_man="pacman -S"
 elif [ $(uname -r | grep -i 'fedora') ]; then
-    pkg_man=yum install
+    pkg_man="yum install"
 fi
 
 # Set the shell config file
@@ -26,7 +26,7 @@ fi;
 
 
 if ! hash nano 2>/dev/null; then
-    sudo $pkg_man install nano;
+    sudo $pkg_man nano;
 fi;
 
 #sudo apt-get install tmux;
