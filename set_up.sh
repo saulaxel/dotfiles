@@ -26,7 +26,7 @@ fi;
 
 
 if ! hash nano 2>/dev/null; then
-    sudo $pkg_man install nano;
+    sudo $pkg_man nano;
 fi;
 
 #sudo apt-get install tmux;
