@@ -20,8 +20,8 @@ fi
 
 # Install dependencies
 if ! hash vim 2>/dev/null; then
-    sudo $pkg_man install vim;
-    sudo $pkg_man install vim-nox;
+    sudo $pkg_man vim;
+    sudo $pkg_man vim-nox;
 fi;
 
 

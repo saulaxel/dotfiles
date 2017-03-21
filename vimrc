@@ -104,7 +104,7 @@
     Plugin 'Shougo/neosnippet'
     Plugin 'Shougo/neosnippet-snippets'
     Plugin 'kshenoy/vim-signature'
-    Plugin 'https://github.com/gregsexton/MatchTag.git'
+    Plugin 'gregsexton/MatchTag'
     "Plugin 'https://github.com/Valloric/MatchTagAlways.git'
 
     "Plugin 'https://github.com/shinokada/SWTC.vim.git'
