@@ -256,6 +256,7 @@
     " al intentar salIr o guardar un archivo
     cnoremap Q q
     cnoremap W w
+    cnoremap Wall Wall
 
     " Teclas para activar y desactivar numeraciOn relativa
     map <F5> :set relativenumber!<Return>
