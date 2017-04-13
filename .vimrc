@@ -81,7 +81,7 @@
     highlight TabLineSel ctermfg=black ctermbg=darkGray
 
     " Colores para el modo visual
-    highlight Visual guifg=#000000 guibg=#FFFFFF gui=none
+    highlight Visual ctermfg=15 ctermbg=0
 " }
 
 " Plugins y sus configuraciones {
@@ -127,7 +127,7 @@
     set laststatus=2
     let g:airline#extensions#tabline#enable = 1
 
-    if 1 > 0
+    if 1 < 0
         let g:airline_powerline_fonts = 1
     else
         if !exists('g:airline_symbols')
