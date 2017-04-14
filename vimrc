@@ -81,7 +81,7 @@
     highlight TabLineSel ctermfg=black ctermbg=darkGray
 
     " Colores para el modo visual
-    highlight Visual guifg=#000000 guibg=#FFFFFF gui=none
+    highlight Visual ctermfg=7 ctermbg=0
 " }
 
 " Plugins y sus configuraciones {
