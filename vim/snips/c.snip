@@ -33,11 +33,11 @@ abbr        int main(...) { EXIT... }
 	void print_error(const char *);
 	
 	int main(int argc, char **argv) {
-		if( argc < #{2:2} ) {
+		if( argc < ${2:2} ) {
 			display_usage();
 			return EXIT_SUCCESS;
 		}
-		#{0}
+		${0}
 
 		return EXIT_SUCCESS;
 	}
