@@ -13,8 +13,7 @@ snippet     basic2
 options     head
 abbr        int main(...)
 	#include <stdio.h>
-	#include <stdlib.h>
-	${1}
+	#include <stdlib.h>${1}
 	
 	int main(int argc, char ** argv) {
 		${0}
@@ -26,8 +25,7 @@ snippet     complete
 options     head
 abbr        int main(...) { EXIT... }
 	#include <stdio.h>
-	#include <stdlib.h>
-	${1}
+	#include <stdlib.h>${1}
 	
 	void display_usage(void);
 	void print_error(const char *);
@@ -59,7 +57,7 @@ snippet     p
 snippet     if
 options     head
 abbr        if () {}
-    if(${1:#:condition}) {
+    if (${1:#:condition}) {
         ${2:TARGET}
     }${0}
 
@@ -70,14 +68,14 @@ abbr        else {}
     }${0}
 
 snippet elif
-    else if(${1:#:condition}) {
+    else if (${1:#:condition}) {
         ${2:TARGET}
     }${0}
 
 snippet     ifel
 options     head
 abbr        if () {} else {}
-    if(${1:#:condition}) {
+    if (${1:#:condition}) {
         ${2:TARGET}
     } else {
         ${3}
@@ -86,21 +84,21 @@ abbr        if () {} else {}
 snippet     for
 options     head
 abbr        for () {}
-    for(${1:i} = ${2:0}; $1 < ${3}; $1++) {
+    for (${1:int }${2:i} = ${3:0}; $2 < ${5}; $3++) {
         ${0:#:TARGET}
     }
 
 snippet     fort
 options     head
 abbr        for () {}
-    for(${1:int} ${2:i} = ${3:0}; $2 < ${4}; $2++) {
+    for (${1:int }${2:i} = ${3:0}; $2 < ${4}; $2++) {
         ${0:#:TARGET}
     }
 
 snippet     while
 options     head
 abbr        while () {}
-    while(${1:#:condition}) {
+    while (${1:#:condition}) {
         ${0:TARGET}
     }
 
@@ -114,10 +112,10 @@ alias       do
 snippet     switch
 options     head
 abbr        switch () {}
-	switch(${1:#:var}) {
+	switch (${1:#:var}) {
 		case ${2:#:val}:
 			${3:TARGET}
-			break;
+			break;${4}
 
 		default:
 			${0:TARGET}
@@ -129,7 +127,7 @@ options     head
 abbr        case: break;
 	case ${1}:
 		${2}
-		break;
+		break;${3}
 
 snippet     function
 options     head
@@ -194,7 +192,8 @@ alias   #ifndef
 abbr #ifndef ... #define ... #endif
     #ifndef $1
     #define ${1:#:SYMBOL}
-    #endif${0}
+    ${2}
+    #endif /* $1 */
 
 snippet def
 options     head

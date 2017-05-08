@@ -200,8 +200,8 @@
 " Funciones {
     function! VerMarcas()
         syntax enable
-        highlight CursorLine ctermbg=black
-        highlight CursorColumn ctermbg=black
+        highlight CursorLine ctermbg=white
+        highlight CursorColumn ctermbg=white
         highlight ColorColumn ctermbg=cyan
     endfunction
 
