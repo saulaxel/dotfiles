@@ -1,8 +1,7 @@
 snippet     basic1
 options     head
 abbr        main()
-	#include <stdio.h>
-	${1}
+	#include <stdio.h>${1}
 
 	int main(void) {
 		${2}
@@ -84,7 +83,7 @@ abbr        if () {} else {}
 snippet     for
 options     head
 abbr        for () {}
-    for (${1:int }${2:i} = ${3:0}; $2 < ${5}; $3++) {
+    for (${1:int }${2:i} = ${3:0}; $2 < ${4}; $2++) {
         ${0:#:TARGET}
     }
 
