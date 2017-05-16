@@ -4,9 +4,10 @@ snippet     basic1
 options     head
 abbr        main()
 	#include <iostream>${1}
+	using std :: cout; ${2}
 
 	int main(void) {
-		${2}
+		${3}
 		return 0;
 	}
 
@@ -46,8 +47,7 @@ snippet     template
 abbr        template <T>
     template<typename ${1:T}> ${0}
 
-snippet     class
-options     head
+snippet     class options     head
 abbr        class {}
     class ${1:#:name} {
     public:
@@ -141,10 +141,12 @@ abbr        #include<iostream> int main...
         return 0;
     }
 
-snippet     p
+snippet     std_cout
 options     head
+alias       sc
   std::cout << ${0:TARGET} << std::endl;
 
-snippet     po
+snippet     cout
 options     head
+alias       c
     cout << ${0:TARGET} << endl;
