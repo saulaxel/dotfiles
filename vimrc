@@ -128,6 +128,7 @@
     " ConfiguraciOn de airline (La barra de informaciOn de abajo)
     set laststatus=2
     let g:airline#extensions#tabline#enable = 1
+    let g:airline_theme='alduin'
 
     if 1 > 0
         let g:airline_powerline_fonts = 1
