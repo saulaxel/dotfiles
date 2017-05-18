@@ -125,6 +125,27 @@
     highlight Pmenu ctermbg=7
     highlight PmenuSel ctermbg=8
 
+    " ConfiguraciOn de vim-marching
+    let g:marching_clang_command = "clang"
+
+    let g:marching#clang_command#options = {
+\           "cpp" : "-std=gnu++1y",
+            "c"   : "-std=gnu1y""
+\   }
+
+    let g:marching_enable_neocomplete = 1
+
+    if !exists('g:neocomplete#force_omni_input_patterns')
+        let g:neocomplete#force_omni_input_patterns = {}
+    endif
+
+    let g:neocomplete#force_omni_input_patterns.cpp =
+\       '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*)'
+
+    set updatetime=200
+
+    imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
+
     " ConfiguraciOn de airline (La barra de informaciOn de abajo)
     set laststatus=2
     let g:airline#extensions#tabline#enable = 1
