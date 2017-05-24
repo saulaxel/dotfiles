@@ -61,7 +61,7 @@ if [ ! -d ~/.vim/bundle/Vundle.vim ]; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi;
 
-vim +PluginInstall +qall
+vim +PluginInstall +qall -VimProcInstall
 
 cp ./vim/snips/emmet.vim ~/.vim/bundle/emmet-vim/autoload
 cp ./vim/snips/NERD_commenter.vim ~/.vim/bundle/The-NERD-Commenter/plugin

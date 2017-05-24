@@ -112,6 +112,8 @@
     Plugin 'Shougo/neosnippet-snippets'
     Plugin 'Shougo/neoinclude.vim'
     Plugin 'Shougo/neco-vim'
+    Plugin 'Shougo/vimproc'
+    Plugin 'osyo-manga/vim-marching'
     Plugin 'kshenoy/vim-signature'
     Plugin 'gregsexton/MatchTag'
     "Plugin 'https://github.com/Valloric/MatchTagAlways.git'
