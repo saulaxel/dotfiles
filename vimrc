@@ -106,6 +106,7 @@
     Plugin 'Tabular'
     Plugin 'tpope/vim-surround'
     Plugin 'vim-airline/vim-airline'
+    Plugin 'vim-airline/vim-airline-themes'
     Plugin 'Shougo/neocomplete'
     Plugin 'Shougo/neosnippet'
     Plugin 'Shougo/neosnippet-snippets'
@@ -130,7 +131,7 @@
 
     let g:marching#clang_command#options = {
 \           "cpp" : "-std=gnu++1y",
-            "c"   : "-std=gnu1y""
+\           "c"   : "-std=gnu1y"
 \   }
 
     let g:marching_enable_neocomplete = 1

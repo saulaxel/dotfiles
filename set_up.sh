@@ -22,12 +22,15 @@ fi
 if ! hash vim 2>/dev/null; then
     sudo $pkg_man vim
     sudo $pkg_man vim-nox
-fi;
-
+fi
 
 if ! hash nano 2>/dev/null; then
     sudo $pkg_man nano
-fi;
+fi
+
+if ! hash sass 2>/dev/null; then
+    sudo $pkg_man ruby; sudo gem install sass
+fi
 
 #sudo apt-get install tmux;
 

@@ -106,6 +106,7 @@
     Plugin 'Tabular'
     Plugin 'tpope/vim-surround'
     Plugin 'vim-airline/vim-airline'
+    Plugin 'vim-airline/vim-airline-themes'
     Plugin 'Shougo/neocomplete'
     Plugin 'Shougo/neosnippet'
     Plugin 'Shougo/neosnippet-snippets'
