@@ -68,4 +68,13 @@ cp ./vim/snips/NERD_commenter.vim ~/.vim/bundle/The-NERD-Commenter/plugin
 cp ./vim/snips/*.snip ~/.vim/bundle/neosnippet-snippets/neosnippets
 cp ./vim/colors/solarized.vim ~/.vim/colors
 
+if [ ! -d ~/vimproc.vim ];then
+    git clone https://github.com/Shougo/vimproc.vim ~/vimproc
+    cd ~/vimproc
+    make
+    cp -r autoload/* lib/* plugin/* ~/.vim
+
+    sudo $pkg_man clang
+fi;
+
 exit 0;
