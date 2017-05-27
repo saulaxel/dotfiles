@@ -7,7 +7,7 @@
     " ConfiguraciOn texto
     set number
     set linebreak
-    set showbreak=...\ 
+    set showbreak=...\              " Se muestran 3 puntos para simbolizar continuaciOn
     set textwidth=100
     set showmatch
     set visualbell
