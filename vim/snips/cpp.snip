@@ -48,31 +48,35 @@ abbr        template <T>
 
 snippet     class options     head
 abbr        class {}
-    class ${1:#:name} {
-    public:
-        $1(${2});
-        ~$1(void);
-    private:
-        ${3}
-    };
+	class ${1:#:name}
+	{
+	public:
+		$1(${2});
+		~$1(void);
+	private:
+		${3}
+	};
 
-    $1::$1($2) {
-        ${4:TARGET}
-    }
+	$1::$1($2)
+	{
+		${4:TARGET}
+	}
 
-    $1::~$1(void) {
-        ${5:TARGET}
-    }
+	$1::~$1(void)
+	{
+		${5:TARGET}
+	}
 
 snippet     class-without-constructor
 options     head
 abbr        class {}
-    class ${1:#:name} {
-    public:
-        ${2}
-    private:
-        ${3}
-    };
+	class ${1:#:name}
+	{
+	public:
+		${2}
+	private:
+		${3}
+	};
 
 snippet     try
 options     head
