@@ -34,9 +34,9 @@
     set list
     set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮
 
-    " Extras 
+    " Extras
     set undolevels=1000
-    set backspace=indent,eol,start 
+    set backspace=indent,eol,start
     set splitright
     set splitbelow
 " }
@@ -249,7 +249,7 @@
     " Definiendo configuraciOnes especificas para cada tipo de archivos
     autocmd BufEnter *.jade set filetype=jade
     autocmd Filetype html NoMatchParen
-    autocmd Filetype html,jade,pug,htmldjango,css,scss,sass,php imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>") 
+    autocmd Filetype html,jade,pug,htmldjango,css,scss,sass,php imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
     autocmd Filetype html,*.jade,python,php set ts=2 sw=2 sts=2
 " }
 
