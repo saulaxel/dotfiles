@@ -271,6 +271,16 @@
     inoremap <leader>pk <Esc>:VCoolor<Return>a
     inoremap <leader>scp <Esc>:!gpick<Return>a
 
+    " Abreviaciones
+    iabbrev fro for
+    iabbrev lenght length
+    iabbrev widht  width
+    iabbrev heigth heigth
+    iabbrev prt    ptr
+    iabbrev tis    this
+    iabbrev tihs   this
+    iabbrev form   from
+
     " Manejo de tabulaciones
     nnoremap <leader>tn :tabnew<Space>
 
