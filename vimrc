@@ -132,9 +132,8 @@
     let g:marching_clang_command = "clang"
 
     let g:marching#clang_command#options = {
-\           "cpp" : "-std=gnu++1y",
-\           "c"   : "-std=gnu1y"
-\   }
+    \       "cpp" : "-std=gnu++1y"
+    \   }
 
     let g:marching_enable_neocomplete = 1
 
