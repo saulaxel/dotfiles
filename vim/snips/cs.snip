@@ -3,7 +3,8 @@ snippet namespace
 alias   name
 abbr    namespace {}
 options head
-    namespace ${1:#:Name} {
+    namespace ${1:#:Name}
+    {
         ${0:TARGET}
     }
 
@@ -106,55 +107,65 @@ options head
 # Syntax
 snippet if
 abbr    if () {}
-    if (${1:#:condition}) {
+    if (${1:#:condition})
+    {
         ${0:TARGET}
     }
 
 snippet elseif
 alias   elif
 abbr    else if () {}
-    else if (${1:#:condition}) {
+    else if (${1:#:condition})
+    {
         ${0:TARGET}
     }
 
 snippet ifelse
 alias   ifel
 abbr    if () {} else {}
-    if (${1:#:condition}) {
+    if (${1:#:condition})
+    {
         ${2:TARGET}
-    } else {
+    }
+    else
+    {
         ${3:TARGET}
     }
 
 snippet while
 abbr    while () {}
-    while (${1:#:condition}) {
+    while (${1:#:condition})
+    {
         ${0:TARGET}
     }
 
 snippet do_while
 alias   dowhile
 abbr    do {} while() {}
-    do {
+    do
+    {
         ${0:TARGET}
     } while (${1:#:condition});
 
 snippet for
 abbr    for () {}
-    for (${1:#:var}; ${2:#:condition}; ${3:#:effect}) {
+    for (${1:#:var}; ${2:#:condition}; ${3:#:effect})
+    {
         ${0:TARGET}
     }
 
 snippet foreach
 alias   fore
 abbr    foreach () {}
-    foreach (${1:#:var} in ${2:#:iter}) {
+    foreach (${1:#:var} in ${2:#:iter})
+    {
         ${0:TARGET}
     }
 
 snippet switch
 abbr    switch () {}
-    switch (${1:#:var}) {
+    switch (${1:#:var})
+    {
     case ${2:#:val}:
         ${0:TARGET}
         break;
@@ -183,7 +194,8 @@ options head
 snippet try_without_catch_nor_finally
 alias   try_n
 options head
-    try {
+    try
+    {
         ${0:TARGET}
     }
 
@@ -191,9 +203,11 @@ snippet try_catch
 alias   try
 abbr    try {} catch () {}
 options head
-    try {
+    try
+    {
         ${0:TARGET}
-    } catch (${1:Exception} ${2:e}) {
+    }
+    catch (${1:Exception} ${2:e}) {
         ${3:Console.WriteLine(e.Message);}
     }
 
@@ -201,9 +215,12 @@ snippet try_catch_n
 alias   try_cn
 abbr    try {} catch {}
 options head
-    try {
+    try
+    {
         ${0:TARGET}
-    } catch {
+    }
+    catch
+    {
         ${1}
     }
 
@@ -211,11 +228,16 @@ snippet try_catch_finally
 alias   try_cf
 abbr    try {} catch () {} finally {}
 options head
-    try {
+    try
+    {
         ${0:TARGET}
-    } catch (${1:Exception} ${2:e}) {
+    }
+    catch (${1:Exception} ${2:e})
+    {
         ${3:Console.WriteLine(e.Message);}
-    } finally {
+    }
+    finally
+    {
         ${4}
     }
 
@@ -223,9 +245,12 @@ snippet try_finally
 alias   try_f
 abbr    try {} finally {}
 options head
-    try {
+    try
+    {
         ${0:TARGET}
-    } finally {
+    }
+    finally
+    {
         ${1}
     }
 
@@ -233,30 +258,38 @@ snippet try_catch_n_finally
 alias   try_cnf
 abbr    try {} catch {} finally {}
 options head
-    try {
+    try
+    {
         ${0:TARGET}
-    } catch {
+    }
+    catch
+    {
         ${1}
-    } finally {
+    }
+    finally
+    {
         ${2}
     }
 
 snippet catch
 abbr    catch () {}
-    catch (${1:Exception} ${2:e}) {
+    catch (${1:Exception} ${2:e})
+    {
         ${0:Console.WriteLine(e.Message);}
     }
 
 snippet catch_n
 abbr    catch {}
-    catch {
+    catch
+    {
         ${0}
     }
 
 snippet finally
 alias   fin
 abbr    finally {}
-    finally {
+    finally
+    {
         ${0:TARGET}
     }
 
@@ -267,7 +300,8 @@ options head
 snippet lock
 abbr    lock () {}
 options head
-    lock (${1:#:resource}) {
+    lock (${1:#:resource})
+    {
         ${0:TARGET}
     }
 
@@ -275,21 +309,24 @@ snippet using_resource
 alias   using resource
 abbr    using () {}
 options head
-    using (${1:#:resource}) {
+    using (${1:#:resource})
+    {
         ${0:TARGET}
     }
 
 snippet checked
 abbr    checked () {}
 options head
-    checked (${1:#:var}) {
+    checked (${1:#:var})
+    {
         ${0:TARGET}
     }
 
 snippet unchecked
 abbr    unchecked () {}
 options head
-    unchecked (${1:#:var}) {
+    unchecked (${1:#:var})
+    {
         ${0:TARGET}
     }
 
@@ -303,7 +340,8 @@ options head
 snippet fixed
 abbr    fixed () {}
 options head
-    fixed (${1:#:type}* ${2:#:var} = ${3:#:adress}) {
+    fixed (${1:#:type}* ${2:#:var} = ${3:#:adress})
+    {
         ${0:TARGET}
     }
 
@@ -428,32 +466,35 @@ abbr    <value></value>
 # Other
 snippet main
 options head
-    public static void Main(string[] args) {
+    public static void Main(string[] args)
+    {
         ${0}
     }
 
 snippet writeline
-alias   println p
+alias   WriteLine println pl wl
 options head
     Console.WriteLine(${1:#:message});${0}
 
 snippet write
-alias   print
+alias   Write print p w
 options head
     Console.Write(${1:#:message});${0}
 
 snippet readline
-alias   rl
+alias   ReadLine rl
     Console.ReadLine()
 
 snippet readkey
-alias   rk
+alias   ReadKey rk
     Console.ReadKey()
 
 snippet helloworld
 options head
-    public class ${1:Hello} {
-        public static void Main(string[] args) {
+    public class ${1:Hello}
+    {
+        public static void Main(string[] args)
+        {
             System.Console.WriteLine("Hello, world!");
         }
     }
@@ -464,7 +505,8 @@ snippet testclass
 alias   tc
 options head
     [TestFixture]
-    public class ${1}Test {
+    public class ${1}Test
+    {
         ${0:TARGET}
     }
 
@@ -472,7 +514,8 @@ snippet testsetup
 alias   tsu
 options head
     [SetUp]
-    public void SetUp() {
+    public void SetUp()
+    {
         ${0:TARGET}
     }
 
@@ -480,14 +523,16 @@ snippet testteardown
 alias   ttd
 options head
     [TearDown]
-    public void TearDown() {
+    public void TearDown()
+    {
         ${0:TARGET}
     }
 
 snippet test
 options head
     [Test]
-    public void ${1:#:Name}Test() {
+    public void ${1:#:Name}Test()
+    {
         ${0:TARGET}
     }
 
