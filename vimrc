@@ -279,7 +279,7 @@
     iabbrev fro for
     iabbrev lenght length
     iabbrev widht  width
-    iabbrev heigth heigth
+    iabbrev height heigth
     iabbrev prt    ptr
     iabbrev tis    this
     iabbrev tihs   this
