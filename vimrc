@@ -118,6 +118,7 @@
     Plugin 'davidhalter/jedi-vim'
     Plugin 'kshenoy/vim-signature'
     Plugin 'gregsexton/MatchTag'
+    Plugin 'elzr/vim-json'
     "Plugin 'https://github.com/Valloric/MatchTagAlways.git'
 
     "Plugin 'https://github.com/shinokada/SWTC.vim.git'
