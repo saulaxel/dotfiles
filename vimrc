@@ -41,14 +41,6 @@
     set splitbelow
 " }
 
-" ConfiguraciOn del sistema (Usese con precauciOn) {
-    " Transformar la tecla Escape en Block Mayus y Block Mayus en Escape
-    "autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-    "autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x09 = Caps_Lock'
-    "autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
-    "autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x09 = Escape'
-" }
-
 " Estilo visual {
     " ConfiguraciOn de la paleta de colores de solarized
     syntax enable
@@ -244,12 +236,15 @@
         inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
         inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 
-        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-        autocmd FileType python setlocal omnifunc=jedi#completions
-        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-        autocmd FileType java setlocal omnifunc=javacomplete#Complete
+        augroup omnifunctions
+            autocmd!
+            autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+            autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+            autocmd FileType python setlocal omnifunc=jedi#completions
+            autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+            autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+            autocmd FileType java setlocal omnifunc=javacomplete#Complete
+        augroup END
 
         if !exists('g:neocomplete#sources#omni#input_patterns')
             let g:neocomplete#sources#omni#input_patterns = {}
@@ -295,17 +290,23 @@
 
 " Comandos automAticos {
     " Definiendo el make
-    autocmd Filetype c          set makeprg=gcc\ %
-    autocmd Filetype java       set makeprg=javac\ %
-    autocmd Filetype html       set makeprg=xdg-open\ %
-    autocmd Filetype python     set makeprg=python\ %
-    autocmd Filetype cs         set makeprg=mcs\ %
+    augroup makecomnads
+        autocmd!
+        autocmd Filetype c          set makeprg=gcc\ %
+        autocmd Filetype java       set makeprg=javac\ %
+        autocmd Filetype html       set makeprg=xdg-open\ %
+        autocmd Filetype python     set makeprg=python\ %
+        autocmd Filetype cs         set makeprg=mcs\ %
+    augroup END
 
     " Definiendo configuraciOnes especificas para cada tipo de archivos
-    autocmd BufEnter *.jade set filetype=jade
-    autocmd Filetype html NoMatchParen
-    autocmd Filetype html,jade,pug,htmldjango,css,scss,sass,php imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-    autocmd Filetype html,*.jade,python,php set ts=2 sw=2 sts=2
+    augroup fileconfig
+        autocmd!
+        autocmd BufEnter *.jade set filetype=jade
+        autocmd Filetype html NoMatchParen
+        autocmd Filetype html,jade,pug,htmldjango,css,scss,sass,php imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+        autocmd Filetype html,*.jade,python,php set ts=2 sw=2 sts=2
+    augroup END
 " }
 
 " Mapeos {
