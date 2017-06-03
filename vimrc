@@ -115,6 +115,7 @@
     Plugin 'Shougo/vimproc.vim'
     Plugin 'osyo-manga/vim-marching'
     Plugin 'artur-shaik/vim-javacomplete2'
+    Plugin 'davidhalter/jedi-vim'
     Plugin 'kshenoy/vim-signature'
     Plugin 'gregsexton/MatchTag'
     "Plugin 'https://github.com/Valloric/MatchTagAlways.git'
@@ -143,6 +144,9 @@
     endif
 
     let g:neocomplete#force_omni_input_patterns.cpp =
+    \       '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*)'
+
+    let g:neocomplete#force_omni_input_patterns.c =
     \       '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*)'
 
     set updatetime=200
@@ -184,12 +188,20 @@
     nmap <silent> <buffer> <leader>jn <Plug>(JavaComplete-Generate-NewClass)
     nmap <silent> <buffer> <leader>jN <Plug>(JavaComplete-Generate-ClassInFile)
 
+    " ConfiguraciOn de jedi
+    let g:jedi#completions_enabled = 0
+    let g:jedi#auto_vim_configuration = 0
+    let g:jedi#smart_auto_mappings = 0
+
+    let g:neocomplete#force_omni_input_patterns.python =
+    \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+
     " ConfiguraciOn de airline (La barra de informaciOn de abajo)
     set laststatus=2
     let g:airline#extensions#tabline#enable = 1
     let g:airline_theme='alduin'
 
-    if 1 > 0
+    if 1 < 0
         let g:airline_powerline_fonts = 1
     else
         if !exists('g:airline_symbols')
@@ -233,8 +245,8 @@
 
         autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
         autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType python setlocal omnifunc=jedi#completions
         autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
         autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
         autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
@@ -277,6 +289,7 @@
         inoremap <Left> <nop>
         inoremap <Right> <nop>
     endfunction
+
 " }
 
 " Comandos automAticos {
