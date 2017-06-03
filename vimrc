@@ -114,6 +114,7 @@
     Plugin 'Shougo/neco-vim'
     Plugin 'Shougo/vimproc.vim'
     Plugin 'osyo-manga/vim-marching'
+    Plugin 'artur-shaik/vim-javacomplete2'
     Plugin 'kshenoy/vim-signature'
     Plugin 'gregsexton/MatchTag'
     "Plugin 'https://github.com/Valloric/MatchTagAlways.git'
@@ -142,11 +143,46 @@
     endif
 
     let g:neocomplete#force_omni_input_patterns.cpp =
-\       '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*)'
+    \       '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*)'
 
     set updatetime=200
 
     imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
+
+    " ConfiguraciOn de javacomplete
+    nmap <leader>jI     <Plug>(JavaComplete-Imports-AddMissing)
+    nmap <leader>jR     <Plug>(JavaComplete-Imports-RemoveUnused)
+    nmap <leader>ji     <Plug>(JavaComplete-Imports-AddSmart)
+    nmap <leader>jii    <Plug>(JavaComplete-Imports-Add)
+
+    imap <C-j>I         <Plug>(JavaComplete-Imports-AddMissing)
+    imap <C-j>R         <Plug>(JavaComplete-Imports-RemoveUnused)
+    imap <C-j>i         <Plug>(JavaComplete-Imports-AddSmart)
+    imap <C-j>ii        <Plug>(JavaComplete-Imports-Add)
+
+    nmap <leader>jM     <Plug>(JavaComplete-Generate-AbstractMethods)
+
+    imap <C-j>jM        <Plug>(JavaComplete-Generate-AbstractMethods)
+
+    nmap <leader>jA     <Plug>(JavaComplete-Generate-Accessors)
+    nmap <leader>js     <Plug>(JavaComplete-Generate-AccessorSetter)
+    nmap <leader>jg     <Plug>(JavaComplete-Generate-AccessorGetter)
+    nmap <leader>ja     <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+    nmap <leader>jts    <Plug>(JavaComplete-Generate-ToString)
+    nmap <leader>jeq    <Plug>(JavaComplete-Generate-EqualsAndHashCode)
+    nmap <leader>jc     <Plug>(JavaComplete-Generate-Constructor)
+    nmap <leader>jcc    <Plug>(JavaComplete-Generate-DefaultConstructor)
+
+    imap <C-j>s         <Plug>(JavaComplete-Generate-AccessorSetter)
+    imap <C-j>g         <Plug>(JavaComplete-Generate-AccessorGetter)
+    imap <C-j>a         <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+
+    vmap <leader>js     <Plug>(JavaComplete-Generate-AccessorSetter)
+    vmap <leader>jg     <Plug>(JavaComplete-Generate-AccessorGetter)
+    vmap <leader>ja     <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+
+    nmap <silent> <buffer> <leader>jn <Plug>(JavaComplete-Generate-NewClass)
+    nmap <silent> <buffer> <leader>jN <Plug>(JavaComplete-Generate-ClassInFile)
 
     " ConfiguraciOn de airline (La barra de informaciOn de abajo)
     set laststatus=2
@@ -200,6 +236,7 @@
         autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
         autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
         autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+        autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
         if !exists('g:neocomplete#sources#omni#input_patterns')
             let g:neocomplete#sources#omni#input_patterns = {}
