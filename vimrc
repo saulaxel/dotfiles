@@ -145,6 +145,7 @@
     set updatetime=200
 
     imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
+    imap <buffer> <C-x><C-x><C-o> <Plug>(marching_force_start_omni_complete)
 
     " ConfiguraciOn de javacomplete
     nmap <leader>jI     <Plug>(JavaComplete-Imports-AddMissing)
