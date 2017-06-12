@@ -36,7 +36,7 @@
 
     " Extras 
     set undolevels=1000
-    set backspace=indent,eol,start 
+    set backspace=indent,eol,start
     set splitright
     set splitbelow
 " }
@@ -115,6 +115,8 @@
     Plugin 'Shougo/vimproc.vim'
     Plugin 'osyo-manga/vim-marching'
     Plugin 'kshenoy/vim-signature'
+    Plugin 'vim-javascript'
+    Plugin 'elzr/vim-json'
     Plugin 'gregsexton/MatchTag'
     "Plugin 'https://github.com/Valloric/MatchTagAlways.git'
 
