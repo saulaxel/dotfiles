@@ -5,7 +5,7 @@
 ##
 
 ## Indentado automAtico
-set autoindent 
+set autoindent
 
 ## Copia automAtica de seguridad al directorio ""
 #lset backup
@@ -14,7 +14,7 @@ set autoindent
 ## Hacer busqueda hacia atras por default
 # set backwards
 
-## Usar texto grueso en la cabecera en lugar del texto 
+## Usar texto grueso en la cabecera en lugar del texto
 ## con fondo invertido
 set boldtext
 
@@ -43,7 +43,7 @@ set morespace
 ## Habilita el ratOn
 set mouse
 
-## Permitir multiples buffers (debe existir la 
+## Permitir multiples buffers (debe existir la
 ## configuraciOn --enable-multibuffer para que funcione)
 #set multibuffer
 
@@ -62,7 +62,7 @@ set mouse
 ## No representar una lInea larga como varias lIneas
 # set nowrap
 
-## Establecer directorio de trabajo para limitar la 
+## Establecer directorio de trabajo para limitar la
 ## ediciOn con nano fuera del mismo
 #set operatingdir ""
 

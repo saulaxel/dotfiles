@@ -7,7 +7,7 @@
     " ConfiguraciOn texto
     set number
     set linebreak
-    set showbreak=...\ 
+    set showbreak=...\              " Se muestran 3 puntos para simbolizar continuaciOn
     set textwidth=100
     set showmatch
     set visualbell
@@ -34,19 +34,11 @@
     set list
     set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮
 
-    " Extras 
+    " Extras
     set undolevels=1000
     set backspace=indent,eol,start
     set splitright
     set splitbelow
-" }
-
-" ConfiguraciOn del sistema (Usese con precauciOn) {
-    " Transformar la tecla Escape en Block Mayus y Block Mayus en Escape
-    "autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-    "autocmd VimEnter * !xmodmap -e 'clear Lock' -e 'keycode 0x09 = Caps_Lock'
-    "autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'
-    "autocmd VimLeave * !xmodmap -e 'clear Lock' -e 'keycode 0x09 = Escape'
 " }
 
 " Estilo visual {
@@ -114,10 +106,13 @@
     Plugin 'Shougo/neco-vim'
     Plugin 'Shougo/vimproc.vim'
     Plugin 'osyo-manga/vim-marching'
+    Plugin 'artur-shaik/vim-javacomplete2'
+    Plugin 'davidhalter/jedi-vim'
     Plugin 'kshenoy/vim-signature'
     Plugin 'vim-javascript'
     Plugin 'elzr/vim-json'
     Plugin 'gregsexton/MatchTag'
+    Plugin 'elzr/vim-json'
     "Plugin 'https://github.com/Valloric/MatchTagAlways.git'
 
     "Plugin 'https://github.com/shinokada/SWTC.vim.git'
@@ -134,9 +129,8 @@
     let g:marching_clang_command = "clang"
 
     let g:marching#clang_command#options = {
-\           "cpp" : "-std=gnu++1y",
-\           "c"   : "-std=gnu1y"
-\   }
+    \       "cpp" : "-std=gnu++1y"
+    \   }
 
     let g:marching_enable_neocomplete = 1
 
@@ -145,18 +139,65 @@
     endif
 
     let g:neocomplete#force_omni_input_patterns.cpp =
-\       '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*)'
+    \       '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*)'
+
+    let g:neocomplete#force_omni_input_patterns.c =
+    \       '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*)'
 
     set updatetime=200
 
     imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
+    imap <buffer> <C-x><C-x><C-o> <Plug>(marching_force_start_omni_complete)
+
+    " ConfiguraciOn de javacomplete
+    nmap <leader>jI     <Plug>(JavaComplete-Imports-AddMissing)
+    nmap <leader>jR     <Plug>(JavaComplete-Imports-RemoveUnused)
+    nmap <leader>ji     <Plug>(JavaComplete-Imports-AddSmart)
+    nmap <leader>jii    <Plug>(JavaComplete-Imports-Add)
+
+    imap <C-j>I         <Plug>(JavaComplete-Imports-AddMissing)
+    imap <C-j>R         <Plug>(JavaComplete-Imports-RemoveUnused)
+    imap <C-j>i         <Plug>(JavaComplete-Imports-AddSmart)
+    imap <C-j>ii        <Plug>(JavaComplete-Imports-Add)
+
+    nmap <leader>jM     <Plug>(JavaComplete-Generate-AbstractMethods)
+
+    imap <C-j>jM        <Plug>(JavaComplete-Generate-AbstractMethods)
+
+    nmap <leader>jA     <Plug>(JavaComplete-Generate-Accessors)
+    nmap <leader>js     <Plug>(JavaComplete-Generate-AccessorSetter)
+    nmap <leader>jg     <Plug>(JavaComplete-Generate-AccessorGetter)
+    nmap <leader>ja     <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+    nmap <leader>jts    <Plug>(JavaComplete-Generate-ToString)
+    nmap <leader>jeq    <Plug>(JavaComplete-Generate-EqualsAndHashCode)
+    nmap <leader>jc     <Plug>(JavaComplete-Generate-Constructor)
+    nmap <leader>jcc    <Plug>(JavaComplete-Generate-DefaultConstructor)
+
+    imap <C-j>s         <Plug>(JavaComplete-Generate-AccessorSetter)
+    imap <C-j>g         <Plug>(JavaComplete-Generate-AccessorGetter)
+    imap <C-j>a         <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+
+    vmap <leader>js     <Plug>(JavaComplete-Generate-AccessorSetter)
+    vmap <leader>jg     <Plug>(JavaComplete-Generate-AccessorGetter)
+    vmap <leader>ja     <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+
+    nmap <silent> <buffer> <leader>jn <Plug>(JavaComplete-Generate-NewClass)
+    nmap <silent> <buffer> <leader>jN <Plug>(JavaComplete-Generate-ClassInFile)
+
+    " ConfiguraciOn de jedi
+    let g:jedi#completions_enabled = 0
+    let g:jedi#auto_vim_configuration = 0
+    let g:jedi#smart_auto_mappings = 0
+
+    let g:neocomplete#force_omni_input_patterns.python =
+    \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 
     " ConfiguraciOn de airline (La barra de informaciOn de abajo)
     set laststatus=2
     let g:airline#extensions#tabline#enable = 1
     let g:airline_theme='alduin'
 
-    if 1 > 0
+    if 1 < 0
         let g:airline_powerline_fonts = 1
     else
         if !exists('g:airline_symbols')
@@ -172,52 +213,60 @@
     endif
 
     " ConfiguraciOn de neocomplete
-    let g:acp_enableAtStartup = 0
-    let g:neocomplete#enable_at_startup = 1
-    let g:neocomplete#enable_smart_case = 1
-    let g:neocomplete#sources#syntax#min_keyword_lenght = 3
-    let g:neocomplete#sources#dictionary#dictionaries = {
-        \ 'default' : '',
-        \ 'vimshell' : $HOME.'/.vimshell_hist',
-        \ 'scheme' : $HOME.'.gosh_completions'
-        \ }
+    if 1 > 0
+        let g:acp_enableAtStartup = 0
+        let g:neocomplete#enable_at_startup = 1
+        let g:neocomplete#enable_smart_case = 1
+        let g:neocomplete#sources#syntax#min_keyword_lenght = 3
+        let g:neocomplete#sources#dictionary#dictionaries = {
+            \ 'default' : '',
+            \ 'vimshell' : $HOME.'/.vimshell_hist',
+            \ 'scheme' : $HOME.'.gosh_completions'
+            \ }
 
-    if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-    endif
-    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+        if !exists('g:neocomplete#keyword_patterns')
+            let g:neocomplete#keyword_patterns = {}
+        endif
+        let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-    inoremap <expr><C-g> neocomplete#undo_completion()
+        inoremap <expr><C-g> neocomplete#undo_completion()
 
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-    function! s:my_cr_function()
-          return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-    endfunction
+        inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+        function! s:my_cr_function()
+              return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+        endfunction
 
-    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+        inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+        inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+        augroup omnifunctions
+            autocmd!
+            autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+            autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+            autocmd FileType python setlocal omnifunc=jedi#completions
+            autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+            autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+            autocmd FileType java setlocal omnifunc=javacomplete#Complete
+        augroup END
 
-    if !exists('g:neocomplete#sources#omni#input_patterns')
-        let g:neocomplete#sources#omni#input_patterns = {}
-    endif
+        if !exists('g:neocomplete#sources#omni#input_patterns')
+            let g:neocomplete#sources#omni#input_patterns = {}
+        endif
 
     let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
-    imap <C-e> <Plug>(neosnippet_expand_or_jump)
-    smap <C-e> <Plug>(neosnippet_expand_or_jump)
-    xmap <C-e> <Plug>(neosnippet_expand_target)
+        imap <C-e> <Plug>(neosnippet_expand_or_jump)
+        smap <C-e> <Plug>(neosnippet_expand_or_jump)
+        xmap <C-e> <Plug>(neosnippet_expand_target)
 
-    "smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-                \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+        "smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+                    \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
-    let g:neosnippet#enable_snipmate_compatibility = 1
-    let g:neosnippet#snippet_directory='~/.vim/bundle/vim-snippets/snippets'
+        let g:neosnippet#enable_snipmate_compatibility = 1
+        let g:neosnippet#snippet_directory='~/.vim/bundle/vim-snippets/snippets'
+    else
+        let g:acp_enableAtStartup = 1
+    endif
 
     if has('conceal')
         set conceallevel=2 concealcursor=niv
@@ -239,20 +288,28 @@
         inoremap <Left> <nop>
         inoremap <Right> <nop>
     endfunction
+
 " }
 
 " Comandos automAticos {
     " Definiendo el make
-    autocmd Filetype c set makeprg=gcc\ %
-    autocmd Filetype java set makeprg=javac\ %
-    autocmd Filetype html set makeprg=xdg-open\ %
-    autocmd Filetype python set makeprg=python\ %
+    augroup makecomnads
+        autocmd!
+        autocmd Filetype c          set makeprg=gcc\ %
+        autocmd Filetype java       set makeprg=javac\ %
+        autocmd Filetype html       set makeprg=xdg-open\ %
+        autocmd Filetype python     set makeprg=python\ %
+        autocmd Filetype cs         set makeprg=mcs\ %
+    augroup END
 
     " Definiendo configuraciOnes especificas para cada tipo de archivos
-    autocmd BufEnter *.jade set filetype=jade
-    autocmd Filetype html NoMatchParen
-    autocmd Filetype html,jade,pug,htmldjango,css,scss,sass,php imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>") 
-    autocmd Filetype html,*.jade,python,php set ts=2 sw=2 sts=2
+    augroup fileconfig
+        autocmd!
+        autocmd BufEnter *.jade set filetype=jade
+        autocmd Filetype html NoMatchParen
+        autocmd Filetype html,jade,pug,htmldjango,css,scss,sass,php imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+        autocmd Filetype html,*.jade,python,php set ts=2 sw=2 sts=2
+    augroup END
 " }
 
 " Mapeos {
@@ -272,6 +329,16 @@
     nnoremap .a mm:let @a=@"<cr>"byiW:%s/<C-r>a/<C-r>b/g<cr>`m:delmarks m<cr>
     inoremap <leader>pk <Esc>:VCoolor<Return>a
     inoremap <leader>scp <Esc>:!gpick<Return>a
+
+    " Abreviaciones
+    iabbrev fro for
+    iabbrev lenght length
+    iabbrev widht  width
+    iabbrev height heigth
+    iabbrev prt    ptr
+    iabbrev tis    this
+    iabbrev tihs   this
+    iabbrev form   from
 
     " Manejo de tabulaciones
     nnoremap <leader>tn :tabnew<Space>
@@ -296,7 +363,7 @@
     " Debug en lenguajes compilados
     map <F7> :cprevious<Return>
     map <F8> :cnext<Return>
-    map <F9> :make<Return>:copen<Return>
+    map <F9> :make<Return>
 
     " Arbol de directorios
     map <F12> :NERDTree<Return>

@@ -28,7 +28,7 @@ if ! hash nano 2>/dev/null; then
     sudo $pkg_man nano
 fi
 
-if ! hash sass 2>/dev/null; then
+if ! hash gem 2>/dev/null; then
     sudo $pkg_man ruby; sudo gem install sass
 fi
 
@@ -68,7 +68,7 @@ cp ./vim/snips/NERD_commenter.vim ~/.vim/bundle/The-NERD-Commenter/plugin
 cp ./vim/snips/*.snip ~/.vim/bundle/neosnippet-snippets/neosnippets
 cp ./vim/colors/solarized.vim ~/.vim/colors
 
-if [ ! -d ~/vimproc.vim ];then
+if [ ! -d ~/vimproc ];then
     git clone https://github.com/Shougo/vimproc.vim ~/vimproc
     cd ~/vimproc
     make
