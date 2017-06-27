@@ -110,7 +110,6 @@
     Plugin 'davidhalter/jedi-vim'
     Plugin 'kshenoy/vim-signature'
     Plugin 'vim-javascript'
-    Plugin 'elzr/vim-json'
     Plugin 'gregsexton/MatchTag'
     Plugin 'elzr/vim-json'
     "Plugin 'https://github.com/Valloric/MatchTagAlways.git'
@@ -143,6 +142,9 @@
 
     let g:neocomplete#force_omni_input_patterns.c =
     \       '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*)'
+
+    "let g:neocomplete#force_omni_input_patterns.python =
+    "\ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 
     set updatetime=200
 
@@ -188,9 +190,6 @@
     let g:jedi#completions_enabled = 0
     let g:jedi#auto_vim_configuration = 0
     let g:jedi#smart_auto_mappings = 0
-
-    let g:neocomplete#force_omni_input_patterns.python =
-    \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 
     " ConfiguraciOn de airline (La barra de informaciOn de abajo)
     set laststatus=2
@@ -326,7 +325,8 @@
     nnoremap <space> za
     nnoremap Y y$
     nnoremap <leader>cbox :Tabularize /*<cr>vip<Esc>:substitute/ /=/g<cr>r A/<Esc>vipo<Esc>0r/:substitute/ /=/g<cr>:nohlsearch<cr>
-    nnoremap .a mm:let @a=@"<cr>"byiW:%s/<C-r>a/<C-r>b/g<cr>`m:delmarks m<cr>
+    nnoremap .a mm:let @a=@"<cr>"byiw:%s/<C-r>a/<C-r>b/g<cr>`m:delmarks m<cr>
+    nnoremap .A mm:let @a=@"<cr>"byiW:%s/<C-r>a/<C-r>b/g<cr>`m:delmarks m<cr>
     inoremap <leader>pk <Esc>:VCoolor<Return>a
     inoremap <leader>scp <Esc>:!gpick<Return>a
 
