@@ -212,60 +212,56 @@
     endif
 
     " ConfiguraciOn de neocomplete
-    if 1 > 0
-        let g:acp_enableAtStartup = 0
-        let g:neocomplete#enable_at_startup = 1
-        let g:neocomplete#enable_smart_case = 1
-        let g:neocomplete#sources#syntax#min_keyword_lenght = 3
-        let g:neocomplete#sources#dictionary#dictionaries = {
-            \ 'default' : '',
-            \ 'vimshell' : $HOME.'/.vimshell_hist',
-            \ 'scheme' : $HOME.'.gosh_completions'
-            \ }
+    let g:acp_enableAtStartup = 0
+    let g:neocomplete#enable_at_startup = 1
+    let g:neocomplete#enable_smart_case = 1
+    let g:neocomplete#sources#syntax#min_keyword_lenght = 3
+    let g:neocomplete#sources#dictionary#dictionaries = {
+        \ 'default' : '',
+        \ 'vimshell' : $HOME.'/.vimshell_hist',
+        \ 'scheme' : $HOME.'.gosh_completions'
+        \ }
 
-        if !exists('g:neocomplete#keyword_patterns')
-            let g:neocomplete#keyword_patterns = {}
-        endif
-        let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+    if !exists('g:neocomplete#keyword_patterns')
+        let g:neocomplete#keyword_patterns = {}
+    endif
+    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-        inoremap <expr><C-g> neocomplete#undo_completion()
+    inoremap <expr><C-g> neocomplete#undo_completion()
 
-        inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-        function! s:my_cr_function()
-              return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-        endfunction
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    function! s:my_cr_function()
+          return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+    endfunction
 
-        inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-        inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 
-        augroup omnifunctions
-            autocmd!
-            autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-            autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-            autocmd FileType python setlocal omnifunc=jedi#completions
-            autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-            autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-            autocmd FileType java setlocal omnifunc=javacomplete#Complete
-        augroup END
+    augroup omnifunctions
+        autocmd!
+        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType python setlocal omnifunc=jedi#completions
+        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+        autocmd FileType java setlocal omnifunc=javacomplete#Complete
+    augroup END
 
-        if !exists('g:neocomplete#sources#omni#input_patterns')
-            let g:neocomplete#sources#omni#input_patterns = {}
-        endif
+    if !exists('g:neocomplete#sources#omni#input_patterns')
+        let g:neocomplete#sources#omni#input_patterns = {}
+    endif
 
     let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
-        imap <C-e> <Plug>(neosnippet_expand_or_jump)
-        smap <C-e> <Plug>(neosnippet_expand_or_jump)
-        xmap <C-e> <Plug>(neosnippet_expand_target)
+    imap <C-e> <Plug>(neosnippet_expand_or_jump)
+    smap <C-e> <Plug>(neosnippet_expand_or_jump)
+    xmap <C-e> <Plug>(neosnippet_expand_target)
 
-        "smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-                    \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+    "smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+                \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
-        let g:neosnippet#enable_snipmate_compatibility = 1
-        let g:neosnippet#snippet_directory='~/.vim/bundle/vim-snippets/snippets'
-    else
-        let g:acp_enableAtStartup = 1
-    endif
+    let g:neosnippet#enable_snipmate_compatibility = 1
+    let g:neosnippet#snippet_directory='~/.vim/bundle/vim-snippets/snippets'
 
     if has('conceal')
         set conceallevel=2 concealcursor=niv
