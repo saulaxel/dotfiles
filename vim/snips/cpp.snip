@@ -15,9 +15,9 @@ options     head
 abbr        int main(...)
 	#include <iostream>${1}
 
-	using std :: cout;
-	using std :: cin ;
-	using std :: endl;${2}
+	using std::cout;
+	using std::cin ;
+	using std::endl;${2}
 
 	int main(int argc, char ** argv) {
 		${0}
@@ -40,7 +40,7 @@ alias   #inc2, #include2
 snippet using
 options head
 alias usg
-    using ${1:std} :: ${2:cout};
+    using ${1:std}::${2:cout};
 
 snippet     template
 abbr        template <T>
