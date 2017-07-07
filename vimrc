@@ -276,6 +276,11 @@
         highlight ColorColumn ctermbg=cyan
     endfunction
 
+    function! DoblarFunciones()
+        set foldmethod=syntax
+        set foldnestmax=1
+    endfunction
+
     function! ModoDificil()
         inoremap <Esc> <nop>
         inoremap <Up> <nop>
