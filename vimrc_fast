@@ -1,4 +1,5 @@
-set nocp ai st nu rnu ru lbr sbr=...\  bri tw=100 hls smc is ts=4 sts=4 sw=4 et sm list lcs=tab:▸\ ,trail:⋅,extends:❯,precedes:❮ ul=1000 bs=indent,eol,start spr sb
+syntax on
+set nocp ai sta nu rnu ru lbr sbr=...\  bri tw=100 hls smc is ts=4 sts=4 sw=4 et sm list lcs=tab:▸\ ,trail:⋅,extends:❯,precedes:❮ ul=1000 bs=indent,eol,start spr sb
 aug makecomnads
 au!
 au Filetype c set makeprg=gcc\ %
@@ -11,7 +12,7 @@ aug END
 let mapleader="\,"
 nn <leader>av :tabnew $MYVIMRC<CR>
 nn <leader>sv :source $MYVIMRC<CR>
-in kj <Esc>
+ino kj <Esc>
 nn <space> za
 nn Y y$
 ia fro for
@@ -27,8 +28,8 @@ nn <leader>tk :tabnext<CR>
 nn <leader>tj :tabprev<CR>
 nn <leader>th :tabfirst<CR>
 nn <leader>tl :tablast<CR>
-cn w!! w !sudo tee % >/dev/null
-cn Q q
-cn W w
-cn WW W
-cn QQ Q
+cno w!! w !sudo tee % >/dev/null
+cno Q q
+cno W w
+cno WW W
+cno QQ Q
