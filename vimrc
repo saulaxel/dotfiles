@@ -8,6 +8,9 @@
     set number
     set linebreak
     set showbreak=...\              " Se muestran 3 puntos para simbolizar continuaciOn
+    if has("patch-7.4.354")
+        set breakindent
+    endif
     set textwidth=100
     set showmatch
     set visualbell
@@ -356,7 +359,8 @@
     " al intentar salIr o guardar un archivo
     cnoremap Q q
     cnoremap W w
-    cnoremap Wall Wall
+    cnoremap WW W
+    cnoremap QQ Q
 
     " Teclas para activar y desactivar numeraciOn relativa
     map <F5> :set relativenumber!<Return>

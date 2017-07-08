@@ -1,0 +1,34 @@
+set nocp ai st nu rnu ru lbr sbr=...\  bri tw=100 hls smc is ts=4 sts=4 sw=4 et sm list lcs=tab:▸\ ,trail:⋅,extends:❯,precedes:❮ ul=1000 bs=indent,eol,start spr sb
+aug makecomnads
+au!
+au Filetype c set makeprg=gcc\ %
+au Filetype cpp set makeprg=g++\ %
+au Filetype java set makeprg=javac\ %
+au Filetype html set makeprg=xdg-open\ %
+au Filetype python set makeprg=python\ %
+au Filetype cs set makeprg=mcs\ %
+aug END
+let mapleader="\,"
+nn <leader>av :tabnew $MYVIMRC<CR>
+nn <leader>sv :source $MYVIMRC<CR>
+in kj <Esc>
+nn <space> za
+nn Y y$
+ia fro for
+ia lenght length
+ia widht width
+ia height heigth
+ia prt ptr
+ia tis this
+ia tihs this
+ia form from
+nn <leader>tn :tabnew<Space>
+nn <leader>tk :tabnext<CR>
+nn <leader>tj :tabprev<CR>
+nn <leader>th :tabfirst<CR>
+nn <leader>tl :tablast<CR>
+cn w!! w !sudo tee % >/dev/null
+cn Q q
+cn W w
+cn WW W
+cn QQ Q
