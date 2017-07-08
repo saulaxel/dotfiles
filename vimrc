@@ -299,6 +299,7 @@
     augroup makecomnads
         autocmd!
         autocmd Filetype c          set makeprg=gcc\ %
+        autocmd Filetype cpp        set makeprg=g++\ %
         autocmd Filetype java       set makeprg=javac\ %
         autocmd Filetype html       set makeprg=xdg-open\ %
         autocmd Filetype python     set makeprg=python\ %
