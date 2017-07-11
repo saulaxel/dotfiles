@@ -1,5 +1,5 @@
 syntax on
-set nocp ai si sta nu rnu ru lbr sbr=...\  bri tw=100 hls scs is ts=4 sts=4 sw=4 et sm list lcs=tab:▸\ ,trail:⋅,extends:❯,precedes:❮ ul=1000 bs=indent,eol,start spr sb
+set fenc=utf8 nocp ai si sta nu rnu ru lbr sbr=...\  bri tw=100 hls scs is ts=4 sts=4 sw=4 et sm list lcs=tab:▸\ ,trail:⋅,extends:❯,precedes:❮ ul=1000 bs=indent,eol,start spr sb
 aug makecomnads
 au!
 au Filetype c set makeprg=gcc\ %
