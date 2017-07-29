@@ -8,6 +8,7 @@ au Filetype java set makeprg=javac\ %
 au Filetype html set makeprg=xdg-open\ %
 au Filetype python set makeprg=python\ %
 au Filetype cs set makeprg=mcs\ %
+au Filetype sh set makeprg=bash\ %
 aug END
 let mapleader="\,"
 nn <leader>av :tabnew $MYVIMRC<CR>
