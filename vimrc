@@ -304,7 +304,7 @@
         autocmd Filetype html       set makeprg=xdg-open\ %
         autocmd Filetype python     set makeprg=python\ %
         autocmd Filetype cs         set makeprg=mcs\ %
-        autocmd Filetype sh         set makeprg=bashh\ %
+        autocmd Filetype sh         set makeprg=bash\ %
     augroup END
 
     " Definiendo configuraciOnes especificas para cada tipo de archivos
