@@ -123,6 +123,19 @@
     call vundle#end()
     filetype plugin indent on
 
+    " ConfiguraciOn de AutoPairs
+    " (Establece los carActeres de apertura y cierre)
+    let g:AutoPairs = {
+                \ '(' : ')',
+                \ '[' : ']',
+                \ '{' : '}',
+                \ '"' : '"',
+                \ "'" : "'",
+                \ '¿' : '?',
+                \ '¡' : '!',
+                \ '<' : '>'
+                \}
+
     " ConfiguraciOn de neocomplete
     highlight Pmenu ctermbg=7
     highlight PmenuSel ctermbg=8

@@ -47,9 +47,11 @@ snippet while
         ${2:TARGET}
     }
 
-snippet for
-    for (${1}; ${2}; ${3}) {
-        ${4:TARGET}
+snippet     for
+options     head
+abbr        for () {}
+    for (${1:int }${2:i} = ${3:0}; $2${4}; $2++) {
+        ${0:#:TARGET}
     }
 
 snippet foreach
