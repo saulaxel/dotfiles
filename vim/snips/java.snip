@@ -153,7 +153,7 @@ snippet j.m
     java.math.
 
 snippet main
-    class `expand('%:p:t:r')` {
+    public class `expand('%:p:t:r')` {
         public static void main(String args[]) {
             ${0:#:body}
         }
@@ -168,12 +168,12 @@ alias   basic
 snippet println
 alias   pl
 options word
-    System.out.println(${1});${0}
+    System.out.println(${1})${0}
 
 snippet print
 alias   p
 options word
-    System.out.print(${1});${0}
+    System.out.print(${1})${0}
 
 #javadoc
 snippet comment
