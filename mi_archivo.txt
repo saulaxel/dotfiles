@@ -1,0 +1,3 @@
+Hola, ¿Qué tal amigos?, estoy editando
+un archivo muy simple por medio de un
+comando de la terminal.
