@@ -304,6 +304,19 @@
         inoremap <Right> <nop>
     endfunction
 
+    function! ModoWeb()
+        set nolist
+        imap <expr><Tab> neosnippet#expandable_or_jumpable() ?
+                \ "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+        smap <expr><Tab> neosnippet#expandable_or_jumpable() ?
+                \ "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+        xmap <expr><Tab> neosnippet#expandable_or_jumpable() ?
+                \ "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+
+        imap <Up>    <C-p>
+        imap <Down>  <C-n>
+    endfunction
+
 " }
 
 " Comandos automAticos {
