@@ -374,26 +374,26 @@ function! emmet#getFileType(...) abort
   let type = ''
 
   if has_key(s:emmet_settings, &filetype)
-    return &filetype
+    let type = &filetype
   else
     let types = split(&filetype, '\.')
-  endif
-  for part in types
-    if emmet#lang#exists(part)
-      let type = part
-      break
-    endif
-    let base = emmet#getBaseType(part)
-    if base !=# ''
-      if flg
-        let type = &filetype
-      else
-        let type = base
+    for part in types
+      if emmet#lang#exists(part)
+        let type = part
+        break
       endif
-      unlet base
-      break
-    endif
-  endfor
+      let base = emmet#getBaseType(part)
+      if base !=# ''
+        if flg
+          let type = &filetype
+        else
+          let type = base
+        endif
+        unlet base
+        break
+      endif
+    endfor
+  endif
   if type ==# 'html'
     let pos = emmet#util#getcurpos()
     let type = synIDattr(synID(pos[1], pos[2], 1), 'name')
@@ -1069,6 +1069,7 @@ let s:emmet_settings = {
 \           "d:n": "display:none;",
 \           "d:b": "display:block;",
 \           "d:f": "display:flex;",
+\           "d:if": "display:inline-flex;",
 \           "d:i": "display:inline;",
 \           "d:ib": "display:inline-block;",
 \           "d:ib+": "display: inline-block;\n*display: inline;\n*zoom: 1;",
@@ -1577,6 +1578,47 @@ let s:emmet_settings = {
 \           "cur:m": "cursor:move;",
 \           "cur:p": "cursor:pointer;",
 \           "cur:t": "cursor:text;",
+\           "fxd": "flex-direction:|;",
+\           "fxd:r": "flex-direction:row;",
+\           "fxd:rr": "flex-direction:row-reverse;",
+\           "fxd:c": "flex-direction:column;",
+\           "fxd:cr": "flex-direction:column-reverse;",
+\           "fxw": "flex-wrap: |;",
+\           "fxw:n": "flex-wrap:nowrap;",
+\           "fxw:w": "flex-wrap:wrap;",
+\           "fxw:wr": "flex-wrap:wrap-reverse;",
+\           "fxf": "flex-flow:|;",
+\           "jc": "justify-content:|;",
+\           "jc:fs": "justify-content:flex-start;",
+\           "jc:fe": "justify-content:flex-end;",
+\           "jc:c": "justify-content:center;",
+\           "jc:sb": "justify-content:space-between;",
+\           "jc:sa": "justify-content:space-around;",
+\           "ai": "align-items:|;",
+\           "ai:fs": "align-items:flex-start;",
+\           "ai:fe": "align-items:flex-end;",
+\           "ai:c": "align-items:center;",
+\           "ai:b": "align-items:baseline;",
+\           "ai:s": "align-items:stretch;",
+\           "ac": "align-content:|;",
+\           "ac:fs": "align-content:flex-start;",
+\           "ac:fe": "align-content:flex-end;",
+\           "ac:c": "align-content:center;",
+\           "ac:sb": "align-content:space-between;",
+\           "ac:sa": "align-content:space-around;",
+\           "ac:s": "align-content:stretch;",
+\           "ord": "order:|;",
+\           "fxg": "flex-grow:|;",
+\           "fxsh": "flex-shrink:|;",
+\           "fxb": "flex-basis:|;",
+\           "fx": "flex:|;",
+\           "as": "align-self:|;",
+\           "as:a": "align-self:auto;",
+\           "as:fs": "align-self:flex-start;",
+\           "as:fe": "align-self:flex-end;",
+\           "as:c": "align-self:center;",
+\           "as:b": "align-self:baseline;",
+\           "as:s": "align-self:stretch;",
 \           "pgbb": "page-break-before:|;",
 \           "pgbb:au": "page-break-before:auto;",
 \           "pgbb:al": "page-break-before:always;",
@@ -1834,6 +1876,11 @@ let s:emmet_settings = {
 \        'inline_elements': 'a,abbr,acronym,applet,b,basefont,bdo,big,br,button,cite,code,del,dfn,em,font,i,iframe,img,input,ins,kbd,label,map,object,q,s,samp,script,small,span,strike,strong,sub,sup,textarea,tt,u,var',
 \        'empty_element_suffix': g:emmet_html5 ? '>' : ' />',
 \        'indent_blockelement': 0,
+\        'block_all_childless': 0,
+\    },
+\    'elm': {
+\        'indentation': '    ',
+\        'extends': 'html',
 \    },
 \    'htmldjango': {
 \        'extends': 'html',
@@ -1845,6 +1892,7 @@ let s:emmet_settings = {
 \        'indentation': '  ',
 \        'extends': 'html',
 \        'snippets': {
+\            '!': "html:5",
 \            '!!!': "doctype html\n",
 \            '!!!4t': "doctype HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\"\n",
 \            '!!!4s': "doctype HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\"\n",

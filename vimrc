@@ -87,34 +87,41 @@
     " Permitir que Vundle administre Vundle (requerido)
     Plugin 'VundleVim/Vundle.vim'
 
-    Plugin 'scrooloose/nerdtree.git'
-    Plugin 'Syntastic'
+    " Completado de cOdigo
     "Plugin 'AutoComplPop'
-    Plugin 'mattn/emmet-vim'
-    Plugin 'matchit.zip'
-    Plugin 'Solarized'
-    Plugin 'jiangmiao/auto-pairs'
-    Plugin 'The-NERD-Commenter'
-    Plugin 'jade.vim'
-    Plugin 'ap/vim-css-color'
-    Plugin 'KabbAmine/vCoolor.vim'
-    Plugin 'Tabular'
-    Plugin 'tpope/vim-surround'
-    Plugin 'vim-airline/vim-airline'
-    Plugin 'vim-airline/vim-airline-themes'
-    Plugin 'Shougo/neocomplete'
-    Plugin 'Shougo/neosnippet'
-    Plugin 'Shougo/neosnippet-snippets'
-    Plugin 'Shougo/neoinclude.vim'
-    Plugin 'Shougo/neco-vim'
-    Plugin 'Shougo/vimproc.vim'
-    Plugin 'osyo-manga/vim-marching'
-    Plugin 'artur-shaik/vim-javacomplete2'
-    Plugin 'davidhalter/jedi-vim'
-    Plugin 'kshenoy/vim-signature'
-    Plugin 'vim-javascript'
-    Plugin 'gregsexton/MatchTag'
-    Plugin 'elzr/vim-json'
+    Plugin 'Shougo/neocomplete'             " Ventana de autocompletado
+    Plugin 'Shougo/neosnippet'              " Gestor de plantillas
+    Plugin 'Shougo/neosnippet-snippets'     " Plantillas de fabrica
+    Plugin 'Shougo/neoinclude.vim'          " Completado de archivos
+    Plugin 'Shougo/neco-vim'                " Completado de vimscript
+    Plugin 'mattn/emmet-vim'                " Completado de html/css
+    Plugin 'Shougo/vimproc.vim'             " Requerimiento del que sigue
+    Plugin 'osyo-manga/vim-marching'        " Completado c/cpp
+    Plugin 'davidhalter/jedi-vim'           " Completado de python
+    Plugin 'artur-shaik/vim-javacomplete2'  " Completado de java
+
+    Plugin 'Syntastic'                      " RevisiOn de errores
+
+    " Mejoras en la ediciOn y movimiento
+    Plugin 'scrooloose/nerdtree.git'        " Arbol de directorios
+    Plugin 'kshenoy/vim-signature'          " Marcas sobre lIneas
+    Plugin 'matchit.zip'                    " Moverse entre etiquetas html
+    Plugin 'PeterRincker/vim-argumentative' " Moverse entre argumentos
+    Plugin 'jiangmiao/auto-pairs'           " Completar pares de sImbolos
+    Plugin 'tpope/vim-surround'             " Encerrar / liberar secciones
+    Plugin 'The-NERD-Commenter'             " Comentar / descomentar
+    Plugin 'Tabular'                        " Alinear cOdigo
+    Plugin 'KabbAmine/vCoolor.vim'          " InserciOn de valores rgb
+
+    " Estilo visual y reconocimiento de sintaxis
+    Plugin 'Solarized'                      " Tema de color
+    Plugin 'vim-airline/vim-airline'        " Barra inferior
+    Plugin 'vim-airline/vim-airline-themes' " Temas de color para barra
+    Plugin 'gregsexton/MatchTag'            " Iluminar etiqueta hermana
+    Plugin 'ap/vim-css-color'               " Colorear valores rgb
+    Plugin 'vim-javascript'                 " Sintaxis de javascript
+    Plugin 'jade.vim'                       " Sintaxis de pug (antes jade)
+    Plugin 'elzr/vim-json'                  " Sintaxis de json
     "Plugin 'https://github.com/Valloric/MatchTagAlways.git'
 
     "Plugin 'https://github.com/shinokada/SWTC.vim.git'
@@ -152,11 +159,11 @@
         let g:neocomplete#force_omni_input_patterns = {}
     endif
 
-    let g:neocomplete#force_omni_input_patterns.cpp =
-    \       '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*)'
+    "let g:neocomplete#force_omni_input_patterns.cpp =
+    "\       '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*)'
 
-    let g:neocomplete#force_omni_input_patterns.c =
-    \       '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*)'
+    "let g:neocomplete#force_omni_input_patterns.c =
+    "\       '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*)'
 
     "let g:neocomplete#force_omni_input_patterns.python =
     "\ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
@@ -302,6 +309,19 @@
         inoremap <Down> <nop>
         inoremap <Left> <nop>
         inoremap <Right> <nop>
+    endfunction
+
+    function! ModoWeb()
+        set nolist
+        imap <expr><Tab> neosnippet#expandable_or_jumpable() ?
+                \ "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+        smap <expr><Tab> neosnippet#expandable_or_jumpable() ?
+                \ "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+        xmap <expr><Tab> neosnippet#expandable_or_jumpable() ?
+                \ "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+
+        imap <Up>    <C-p>
+        imap <Down>  <C-n>
     endfunction
 
 " }
