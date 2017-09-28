@@ -343,7 +343,8 @@
     augroup fileconfig
         autocmd!
         autocmd BufEnter *.jade set filetype=jade
-        autocmd Filetype html NoMatchParen
+        "autocmd Filetype html NoMatchParen
+        autocmd BufEnter *.h set filetype=c
         autocmd Filetype html,jade,pug,htmldjango,css,scss,sass,php imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
         autocmd Filetype html,*.jade,python,php set ts=2 sw=2 sts=2
     augroup END
