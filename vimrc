@@ -150,6 +150,7 @@
     let g:marching_clang_command = "clang"
 
     let g:marching#clang_command#options = {
+    \       "c"   : "-std=gnu11",
     \       "cpp" : "-std=gnu++1y"
     \   }
 
@@ -215,8 +216,8 @@
 
     " ConfiguraciOn de airline (La barra de informaciOn de abajo)
     set laststatus=2
-    let g:airline#extensions#tabline#enable = 1
-    let g:airline_theme='alduin'
+    let g:airline_theme='angr'
+    let g:airline#extensions#tabline#enabled = 1
 
     if 1 < 0
         let g:airline_powerline_fonts = 1
@@ -324,6 +325,13 @@
         imap <Down>  <C-n>
     endfunction
 
+    function! Ejecutar()
+        if len(getqflist()) == 0
+            !./a.out
+        else
+            copen
+        endif
+    endfunction
 " }
 
 " Comandos automAticos {
@@ -403,7 +411,7 @@
     " Debug en lenguajes compilados
     map <F7> :cprevious<Return>
     map <F8> :cnext<Return>
-    map <F9> :make<Return>
+    map <F9> :make<Return>:call Ejecutar()<Return>
 
     " Arbol de directorios
     map <F12> :NERDTree<Return>
