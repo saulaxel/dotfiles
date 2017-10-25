@@ -104,12 +104,22 @@
 
     " Mejoras en la ediciOn y movimiento
     Plugin 'scrooloose/nerdtree.git'        " Arbol de directorios
+    Plugin 'majutsushi/tagbar'              " Arbol de tags
     Plugin 'kshenoy/vim-signature'          " Marcas sobre lIneas
     Plugin 'matchit.zip'                    " Moverse entre etiquetas html
-    Plugin 'PeterRincker/vim-argumentative' " Moverse entre argumentos
+    Plugin 'PeterRincker/vim-argumentative' " Objeto de texto 'argumento'
+    Plugin 'vim-indent-object'              " Objeto de texto 'indentado'
+    Plugin 'kana/vim-textobj-user'          " Definir objetos de texto
+    Plugin 'kana/vim-textobj-line'          " Objeto de texto 'lInea'
+    Plugin 'kana/vim-textobj-function'      " Objeto de texto 'funciOn'
+    Plugin 'glts/vim-textobj-comment'       " Objeto de texto 'comentario'
+    Plugin 'zandrmartin/vim-textobj-blanklines' " Bloques en blanco
     Plugin 'jiangmiao/auto-pairs'           " Completar pares de sImbolos
     Plugin 'tpope/vim-surround'             " Encerrar / liberar secciones
     Plugin 'The-NERD-Commenter'             " Comentar / descomentar
+    Plugin 'tpope/vim-commentary'           " Comentar / descomentar
+    Plugin 'ReplaceWithRegister'            " Manejo de registros
+    Plugin 'christoomey/vim-system-copy'    " Copiar a la papelera del sistema"
     Plugin 'Tabular'                        " Alinear cOdigo
     Plugin 'KabbAmine/vCoolor.vim'          " InserciOn de valores rgb
 
@@ -405,16 +415,14 @@
     cnoremap WW W
     cnoremap QQ Q
 
-    " Teclas para activar y desactivar numeraciOn relativa
-    map <F5> :set relativenumber!<Return>
-
     " Debug en lenguajes compilados
     map <F7> :cprevious<Return>
     map <F8> :cnext<Return>
     map <F9> :make<Return>:call Ejecutar()<Return>
 
-    " Arbol de directorios
-    map <F12> :NERDTree<Return>
+    " Arbol de directorios y de tags
+    map <F5> :NERDTreeToggle<Return>
+    map <F6> :TagbarToggle<Return>
 
 " }
 

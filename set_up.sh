@@ -64,17 +64,14 @@ fi;
 vim +PluginInstall +qall
 
 cp ./vim/snips/emmet.vim ~/.vim/bundle/emmet-vim/autoload
-cp ./vim/snips/NERD_commenter.vim ~/.vim/bundle/The-NERD-Commenter/plugin
 cp ./vim/snips/*.snip ~/.vim/bundle/neosnippet-snippets/neosnippets
 cp ./vim/colors/solarized.vim ~/.vim/colors
 
-if [ ! -d ~/vimproc ];then
-    git clone https://github.com/Shougo/vimproc.vim ~/vimproc
-    cd ~/vimproc
-    make
-    cp -r autoload/* lib/* plugin/* ~/.vim
-
+if [ ! -d ~/vimproc ]; then
     sudo $pkg_man clang
-fi;
+    git clone https://github.com/Shougo/vimproc.vim ~/vimproc
+
+    vim +VimProcInstall +qall
+fi
 
 exit 0;
