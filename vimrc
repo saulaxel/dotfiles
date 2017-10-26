@@ -8,7 +8,7 @@
     set number
     set linebreak
     set showbreak=...\              " Se muestran 3 puntos para simbolizar continuaciOn
-    if has("patch-7.4.354")
+    if has("patch-7.4.354") || has('nvim')
         set breakindent
     endif
     set textwidth=100
@@ -44,63 +44,39 @@
     set splitbelow
 " }
 
-" Estilo visual {
-    " ConfiguraciOn de la paleta de colores de solarized
-    syntax enable
-    if has('gui_running')
-        set background=light
-    else
-        set background=dark
-    endif
-    set t_Co=16
-    let g:solarized_termcolors=16
-    colorscheme solarized
-
-    " Fin de la configuraciOn de la paleta de colores
-
-    " Resaltado del elemento hermano
-    highlight MatchParen ctermbg=7 ctermfg=8
-
-    " Resaltado de la lInea actual
-    highlight CursorLine ctermbg=white
-    set cursorline
-    highlight CursorColumn ctermbg=white
-    set cursorcolumn
-
-    " Resaltado de la columna no 80 para usarla como guia
-    highlight ColorColumn ctermbg=cyan
-    set colorcolumn=80
-
-    " Colores para las tabulaciones
-    highlight TabLine ctermfg=blue ctermbg=gray
-    highlight TabLineSel ctermfg=black ctermbg=darkGray
-
-    " Colores para el modo visual
-    highlight Visual ctermfg=7 ctermbg=0
-" }
-
 " Plugins y sus configuraciones {
     " Fijar la ruta en tiempo de ejecuciOn para incluir Vundle e inicializarlo
     set rtp+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
+
 
     " Permitir que Vundle administre Vundle (requerido)
     Plugin 'VundleVim/Vundle.vim'
 
     " Completado de cOdigo
     "Plugin 'AutoComplPop'
-    Plugin 'Shougo/neocomplete'             " Ventana de autocompletado
+    if has('nvim')                          " Ventana de autocompletado
+        Plugin 'Shougo/deoplete.nvim'
+    else
+        Plugin 'Shougo/neocomplete'
+    endif
+
     Plugin 'Shougo/neosnippet'              " Gestor de plantillas
     Plugin 'Shougo/neosnippet-snippets'     " Plantillas de fabrica
     Plugin 'Shougo/neoinclude.vim'          " Completado de archivos
     Plugin 'Shougo/neco-vim'                " Completado de vimscript
+    Plugin 'Shougo/vimproc.vim'             " Requerimiento del que sigue
     Plugin 'mattn/emmet-vim'                " Completado de html/css
     Plugin 'Shougo/vimproc.vim'             " Requerimiento del que sigue
     Plugin 'osyo-manga/vim-marching'        " Completado c/cpp
     Plugin 'davidhalter/jedi-vim'           " Completado de python
     Plugin 'artur-shaik/vim-javacomplete2'  " Completado de java
 
-    Plugin 'Syntastic'                      " RevisiOn de errores
+    if has('nvim') || (v:version >= 800)     " RevisiOn de errores
+        Plugin 'w0rp/ale'
+    else
+        Plugin 'Syntastic'
+    endif
 
     " Mejoras en la ediciOn y movimiento
     Plugin 'scrooloose/nerdtree.git'        " Arbol de directorios
@@ -125,6 +101,7 @@
 
     " Estilo visual y reconocimiento de sintaxis
     Plugin 'Solarized'                      " Tema de color
+    Plugin 'rafi/awesome-vim-colorschemes'
     Plugin 'vim-airline/vim-airline'        " Barra inferior
     Plugin 'vim-airline/vim-airline-themes' " Temas de color para barra
     Plugin 'gregsexton/MatchTag'            " Iluminar etiqueta hermana
@@ -152,7 +129,15 @@
                 \ '¡' : '!'
                 \}
 
-    " ConfiguraciOn de neocomplete
+    " ConfiguraciOn de ale
+    if has('nvim')
+        let g:ale_set_quickfix = 1
+    endif
+
+    " ConfiguraciOn de neocomplete-deoplete
+    if has('nvim')
+        let g:deoplete#enable_at_startup = 1
+    endif
     highlight Pmenu ctermbg=7
     highlight PmenuSel ctermbg=8
 
@@ -164,7 +149,9 @@
     \       "cpp" : "-std=gnu++1y"
     \   }
 
-    let g:marching_enable_neocomplete = 1
+    if !has('nvim')
+        let g:marching_enable_neocomplete = 1
+    endif
 
     if !exists('g:neocomplete#force_omni_input_patterns')
         let g:neocomplete#force_omni_input_patterns = {}
@@ -360,6 +347,7 @@
     " Definiendo configuraciOnes especificas para cada tipo de archivos
     augroup fileconfig
         autocmd!
+        autocmd BufEnter *.nasm set filetype=nasm
         autocmd BufEnter *.jade set filetype=jade
         "autocmd Filetype html NoMatchParen
         autocmd BufEnter *.h set filetype=c
@@ -424,6 +412,37 @@
     map <F5> :NERDTreeToggle<Return>
     map <F6> :TagbarToggle<Return>
 
+" }
+
+" Estilo visual {
+    " ConfiguraciOn de la paleta de colores de solarized
+    syntax enable
+    set background=dark
+    set t_Co=16
+    let g:solarized_termcolors=16
+    colorscheme tender
+
+    " Fin de la configuraciOn de la paleta de colores
+
+    " Resaltado del elemento hermano
+    highlight MatchParen ctermbg=7 ctermfg=8
+
+    " Resaltado de la lInea actual
+    highlight CursorLine ctermbg=white
+    set cursorline
+    highlight CursorColumn ctermbg=white
+    set cursorcolumn
+
+    " Resaltado de la columna no 80 para usarla como guia
+    highlight ColorColumn ctermbg=cyan
+    set colorcolumn=80
+
+    " Colores para las tabulaciones
+    highlight TabLine ctermfg=blue ctermbg=gray
+    highlight TabLineSel ctermfg=black ctermbg=darkGray
+
+    " Colores para el modo visual
+    highlight Visual ctermfg=7 ctermbg=0
 " }
 
 " Cosas inutiles {
