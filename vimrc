@@ -65,7 +65,6 @@
     Plugin 'Shougo/neosnippet-snippets'     " Plantillas de fabrica
     Plugin 'Shougo/neoinclude.vim'          " Completado de archivos
     Plugin 'Shougo/neco-vim'                " Completado de vimscript
-    Plugin 'Shougo/vimproc.vim'             " Requerimiento del que sigue
     Plugin 'mattn/emmet-vim'                " Completado de html/css
     Plugin 'Shougo/vimproc.vim'             " Requerimiento del que sigue
     Plugin 'osyo-manga/vim-marching'        " Completado c/cpp
