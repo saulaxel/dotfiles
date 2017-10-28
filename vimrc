@@ -347,11 +347,11 @@
     augroup fileconfig
         autocmd!
         autocmd BufEnter *.nasm set filetype=nasm
-        autocmd BufEnter *.jade set filetype=jade
+        autocmd BufEnter *.jade set filetype=pug
         "autocmd Filetype html NoMatchParen
         autocmd BufEnter *.h set filetype=c
         autocmd Filetype html,jade,pug,htmldjango,css,scss,sass,php imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-        autocmd Filetype html,*.jade,python,php set ts=2 sw=2 sts=2
+        autocmd Filetype html,pug,php,css,scss,sass set ts=2 sw=2 sts=2
     augroup END
 " }
 
