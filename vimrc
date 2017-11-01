@@ -58,7 +58,13 @@
     if has('nvim')                          " Ventana de autocompletado
         Plugin 'Shougo/deoplete.nvim'
     else
-        Plugin 'Shougo/neocomplete'
+        if has('lua')
+            Plugin 'Shougo/neocomplete'
+        elseif has(v:version >= 800)
+            Plugin 'Shougo/deoplete.nvim'
+            Plugin 'roxma/nvim-yard'
+            Plugin 'roxma/vim-hug-neovim-rpc'
+        endif
     endif
 
     Plugin 'Shougo/neosnippet'              " Gestor de plantillas
@@ -71,7 +77,7 @@
     Plugin 'davidhalter/jedi-vim'           " Completado de python
     Plugin 'artur-shaik/vim-javacomplete2'  " Completado de java
 
-    if has('nvim') || (v:version >= 800)     " RevisiOn de errores
+    if has('nvim') || (v:version >= 800)    " RevisiOn de errores
         Plugin 'w0rp/ale'
     else
         Plugin 'Syntastic'
@@ -100,14 +106,13 @@
 
     " Estilo visual y reconocimiento de sintaxis
     Plugin 'Solarized'                      " Tema de color
-    Plugin 'rafi/awesome-vim-colorschemes'
+    Plugin 'rafi/awesome-vim-colorschemes'  " MAs temas de color
     Plugin 'vim-airline/vim-airline'        " Barra inferior
     Plugin 'vim-airline/vim-airline-themes' " Temas de color para barra
     Plugin 'gregsexton/MatchTag'            " Iluminar etiqueta hermana
     Plugin 'ap/vim-css-color'               " Colorear valores rgb
-    Plugin 'vim-javascript'                 " Sintaxis de javascript
-    Plugin 'jade.vim'                       " Sintaxis de pug (antes jade)
-    Plugin 'elzr/vim-json'                  " Sintaxis de json
+    Plugin 'sheerun/vim-polyglot'           " Sintaxis de varios lenguajes
+    Plugin 'Beerstorm/vim-brainfuck'        " Sintaxis de brainfuck
     "Plugin 'https://github.com/Valloric/MatchTagAlways.git'
 
     "Plugin 'https://github.com/shinokada/SWTC.vim.git'
