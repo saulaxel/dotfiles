@@ -6,6 +6,7 @@
 
     " ConfiguraciOn texto
     set number
+    set relativenumber " NumeraciOn de lIneas desde tu posiciOn actual
     set linebreak
     set showbreak=...\              " Se muestran 3 puntos para simbolizar continuaciOn
     if has("patch-7.4.354") || has('nvim')
@@ -16,14 +17,15 @@
     set visualbell
     set ruler
 
-    " NumeraciOn de lIneas desde tu posiciOn actual
-    set relativenumber
-
     " ConfiguraciOn para la busqueda
     set hlsearch
     set smartcase
     set ignorecase
     set incsearch
+
+    " Ex menU
+    "set path+=**       " BUsqueda recursiva de archivos
+    set wildmenu
 
     " ConfiguraciOn para el indentado automAtico
     set autoindent
@@ -38,6 +40,8 @@
     set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮
 
     " Extras
+    set spelllang=es
+    set spell
     set undolevels=1000
     set backspace=indent,eol,start
     set splitright
@@ -142,8 +146,8 @@
     if has('nvim')
         let g:deoplete#enable_at_startup = 1
     endif
-    highlight Pmenu ctermbg=7
-    highlight PmenuSel ctermbg=8
+    "highlight Pmenu ctermbg=7
+    "highlight PmenuSel ctermbg=8
 
     " ConfiguraciOn de vim-marching
     let g:marching_clang_command = "clang"
@@ -295,9 +299,9 @@
 " Funciones {
     function! VerMarcas()
         syntax enable
-        highlight CursorLine ctermbg=white
-        highlight CursorColumn ctermbg=white
-        highlight ColorColumn ctermbg=cyan
+        "highlight CursorLine ctermbg=black
+        "highlight CursorColumn ctermbg=black
+        "highlight ColorColumn ctermbg=cyan
     endfunction
 
     function! DoblarFunciones()
@@ -327,8 +331,12 @@
     endfunction
 
     function! Ejecutar()
-        if len(getqflist()) == 0
-            !./a.out
+        if len(getqflist()) == 0        " Run the program
+            if (&filetype == 'c' || &filetype == 'cpp')
+                !./%:t:r
+            elseif (&filetype == 'java')
+                !java %:t:r
+            endif
         else
             copen
         endif
@@ -351,12 +359,11 @@
     " Definiendo configuraciOnes especificas para cada tipo de archivos
     augroup fileconfig
         autocmd!
-        autocmd BufEnter *.nasm set filetype=nasm
-        autocmd BufEnter *.jade set filetype=pug
-        "autocmd Filetype html NoMatchParen
-        autocmd BufEnter *.h set filetype=c
-        autocmd Filetype html,jade,pug,htmldjango,css,scss,sass,php imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-        autocmd Filetype html,pug,php,css,scss,sass set ts=2 sw=2 sts=2
+        autocmd BufEnter *.nasm setlocal filetype=nasm
+        autocmd BufEnter *.jade setlocal filetype=pug
+        autocmd BufEnter *.h setlocal filetype=c
+        autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+        autocmd Filetype html,pug,php setlocal ts=2 sw=2 sts=2
     augroup END
 " }
 
@@ -421,20 +428,20 @@
 " Estilo visual {
     " ConfiguraciOn de la paleta de colores de solarized
     syntax enable
-    set background=dark
-    set t_Co=16
+    "set background=dark
+    "set t_Co=16
     let g:solarized_termcolors=16
     colorscheme tender
 
     " Fin de la configuraciOn de la paleta de colores
 
     " Resaltado del elemento hermano
-    highlight MatchParen ctermbg=7 ctermfg=8
+    "highlight MatchParen ctermbg=7 ctermfg=8
 
     " Resaltado de la lInea actual
-    highlight CursorLine ctermbg=white
+    "highlight CursorLine ctermbg=black
     set cursorline
-    highlight CursorColumn ctermbg=white
+    "highlight CursorColumn ctermbg=black
     set cursorcolumn
 
     " Resaltado de la columna no 80 para usarla como guia
