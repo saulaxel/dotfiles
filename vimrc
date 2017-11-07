@@ -347,8 +347,8 @@
     " Definiendo el make
     augroup makecomnads
         autocmd!
-        autocmd Filetype c          set makeprg=gcc\ %\ -std=c11\ -o\ %:t:r -Wall -Wextra
-        autocmd Filetype cpp        set makeprg=g++\ %\ -std=c++11\ -o\ %:t:r -Wall -Wextra
+        autocmd Filetype c          set makeprg=gcc\ %\ -std=c11\ -o\ %:t:r\ -Wall\ -Wextra
+        autocmd Filetype cpp        set makeprg=g++\ %\ -std=c++11\ -o\ %:t:r\ -Wall\ -Wextra
         autocmd Filetype java       set makeprg=javac\ %
         autocmd Filetype html       set makeprg=xdg-open\ %
         autocmd Filetype python     set makeprg=python\ %
