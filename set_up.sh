@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # Process args
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -47,12 +46,13 @@ elif [ "$(uname -a | grep -i 'arch')" ]; then
     pkg_man="pacman -S"
 elif [ "$(uname -a | grep -i 'fedora')" ]; then
     pkg_man="yum install"
+elif [ "$(uname -a | grep -i 'linux')" ]; then
+    pkg_man="apt-get install"
 else
     pkg_man="choco install"
 fi
 
 # Set the shell config file
-
 if [ $(echo $SHELL | grep -i bash) ]; then
     shell=$HOME"/.bashrc"
 elif [ $(echo $SHELL | grep -i zsh ) ]; then
@@ -67,6 +67,10 @@ fi
 if [ -n "$IVIM" ]; then
     $pkg_man vim
     $pkg_man vim-nox
+fi
+
+if [ -n "$IVIM" ]; then
+    $pkg_man neovim
 fi
 
 if [ -n "$IRUBY" ]; then
