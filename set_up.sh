@@ -58,6 +58,10 @@ elif [ $(echo $SHELL | grep -i zsh ) ]; then
     shell=$HOME"/.zshrc"
 fi
 
+if ! hash git 2>/dev/null; then
+    $pkg_man git
+fi
+
 # Install dependencies
 if [ -n "$IVIM" ]; then
     $pkg_man vim
