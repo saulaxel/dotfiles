@@ -32,6 +32,7 @@ while [[ $# -gt 0 ]]; do
             INVIM=1
             IRUBY=1
             ITMUX=1
+            ICLANG=1
             BACKUP=1
             ;;
         *)
