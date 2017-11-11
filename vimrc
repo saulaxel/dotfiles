@@ -53,7 +53,8 @@
     set splitright
     set splitbelow
     if has('conceal')
-        set conceallevel=2 concealcursor=niv
+        set conceallevel=2
+        set concealcursor=
     endif
 " }
 
@@ -128,6 +129,12 @@
     "Plugin 'mattn/webapi-vim'
     Plugin 'sheerun/vim-polyglot'           " Sintaxis de varios lenguajes
     Plugin 'Beerstorm/vim-brainfuck'        " Sintaxis de brainfuck
+    Plugin 'khzaw/vim-conceal'
+    Plugin 'KeitaNakamura/tex-conceal.vim'
+    Plugin 'sethwoodworth/vim-cute-python'
+    Plugin 'discoloda/c-conceal'
+    Plugin 'dkinzer/vim-schemer'
+    Plugin 'calebsmith/vim-lambdify'
 
     " Otros plugins interesantes
     "Plugin 'https://github.com/shinokada/SWTC.vim.git'
