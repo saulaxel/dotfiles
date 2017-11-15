@@ -25,7 +25,7 @@
 
     " Ex menU
     "set path+=**       " BUsqueda recursiva de archivos
-    set wildmenu
+    set wildmenu        " Se pueden visualizar las opciones con tab
 
     " ConfiguraciOn para el indentado automAtico
     set autoindent
@@ -53,7 +53,6 @@
     set splitright
     set splitbelow
     if has('conceal')
-        set conceallevel=2
         set concealcursor=
     endif
 " }
@@ -66,7 +65,7 @@
     " Permitir que Vundle administre Vundle (requerido)
     Plugin 'VundleVim/Vundle.vim'
 
-    " Completado de cOdigo
+    " Completado y revisiOn de cOdigo
     if has('nvim')                          " Ventana de auto-completado
         Plugin 'Shougo/deoplete.nvim'
     else
@@ -78,7 +77,6 @@
             Plugin 'Shougo/neocomplete'
         endif
     endif
-
     Plugin 'Shougo/neosnippet'              " Gestor de plantillas
     Plugin 'Shougo/neosnippet-snippets'     " Plantillas de fabrica
     Plugin 'Shougo/neoinclude.vim'          " Completado de archivos
@@ -88,7 +86,6 @@
     Plugin 'osyo-manga/vim-marching'        " Completado c/cpp
     Plugin 'artur-shaik/vim-javacomplete2'  " Completado de java
     Plugin 'davidhalter/jedi-vim'           " Completado de python
-
     if has('nvim') || (v:version >= 800)    " RevisiOn de errores
         Plugin 'w0rp/ale'
     else
@@ -129,15 +126,15 @@
     "Plugin 'mattn/webapi-vim'
     Plugin 'sheerun/vim-polyglot'           " Sintaxis de varios lenguajes
     Plugin 'Beerstorm/vim-brainfuck'        " Sintaxis de brainfuck
-    Plugin 'khzaw/vim-conceal'
-    Plugin 'KeitaNakamura/tex-conceal.vim'
-    Plugin 'sethwoodworth/vim-cute-python'
-    Plugin 'discoloda/c-conceal'
-    Plugin 'dkinzer/vim-schemer'
-    Plugin 'calebsmith/vim-lambdify'
+    Plugin 'khzaw/vim-conceal'              " <-+
+    Plugin 'KeitaNakamura/tex-conceal.vim'  " <-+-Enmascaramiento de
+    Plugin 'sethwoodworth/vim-cute-python'  " <-+-palabras clave con
+    Plugin 'discoloda/c-conceal'            " <-+-sImbolos unicode
+    Plugin 'dkinzer/vim-schemer'            " <-+-
+    Plugin 'calebsmith/vim-lambdify'        " <-+
 
     " Otros plugins interesantes
-    "Plugin 'https://github.com/shinokada/SWTC.vim.git'
+    "Plugin 'thoughtstream/Damian-Conway-s-Vim-Setup/blob/master/plugin/SWTC.vim'
     "Plugin 'sokoban.vim'
     "Plugin 'johngrib/vim-game-code-break'
 
@@ -388,12 +385,12 @@
     endif
 
     " Abrir fAcilmente el Arbol de directorios y de etiquetas
-    map <F5> :NERDTreeToggle<Return>
-    map <F6> :TagbarToggle<Return>
+    noremap <F5> :NERDTreeToggle<Return>
+    noremap <F6> :TagbarToggle<Return>
 
     " CorrecciOn de errores en el mismo archivo
-    map <F9> :make<Return>:call Ejecutar()<Return>
-"" }
+    noremap <F9> :make<Return>:call Ejecutar()<Return>
+" }
 
 " Tema de color {
     " ConfiguraciOn de la paleta de colores
