@@ -50,7 +50,14 @@ snippet while
 snippet     for
 options     head
 abbr        for () {}
-    for (${1:int }${2:i} = ${3:0}; $2${4}; $2++) {
+    for (${1:int i = 0}; ${2: i < 10}; ${3:++i}) {
+        ${0:#:TARGET}
+    }
+
+snippet     fort
+options     head
+abbr        for () {}
+    for (${1:int }${2:i} = ${3:0}; $2 < ${4}; ++$2) {
         ${0:#:TARGET}
     }
 
@@ -68,7 +75,7 @@ snippet switch
 snippet case
     case ${1}:
         ${2:TARGET}
-    ${0}
+        break;
 
 snippet br
     break;
@@ -171,12 +178,12 @@ alias   basic1
 snippet println
 alias   pl
 options word
-    System.out.println(${1})${0}
+    System.out.println(${1})
 
 snippet print
 alias   p
 options word
-    System.out.print(${1})${0}
+    System.out.print(${1});
 
 #javadoc
 snippet comment

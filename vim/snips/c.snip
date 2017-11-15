@@ -3,7 +3,8 @@ options     head
 abbr        main()
 	#include <stdio.h>${1}
 
-	int main(void) {
+	int main(void)
+	{
 		${2}
 		return 0;
 	}
@@ -14,7 +15,8 @@ abbr        int main(...)
 	#include <stdio.h>
 	#include <stdlib.h>${1}
 	
-	int main(int argc, char ** argv) {
+	int main(int argc, char ** argv)
+	{
 		${0}
 
 		return EXIT_SUCCESS;
@@ -29,7 +31,8 @@ abbr        int main(...) { EXIT... }
 	void display_usage(void);
 	void print_error(const char *);
 	
-	int main(int argc, char **argv) {
+	int main(int argc, char **argv)
+	{
 		if( argc < ${2:2} ) {
 			display_usage();
 			return EXIT_SUCCESS;
@@ -39,12 +42,14 @@ abbr        int main(...) { EXIT... }
 		return EXIT_SUCCESS;
 	}
 	
-	void display_usage(void) {
+	void display_usage(void)
+	{
 		puts("${3}");
 		return;
 	}
 	
-	void print_error(const char * message) {
+	void print_error(const char * message)
+	{
 		fprintf(stderr, "%s", message);
 
 		exit(EXIT_FAILURE);
@@ -58,18 +63,18 @@ options     head
 abbr        if () {}
     if (${1:#:condition}) {
         ${2:TARGET}
-    }${0}
+    }
 
 snippet     else
 abbr        else {}
     else {
         ${1:TARGET}
-    }${0}
+    }
 
 snippet elif
     else if (${1:#:condition}) {
         ${2:TARGET}
-    }${0}
+    }
 
 snippet     ifel
 options     head
@@ -83,14 +88,14 @@ abbr        if () {} else {}
 snippet     for
 options     head
 abbr        for () {}
-    for (${1:int }${2:i} = ${3:0}; $2 < ${4}; $2++) {
+    for (${1:int i = 0}; ${2: i < 10}; ${3:++i}) {
         ${0:#:TARGET}
     }
 
 snippet     fort
 options     head
 abbr        for () {}
-    for (${1:int }${2:i} = ${3:0}; $2 < ${4}; $2++) {
+    for (${1:int }${2:i} = ${3:0}; $2 < ${4}; ++$2) {
         ${0:#:TARGET}
     }
 
@@ -126,13 +131,14 @@ options     head
 abbr        case: break;
 	case ${1}:
 		${2}
-		break;${3}
+		break;
 
 snippet     function
 options     head
 alias       func
 abbr        func() {}
-    ${1:void} ${2:#:func_name}(${3:#:args}) {
+    ${1:void} ${2:#:func_name}(${3:#:args})
+    {
         ${0:TARGET}
     }
 
@@ -160,7 +166,8 @@ abbr        enum {}
 # hard-tab is necessary; C indent doesn't support this.
 snippet main1
 options head
-	int main(void) {
+	int main(void)
+	{
 		${0:TARGET}
 		return 0;
 	}
@@ -168,7 +175,8 @@ options head
 
 snippet main2
 options     head
-	int main(int argc, char *argv[]) {
+	int main(int argc, char *argv[])
+	{
 		${0:TARGET}
 		return 0;
 	}
@@ -177,13 +185,13 @@ options     head
 snippet inc
 options     head
 alias   #inc, #include
-    #include <${1:stdio}.h>${0}
+    #include <${1:stdio}.h>
 
 # #include "..."
 snippet inc2
 options     head
 alias   #inc2, #include2
-    #include "${1}.h"${0}
+    #include "${1}.h"
 
 snippet ifndef
 options     head
@@ -248,7 +256,7 @@ options     head
 
 snippet fopen
 abbr fopen("...", "...");
-    fopen("${1:PATH}", "${2:MODE}")${3}
+    fopen("${1:PATH}", "${2:MODE}")
 
 snippet fgets
 abbr fgets(row, length, file);
