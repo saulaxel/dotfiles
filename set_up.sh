@@ -102,7 +102,7 @@ if [ -n "$INVIM" ]; then
     if [ ! -d ~/.config/nvim ]; then
         mkdir -p ~/.config/nvim
     fi
-    ln -n .vimrc ~/.config/nvim/init.vim
+    ln -n ~/.vimrc ~/.config/nvim/init.vim
 fi
 
 if [ "$(cat $shell | grep "BASH_CONFIG_INCLUDED")" == "" ]; then
