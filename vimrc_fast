@@ -1,9 +1,39 @@
 syntax on
-set fenc=utf8 nocp ai si sta nu rnu ru lbr sbr=...\  bri tw=100 hls scs is ts=4 sts=4 sw=4 et sm list lcs=tab:▸\ ,trail:⋅,extends:❯,precedes:❮ ul=1000 bs=indent,eol,start spr sb
+set fenc=utf8 nocp ai si sta nu rnu ru lbr sbr=...\  tw=100 hls scs is ts=4 sts=4 sw=4 et sm list lcs=tab:▸\ ,trail:⋅,extends:❯,precedes:❮ ul=1000 bs=indent,eol,start spr sb
+if has("patch-7.4.354") || has('nvim')
+    set bri
+endif
+if has('wildmenu')
+    set wmnu
+endif
+if has('conceal')
+    set concealcursor=
+endif
+if has('spell')
+    set spell
+endif
+if 0
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
+    Plugin 'VundleVim/Vundle.vim'
+    Plugin 'scrooloose/nerdtree.git'
+    Plugin 'PeterRincker/vim-argumentative'
+    Plugin 'vim-indent-object'
+    Plugin 'kana/vim-textobj-user'
+    Plugin 'kana/vim-textobj-line'
+    Plugin 'kana/vim-textobj-function'
+    Plugin 'kana/vim-textobj-entire'
+    Plugin 'jiangmiao/auto-pairs'
+    Plugin 'tpope/vim-surround'
+    Plugin 'tpope/vim-commentary'
+    Plugin 'tpope/vim-repeat'
+    call vundle#end()
+filetype plugin indent on
+endif
 aug makecomnads
 au!
-au Filetype c set makeprg=gcc\ %
-au Filetype cpp set makeprg=g++\ %
+au Filetype c set makeprg=gcc\ % -Wall
+au Filetype cpp set makeprg=g++\ % -Wall
 au Filetype java set makeprg=javac\ %
 au Filetype html set makeprg=xdg-open\ %
 au Filetype python set makeprg=python\ %
