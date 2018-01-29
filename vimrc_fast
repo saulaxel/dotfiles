@@ -1,7 +1,9 @@
 " ConfiguraciOn vim
 set nocompatible
 scriptencoding utf-8
-filetype off
+if 0
+    filetype off
+endif
 
 " ConfiguraciOn texto y navegaciOn
 set number
