@@ -4,7 +4,7 @@
     scriptencoding utf-8
     filetype off
 
-    " ConfiguraciOn texto
+    " ConfiguraciOn texto y navegaciOn
     set number
     set relativenumber " NumeraciOn de lIneas desde tu posiciOn actual
     set linebreak
@@ -14,6 +14,7 @@
     endif
     set textwidth=100
     set showmatch
+    set matchpairs+=¡:!
     set visualbell
     set ruler
 
@@ -52,6 +53,7 @@
     set backspace=indent,eol,start
     set splitright
     set splitbelow
+    set nrformats+=alpha
     if has('conceal')
         set concealcursor=
     endif
@@ -85,6 +87,7 @@
     Plugin 'Shougo/vimproc.vim'             " Requerimiento del que sigue
     Plugin 'osyo-manga/vim-marching'        " Completado c/cpp
     Plugin 'artur-shaik/vim-javacomplete2'  " Completado de java
+    Plugin 'jcommenter.vim'                 " Javadoc
     Plugin 'davidhalter/jedi-vim'           " Completado de python
     if has('nvim') || (v:version >= 800)    " RevisiOn de errores
         Plugin 'w0rp/ale'
@@ -180,6 +183,9 @@
     let g:jedi#smart_auto_mappings = 0
     let g:jedi#force_py_version = 3
 
+    " ConfiguraciOn de jcommenter
+    nnoremap <leader>jd :call JCommentWriter()<Return>
+
     " ConfiguraciOn de easy-align
     xmap ga <Plug>(EasyAlign)
     nmap ga <Plug>(EasyAlign)
@@ -187,11 +193,11 @@
     " ConfiguraciOn de ale / Syntastic
     if has('nvim')
         let g:ale_set_quickfix = 1
-        let g:ale_cpp_clangcheck_options = "-extra-arg='-std=c++14"
+        let g:ale_cpp_clangcheck_options = "-extra-arg='-std=c++17"
         let g:ale_c_gcc_options = "-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra"
         let g:ale_c_clang_options = "-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra"
     else
-        let g:syntastic_cpp_compiler_options = '-std=c++14'
+        let g:syntastic_cpp_compiler_options = '-std=c++17'
         let g:syntastic_c_compiler_options = '-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra'
     endif
 
@@ -305,7 +311,7 @@
     augroup makecomnads
         autocmd!
         autocmd Filetype c          setlocal makeprg=gcc\ `pkg-config\ --cflags\ gtk+-3.0`\ %\ -std=c11\ -o\ %:t:r\ -Wall\ -lm\ `pkg-config\ --libs\ gtk+-3.0`
-        autocmd Filetype cpp        setlocal makeprg=g++\ %\ -std=c++14\ -o\ %:t:r\ -Wall\ -Wextra\ -lm
+        autocmd Filetype cpp        setlocal makeprg=g++\ %\ -std=c++17\ -o\ %:t:r\ -Wall\ -Wextra\ -lm
         autocmd Filetype java       setlocal makeprg=javac\ %
         autocmd Filetype html       setlocal makeprg=xdg-open\ %
         autocmd Filetype python     setlocal makeprg=flake8\ %
