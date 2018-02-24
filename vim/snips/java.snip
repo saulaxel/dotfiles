@@ -55,6 +55,19 @@ snippet while
     while (${1}) {
         ${2:TARGET}
     }
+snippet     fori
+options     head
+abbr        for (int i; ...; ++i) {}
+    for (int ${1} = 0; $1 < ${2}; ++$1}) {
+        ${0:#:TARGET}
+    }
+
+snippet     forri
+options     head
+abbr        for (int i; ...; --i) {}
+    for (int ${1} = ${2}; $1 >= 0; --$1}) {
+        ${0:#:TARGET}
+    }
 
 snippet     for
 options     head
