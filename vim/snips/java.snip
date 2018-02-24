@@ -23,17 +23,26 @@ snippet var
     ${1:#:type} ${2:#:var}${3};
 
 snippet const
-    public static final ${1:#:type} ${2:#:var} = ${3};${4}
+    public static final ${1:#:type} ${2:#:var} = ${3};
 
 snippet const_string
-    public static final String ${1:var} = "${2}";${4}
+    public static final String ${1:var} = "${2}";
+
+snippet final
+    public final ${1:#:type} ${2:#:var} = ${3};
 
 snippet assert
-    assert ${1:#:test} : ${2:#:Failure message};${3}
+    assert ${1:#:test} : ${2:#:Failure message};
 
 snippet if
     if (${1}) {
         ${2:TARGET}
+    }
+
+snippet el
+alias else
+    else {
+        ${1:TARGET}
     }
 
 snippet elif
@@ -161,8 +170,8 @@ snippet j.n
 snippet j.m
     java.math.
 
-snippet main
-alias basic2
+snippet basic2
+alias pmclass
     public class `expand('%:p:t:r')` {
         public static void main(String args[]) {
             ${0:#:body}
@@ -175,15 +184,25 @@ alias   basic1
         ${0:#:body}
     }
 
+snippet main
+    public static void main(String args[]) {
+        ${0:#:body}
+    }
+
 snippet println
 alias   pl
 options word
-    System.out.println(${1})
+    System.out.println(${1});
 
 snippet print
 alias   p
 options word
     System.out.print(${1});
+
+snippet format
+alias   f, pf, printf
+options word
+    System.out.format(${1})
 
 #javadoc
 snippet comment

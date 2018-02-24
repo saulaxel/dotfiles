@@ -108,7 +108,6 @@
     Plugin 'glts/vim-textobj-comment'       " Objeto de texto 'comentario'
     Plugin 'kana/vim-textobj-entire'        " Objeto de texto 'todo'
     Plugin 'Julian/vim-textobj-variable-segment' " Segmento de variable
-    Plugin 'haya14busa/vim-textobj-number' " Objeto de texto 'nUmero'
     Plugin 'zandrmartin/vim-textobj-blanklines' " Bloques en blanco
     Plugin 'jiangmiao/auto-pairs'           " Completar pares de sImbolos
     Plugin 'tpope/vim-surround'             " Encerrar / liberar secciones
