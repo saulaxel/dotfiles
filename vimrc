@@ -73,7 +73,7 @@
     else
         if v:version >= 800 && has("python3")
             Plugin 'Shougo/deoplete.nvim'
-            Plugin 'roxma/nvim-yard'
+            Plugin 'roxma/nvim-yarp'
             Plugin 'roxma/vim-hug-neovim-rpc'
         elseif has('lua')
             Plugin 'Shougo/neocomplete'
