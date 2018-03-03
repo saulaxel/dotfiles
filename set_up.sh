@@ -1,138 +1,102 @@
 #!/bin/bash
-# Process args
-while [[ $# -gt 0 ]]; do
-    case "$1" in
-        -v|--vim)
-            IVIM=1
-            ;;
 
-        -nv|--neovim)
-            INVIM=1
-            ;;
+function install_common_debian {
+    sudo apt-get install git zsh vim vim-nox ruby tmux clang
+}
 
-        -r|--ruby)
-            IRUBY=1
-            ;;
+function install_debian {
+    install_common_debian
+    sudo apt-get install neovim python-neovim python3-neovim
+}
 
-        -t|--tmux)
-            ITMUX=1
-            ;;
+function install_ubuntu {
+    install_common_debian
+    sudo apt-get install software-properties-common
+    sudo apt-get install python-dev python-pip python3-dev python3-pip
+    sudo add-apt-repository ppa:neovim-ppa/stable
+    sudo apt-get update
+    sudo apt-get install neovim
+}
 
-        -c|--clang)
-            ICLANG=1
-            ;;
+function install_arch {
+    sudo pacman -S git zsh vim neovim ruby tmux clang
+}
 
-        -b|--backup)
-            BACKUP=1
-            ;;
+function install_fedora {
+    sudo dnf -y install git zsh vim ruby tmux clang
+    sudo dnf -y install neovim python2-neovim python3-neovim
+}
 
-        -a|--all)
-            IVIM=1
-            INVIM=1
-            IRUBY=1
-            ITMUX=1
-            ICLANG=1
-            BACKUP=1
-            ;;
-        *)
-    esac
-    shift
-done
+function install_git_console {
+    echo "¿Tienes instalado chocolately? (s/n)"
+    read ans
 
+    if [ "$ans" != "s" ]; then
+        echo "La instalación continuará una vez instalado chocolately"
+        exit
+    fi
+
+    choco install -y neovim
+}
+
+if [ $# -ne 1 ]; then
+    echo "Debe proporcionar un argumento:"
+    echo -e "\t a) debian"
+    echo -e "\t b) ubuntu"
+    echo -e "\t b) arch"
+    echo -e "\t b) fedora"
+    echo -e "\t b) git_console"
+fi
+
+shell="~/.zshrc"
 # Set the package manager
-if [ "$(uname -a | grep -i 'ubuntu')" ]; then
-    pkg_man="apt-get install"
-elif [ "$(uname -a | grep -i 'arch')" ]; then
-    pkg_man="pacman -S"
-elif [ "$(uname -a | grep -i 'fedora')" ]; then
-    pkg_man="yum install"
-elif [ "$(uname -a | grep -i 'linux')" ]; then
-    pkg_man="apt-get install"
-else
-    pkg_man="choco install"
-fi
-
-# Set the shell config file
-if [ $(echo $SHELL | grep -i bash) ]; then
-    shell=$HOME"/.bashrc"
-elif [ $(echo $SHELL | grep -i zsh ) ]; then
-    shell=$HOME"/.zshrc"
-fi
-
-if ! hash git 2>/dev/null; then
-    $pkg_man git
-fi
-
-# Install dependencies
-if [ -n "$IVIM" ]; then
-    $pkg_man vim
-    $pkg_man vim-nox
-fi
-
-if [ -n "$IVIM" ]; then
-    $pkg_man neovim
-fi
-
-if [ -n "$IRUBY" ]; then
-    $pkg_man ruby
-fi
-
-if [ -n "$ITMUX" ]; then
-    $pkg_man tmux
-fi
-
-# Make a back-up
-if [ -n "$BACKUP" ]; then
-    mkdir ~/.dotfiles_backup
-
-    cp ~/.vimrc ~/.dotfiles_backup
-    cp ~/.nanorc ~/.dotfiles_backup
-    cp ~/.bashrc ~/.dotfiles_backup
+if [ "$1" == "debian" ]; then
+    install_debian
+elif [ "$1" == "ubuntu" ]; then
+    install_debian
+elif [ "$1" == "arch" ]; then
+    install_arch
+elif [ "$1" == "fedora" ]; then
+    install fedora
+elif [ "$1" == "windows" ]; then
+    install_git_console
+    shell="~/.bashrc"
 fi
 
 # Starts real set-up
 if [ ! -d ~/.vim/bundle ] || [ ! -d ~/.vim/colors ]; then
     mkdir -p ~/.vim/bundle
     mkdir ~/.vim/colors
-fi;
+fi
 
 cp ./vimrc ~/.vimrc
 
-if [ -n "$INVIM" ]; then
-    if [ ! -d ~/.config/nvim ]; then
-        mkdir -p ~/.config/nvim
-    fi
-    ln -n ~/.vimrc ~/.config/nvim/init.vim
+if [ ! -d ~/.config/nvim ]; then
+    mkdir -p ~/.config/nvim
 fi
+ln -n ~/.vimrc ~/.config/nvim/init.vim
 
-if [ "$(cat $shell | grep "BASH_CONFIG_INCLUDED")" == "" ]; then
-    cat bashrc >> $shell
-fi
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+cat bashrc >> $shell
 
 cp ./nanorc ~/.nanorc
 
 if [ ! -d ~/.vim/bundle/Vundle.vim ]; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-fi;
-
-if [ -n "$IVIM" ]; then
-    vim +PluginInstall +qall
 fi
 
-if [ -n "$INVIM" ]; then
+vim +PluginInstall +qall
+
+if [ "$1" != "windows" ]
     nvim +PluginInstall +qall
+else
+    nvim-qt +PluginInstall +qall
 fi
 
 cp ./vim/snips/emmet.vim ~/.vim/bundle/emmet-vim/autoload
 cp ./vim/snips/*.snip ~/.vim/bundle/neosnippet-snippets/neosnippets
 cp ./vim/colors/solarized.vim ~/.vim/colors
 
-if [ -n "$ICLANG" ]; then
-    $pkg_man clang
-
-    if [ -n "$INVIM" ]; then
-        vim +VimProcInstall +qall
-    fi
-fi
+vim +VimProcInstall +qall
 
 exit 0
