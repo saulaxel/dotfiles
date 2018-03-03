@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function install_common_debian {
-    sudo apt-get install git zsh vim vim-nox ruby tmux clang
+    sudo apt-get install git zsh vim vim-nox ruby tmux clang figlet cowsay fortune oneko
     sudo apt-get install software-properties-common
     sudo apt-get install python-dev python-pip python3-dev python3-pip
     sudo python2 -m pip install neovim
@@ -21,14 +21,15 @@ function install_ubuntu {
 }
 
 function install_arch {
-    sudo pacman -S git zsh vim neovim ruby tmux clang
+    sudo pacman -S git zsh vim neovim ruby tmux clang figlet cowsay fortune-mod
     sudo pacman -S python-pip
     sudo python2 -m pip install neovim
     sudo python3 -m pip install neovim
+    yaourt -S oneko
 }
 
 function install_fedora {
-    sudo dnf -y install git zsh vim ruby tmux clang
+    sudo dnf -y install git zsh vim ruby tmux clang figlet cowsay fortune-mod oneko
     sudo dnf -y install neovim python2-neovim python3-neovim
     sudo dnf -y install python-pip python3-pip
     sudo python2 -m pip install neovim
@@ -58,7 +59,7 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-shell="~/.zshrc"
+shell="$HOME/.zshrc"
 # Set the package manager
 if [ "$1" == "debian" ]; then
     install_debian
@@ -70,7 +71,7 @@ elif [ "$1" == "fedora" ]; then
     install_fedora
 elif [ "$1" == "windows" ]; then
     install_git_console
-    shell="~/.bashrc"
+    shell="$HOME/.bashrc"
 else
     echo -e "Argumento inválido" >&2
     exit 1
@@ -90,7 +91,7 @@ fi
 ln -n ~/.vimrc ~/.config/nvim/init.vim
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-cat bashrc >> $shell
+cat bashrc >> "$shell"
 
 cp ./nanorc ~/.nanorc
 
