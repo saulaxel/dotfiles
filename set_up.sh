@@ -46,6 +46,8 @@ if [ $# -ne 1 ]; then
     echo -e "\t b) arch"
     echo -e "\t b) fedora"
     echo -e "\t b) git_console"
+
+    exit 1
 fi
 
 shell="~/.zshrc"
