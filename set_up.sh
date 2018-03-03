@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function install_common_debian {
-    sudo apt-get install git zsh vim vim-nox ruby tmux clang
+    sudo apt-get install git zsh vim vim-nox ruby tmux clang figlet cowsay fortune
 }
 
 function install_debian {
@@ -19,11 +19,11 @@ function install_ubuntu {
 }
 
 function install_arch {
-    sudo pacman -S git zsh vim neovim ruby tmux clang
+    sudo pacman -S git zsh vim neovim ruby tmux clang figlet cowsay fortune-mod
 }
 
 function install_fedora {
-    sudo dnf -y install git zsh vim ruby tmux clang
+    sudo dnf -y install git zsh vim ruby tmux clang figlet cowsay fortune-mod
     sudo dnf -y install neovim python2-neovim python3-neovim
 }
 
@@ -50,7 +50,7 @@ if [ $# -ne 1 ]; then
     exit 1
 fi
 
-shell="~/.zshrc"
+shell="$HOME/.zshrc"
 # Set the package manager
 if [ "$1" == "debian" ]; then
     install_debian
@@ -62,7 +62,7 @@ elif [ "$1" == "fedora" ]; then
     install_fedora
 elif [ "$1" == "windows" ]; then
     install_git_console
-    shell="~/.bashrc"
+    shell="$HOME/.bashrc"
 fi
 
 # Starts real set-up
@@ -79,7 +79,7 @@ fi
 ln -n ~/.vimrc ~/.config/nvim/init.vim
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-cat bashrc >> $shell
+cat bashrc >> "$shell"
 
 cp ./nanorc ~/.nanorc
 
