@@ -96,8 +96,10 @@ else
 fi
 
 cp ./vim/snips/emmet.vim ~/.vim/bundle/emmet-vim/autoload
+cp ./vim/jcommenter.vim ~/.vim/bundle/jcommenter.vim/plugin/
 cp ./vim/snips/*.snip ~/.vim/bundle/neosnippet-snippets/neosnippets
 cp ./vim/colors/solarized.vim ~/.vim/colors
+cp ./vim/colors/tender.vim ~/.vim/bundle/awesome-vim-colorschemes/colors
 
 vim +VimProcInstall +qall
 
