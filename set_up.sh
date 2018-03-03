@@ -59,7 +59,7 @@ elif [ "$1" == "ubuntu" ]; then
 elif [ "$1" == "arch" ]; then
     install_arch
 elif [ "$1" == "fedora" ]; then
-    install fedora
+    install_fedora
 elif [ "$1" == "windows" ]; then
     install_git_console
     shell="~/.bashrc"
