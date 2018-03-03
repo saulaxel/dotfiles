@@ -89,7 +89,7 @@ fi
 
 vim +PluginInstall +qall
 
-if [ "$1" != "windows" ]
+if [ "$1" != "windows" ]; then
     nvim +PluginInstall +qall
 else
     nvim-qt +PluginInstall +qall
