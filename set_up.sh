@@ -2,6 +2,10 @@
 
 function install_common_debian {
     sudo apt-get install git zsh vim vim-nox ruby tmux clang
+    sudo apt-get install software-properties-common
+    sudo apt-get install python-dev python-pip python3-dev python3-pip
+    sudo python2 -m pip install neovim
+    sudo python3 -m pip install neovim
 }
 
 function install_debian {
@@ -11,8 +15,6 @@ function install_debian {
 
 function install_ubuntu {
     install_common_debian
-    sudo apt-get install software-properties-common
-    sudo apt-get install python-dev python-pip python3-dev python3-pip
     sudo add-apt-repository ppa:neovim-ppa/stable
     sudo apt-get update
     sudo apt-get install neovim
@@ -20,11 +22,17 @@ function install_ubuntu {
 
 function install_arch {
     sudo pacman -S git zsh vim neovim ruby tmux clang
+    sudo pacman -S python-pip
+    sudo python2 -m pip install neovim
+    sudo python3 -m pip install neovim
 }
 
 function install_fedora {
     sudo dnf -y install git zsh vim ruby tmux clang
     sudo dnf -y install neovim python2-neovim python3-neovim
+    sudo dnf -y install python-pip python3-pip
+    sudo python2 -m pip install neovim
+    sudo python3 -m pip install neovim
 }
 
 function install_git_console {
@@ -41,11 +49,11 @@ function install_git_console {
 
 if [ $# -ne 1 ]; then
     echo "Debe proporcionar un argumento:"
-    echo -e "\t a) debian"
-    echo -e "\t b) ubuntu"
-    echo -e "\t b) arch"
-    echo -e "\t b) fedora"
-    echo -e "\t b) git_console"
+    echo -e "\t a) debian" >&2
+    echo -e "\t b) ubuntu" >&2
+    echo -e "\t b) arch" >&2
+    echo -e "\t b) fedora" >&2
+    echo -e "\t b) git_console" >&2
 
     exit 1
 fi
@@ -63,6 +71,9 @@ elif [ "$1" == "fedora" ]; then
 elif [ "$1" == "windows" ]; then
     install_git_console
     shell="~/.bashrc"
+else
+    echo -e "Argumento inválido" >&2
+    exit 1
 fi
 
 # Starts real set-up
@@ -102,5 +113,11 @@ cp ./vim/colors/solarized.vim ~/.vim/colors
 cp ./vim/colors/tender.vim ~/.vim/bundle/awesome-vim-colorschemes/colors
 
 vim +VimProcInstall +qall
+if [ "$1" != "windows" ]; then
+    nvim +UpdateRemotePlugins +qall
+else
+    nvim-qt +UpdateRemotePlugins +qall
+fi
 
+echo "La preparación del ambiente está lista"
 exit 0
