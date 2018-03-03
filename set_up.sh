@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function install_common_debian {
-    sudo apt-get install git zsh vim vim-nox ruby tmux clang figlet cowsay fortune
+    sudo apt-get install git zsh vim vim-nox ruby tmux clang figlet cowsay fortune oneko
 }
 
 function install_debian {
@@ -20,10 +20,11 @@ function install_ubuntu {
 
 function install_arch {
     sudo pacman -S git zsh vim neovim ruby tmux clang figlet cowsay fortune-mod
+    yaourt -S oneko
 }
 
 function install_fedora {
-    sudo dnf -y install git zsh vim ruby tmux clang figlet cowsay fortune-mod
+    sudo dnf -y install git zsh vim ruby tmux clang figlet cowsay fortune-mod oneko
     sudo dnf -y install neovim python2-neovim python3-neovim
 }
 
