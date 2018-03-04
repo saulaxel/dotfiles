@@ -149,9 +149,9 @@ abbr    do {} while() {}
 
 snippet for
 abbr    for () {}
-    for (${1:#:var}; ${2:#:condition}; ${3:#:effect})
+    for (${1:var }${2:i} = ${3:0}; $2 < ${4}; $2${5})
     {
-        ${0:TARGET}
+        ${0:#:TARGET}
     }
 
 snippet foreach
