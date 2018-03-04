@@ -64,7 +64,7 @@ shell="$HOME/.zshrc"
 if [ "$1" == "debian" ]; then
     install_debian
 elif [ "$1" == "ubuntu" ]; then
-    install_debian
+    install_ubuntu
 elif [ "$1" == "arch" ]; then
     install_arch
 elif [ "$1" == "fedora" ]; then
@@ -91,7 +91,10 @@ fi
 ln -n ~/.vimrc ~/.config/nvim/init.vim
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-cat bashrc >> "$shell"
+
+if [ "$(cat $shell | grep "BASH_CONFIG_INCLUDED")" == "" ]; then
+    cat bashrc >> "$shell"
+fi
 
 cp ./nanorc ~/.nanorc
 
