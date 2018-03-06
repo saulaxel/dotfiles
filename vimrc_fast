@@ -1,5 +1,4 @@
 " ConfiguraciOn vim
-set nocompatible
 scriptencoding utf-8
 if 0
     filetype off
@@ -10,7 +9,7 @@ set number
 set relativenumber " NumeraciOn de lIneas desde tu posiciOn actual
 set linebreak
 set showbreak=...\              " Se muestran 3 puntos para simbolizar continuaciOn
-if has("patch-7.4.354") || has('nvim')
+if has('patch-7.4.354') || has('nvim')
     set breakindent
 endif
 set textwidth=100
@@ -146,13 +145,13 @@ endfunction
 
 function! Ejecutar()
     if len(getqflist()) == 0        " Run the program
-        if (&filetype == 'c' || &filetype == 'cpp')
+        if (&filetype ==# 'c' || &filetype ==# 'cpp')
             !./%:t:r
-        elseif (&filetype == 'java')
+        elseif (&filetype ==# 'java')
             !java %:t:r
-        elseif (&filetype == 'python')
+        elseif (&filetype ==# 'python')
             !python3 %
-        elseif (&filetype == 'sh')
+        elseif (&filetype ==# 'sh')
             !bash %
         endif
     else
@@ -187,7 +186,7 @@ augroup END
 " Mapeos {
 
 " Mapeos bAsicos
-let mapleader = "\,"
+let g:mapleader = '\,'
 nnoremap Q <nop>
 inoremap kj <Esc>
 nnoremap <C-k> -l

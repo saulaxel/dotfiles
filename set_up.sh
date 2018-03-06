@@ -38,7 +38,7 @@ function install_fedora {
 
 function install_git_console {
     echo "¿Tienes instalado chocolately? (s/n)"
-    read ans
+    read -r ans
 
     if [ "$ans" != "s" ]; then
         echo "La instalación continuará una vez instalado chocolately"
@@ -50,11 +50,11 @@ function install_git_console {
 
 if [ $# -ne 1 ]; then
     echo "Debe proporcionar un argumento:"
-    echo -e "\t a) debian" >&2
-    echo -e "\t b) ubuntu" >&2
-    echo -e "\t b) arch" >&2
-    echo -e "\t b) fedora" >&2
-    echo -e "\t b) git_console" >&2
+    echo -e "\\t a) debian" >&2
+    echo -e "\\t b) ubuntu" >&2
+    echo -e "\\t b) arch" >&2
+    echo -e "\\t b) fedora" >&2
+    echo -e "\\t b) git_console" >&2
 
     exit 1
 fi
@@ -92,7 +92,7 @@ ln -n ~/.vimrc ~/.config/nvim/init.vim
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-if [ "$(cat $shell | grep "BASH_CONFIG_INCLUDED")" == "" ]; then
+if [ "$(grep "BASH_CONFIG_INCLUDED" < "$shell")" == "" ]; then
     cat bashrc >> "$shell"
 fi
 
