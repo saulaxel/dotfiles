@@ -73,7 +73,7 @@
     else
         if v:version >= 800 && has("python3")
             Plugin 'Shougo/deoplete.nvim'
-            Plugin 'roxma/nvim-yard'
+            Plugin 'roxma/nvim-yarp'
             Plugin 'roxma/vim-hug-neovim-rpc'
         elseif has('lua')
             Plugin 'Shougo/neocomplete'
@@ -195,9 +195,13 @@
         let g:ale_cpp_clangcheck_options = "-extra-arg='-std=c++17"
         let g:ale_c_gcc_options = "-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra"
         let g:ale_c_clang_options = "-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra"
+        let g:ale_haskell_ghc_options = "-dynamic"
+        let g:ale_fortran_gcc_options = "-Wall -Wextra"
     else
         let g:syntastic_cpp_compiler_options = '-std=c++17'
         let g:syntastic_c_compiler_options = '-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra'
+        let g:syntastic_haskell_compiler_options = "-dynamic"
+        let g:syntastic_fotran_compiler_options = "-Wall -Wextra"
     endif
 
     " ConfiguraciOn de AutoPairs (carActeres de apertura y cierre)
@@ -279,7 +283,11 @@
 
     function! Ejecutar()
         if len(getqflist()) == 0        " Run the program
-            if (&filetype == 'c' || &filetype == 'cpp')
+            if ( &filetype == 'c' ||
+                        \ &filetype == 'cpp' ||
+                        \ &filetype == 'haskell'
+                        \ &filetype == 'fortran')
+
                 !./%:t:r
             elseif (&filetype == 'java')
                 !java %:t:r
@@ -311,11 +319,13 @@
         autocmd!
         autocmd Filetype c          setlocal makeprg=gcc\ `pkg-config\ --cflags\ gtk+-3.0`\ %\ -std=c11\ -o\ %:t:r\ -Wall\ -lm\ `pkg-config\ --libs\ gtk+-3.0`
         autocmd Filetype cpp        setlocal makeprg=g++\ %\ -std=c++17\ -o\ %:t:r\ -Wall\ -Wextra\ -lm
+        autocmd Filetype fortran    setlocal makeprg=fortran\ %\ -o\ %:t:r\ -Wall\ -Wextra
         autocmd Filetype java       setlocal makeprg=javac\ %
         autocmd Filetype html       setlocal makeprg=xdg-open\ %
         autocmd Filetype python     setlocal makeprg=flake8\ %
         autocmd Filetype cs         setlocal makeprg=mcs\ %
         autocmd Filetype sh         setlocal makeprg=bash\ -n\ %
+        autocmd Filetype haskell    setlocal makeprg=ghc\ %\ -dynamic
     augroup END
 
     " Definiendo configuraciOnes especificas para cada tipo de archivos
@@ -325,7 +335,7 @@
         autocmd BufEnter *.jade setlocal filetype=pug
         autocmd BufEnter *.h setlocal filetype=c
         autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-        autocmd Filetype html,css,scss,sass,pug,php setlocal ts=2 sw=2 sts=2
+        autocmd Filetype html,css,scss,sass,pug,php,fortran setlocal ts=2 sw=2 sts=2
     augroup END
 " }
 
