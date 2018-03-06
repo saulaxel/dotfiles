@@ -12,4 +12,4 @@ xmodmap -e 'clear Lock' -e 'keycode 0x09 = Caps_Lock'
 
 figlet -f lean "Bonjourn"
 
-fortune -c | cowsay -f $(find /usr/share/cowsay/cows/ -type f | shuf -n 1)
+fortune -c | cowsay -f "$(find /usr/share/cowsay/cows/ -type f | shuf -n 1)"
