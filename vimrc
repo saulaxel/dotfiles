@@ -63,8 +63,9 @@
     set runtimepath+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
 
-    " Permitir que Vundle administre Vundle (requerido)
+    " Manejo de paquetes y repositorios
     Plugin 'VundleVim/Vundle.vim'
+    Plugin 'tpope/vim-fugitive'
 
     " Completado y revisiOn de cOdigo
     if has('nvim')                          " Ventana de auto-completado
@@ -88,6 +89,7 @@
     Plugin 'artur-shaik/vim-javacomplete2'  " Completado de java
     Plugin 'jcommenter.vim'                 " Javadoc
     Plugin 'davidhalter/jedi-vim'           " Completado de python
+    Plugin 'vim-utils/vim-man'              " Visualizar manuales dentro de vim
     if has('nvim') || (v:version >= 800)    " RevisiOn de errores
         Plugin 'w0rp/ale'
     else
@@ -125,10 +127,12 @@
     Plugin 'vim-airline/vim-airline'        " Barra inferior
     Plugin 'vim-airline/vim-airline-themes' " Temas de color para barra
     Plugin 'gregsexton/MatchTag'            " Iluminar etiqueta hermana
+    Plugin 'ryanoasis/vim-devicons'         " Iconos para los archivos
     Plugin 'ap/vim-css-color'               " Colorear valores RGB
     "Plugin 'Rykka/colorv.vim'
     "Plugin 'mattn/webapi-vim'
     Plugin 'sheerun/vim-polyglot'           " Sintaxis de varios lenguajes
+    Plugin 'dag/vim-fish'                   " Sintaxis de fish
     Plugin 'Beerstorm/vim-brainfuck'        " Sintaxis de brainfuck
     Plugin 'khzaw/vim-conceal'              " <-+
     Plugin 'KeitaNakamura/tex-conceal.vim'  " <-+-Enmascaramiento de
@@ -234,6 +238,9 @@
         let g:airline_symbols.readonly = ''
     endif
 
+    " ConfiguraciOn de vim-devicons
+    set guifont=DroidSansMono\ Nerd\ Font\ 11
+
 " }
 
 " Funciones {
@@ -335,13 +342,14 @@
         autocmd BufEnter *.h setlocal filetype=c
         autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
         autocmd Filetype html,css,scss,sass,pug,php,fortran setlocal ts=2 sw=2 sts=2
+        autocmd Filetype html,css,scss,sass,pug setlocal iskeyword+=-
     augroup END
 " }
 
 " Mapeos {
 
     " Mapeos bAsicos
-    let g:mapleader = '\,'
+    let g:mapleader = ','
     nnoremap Q <nop>
     inoremap kj <Esc>
     nnoremap <C-k> -l

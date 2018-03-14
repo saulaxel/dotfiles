@@ -13,12 +13,6 @@ syntax match cNiceOperator "!=" conceal cchar=≠
 syntax match cNiceOperator ">=" conceal cchar=≥
 syntax match cNiceOperator "<=" conceal cchar=≤
 
-syntax match cNiceOperator "&&" conceal cchar=∧
-syntax match cNiceOperator "||" conceal cchar=∨
-
-syntax match cNiceOperator "<<" conceal cchar=≺
-syntax match cNiceOperator ">>" conceal cchar=≻
-
 syntax match cNiceOperator "->" conceal cchar=➞
 
 syntax keyword cType void conceal cchar=∅
