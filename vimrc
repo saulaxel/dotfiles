@@ -89,7 +89,7 @@
     Plugin 'artur-shaik/vim-javacomplete2'  " Completado de java
     Plugin 'jcommenter.vim'                 " Javadoc
     Plugin 'davidhalter/jedi-vim'           " Completado de python
-    Plugin 'vim-utils/vim-man'              " Visualizar manuales dentro de vim
+    "Plugin 'vim-utils/vim-man'              " Visualizar manuales dentro de vim
     if has('nvim') || (v:version >= 800)    " RevisiOn de errores
         Plugin 'w0rp/ale'
     else
@@ -132,6 +132,7 @@
     "Plugin 'Rykka/colorv.vim'
     "Plugin 'mattn/webapi-vim'
     Plugin 'sheerun/vim-polyglot'           " Sintaxis de varios lenguajes
+    Plugin 'boeckmann/vim-freepascal'       " Sintaxis de freepascal
     Plugin 'dag/vim-fish'                   " Sintaxis de fish
     Plugin 'Beerstorm/vim-brainfuck'        " Sintaxis de brainfuck
     Plugin 'khzaw/vim-conceal'              " <-+
@@ -381,6 +382,16 @@
     nnoremap \| :vsplit<space>
     nnoremap _ :split<space>
 
+    " Manejo de buffers
+    nnoremap <leader>bn :edit<Space>
+
+    nnoremap <leader>bk :bnext<CR>
+    nnoremap <leader>bj :bprevious<CR>
+    nnoremap <leader>bh :bfirst<CR>
+    nnoremap <leader>bl :blast<CR>
+
+    nnoremap <leader>bd :bdelete<CR>
+
     " Manejo de tabulaciones
     nnoremap <leader>tn :tabnew<Space>
 
@@ -388,6 +399,14 @@
     nnoremap <leader>tj :tabprev<CR>
     nnoremap <leader>th :tabfirst<CR>
     nnoremap <leader>tl :tablast<CR>
+    nnoremap <leader>td :q<CR>
+
+    " Abrir manuales desde el archivo
+    augroup man
+        autocmd!
+        autocmd FileType c   nnoremap <buffer> <leader>F :Man <C-r><C-w>
+        autocmd FileType cpp nnoremap <buffer> <leader>F :Man std::<C-r><C-w>
+    augroup END
 
     " Mapeos del modo comando {
         " Movimiento estilo emacs
