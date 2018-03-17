@@ -8,6 +8,7 @@
     set relativenumber " NumeraciOn de lIneas desde tu posiciOn actual
     set linebreak
     set showbreak=...\              " Se muestran 3 puntos para simbolizar continuaciOn
+    set showcmd
     if has('patch-7.4.354') || has('nvim')
         set breakindent
     endif
@@ -87,6 +88,8 @@
     Plugin 'Shougo/vimproc.vim'             " Requerimiento del que sigue
     Plugin 'osyo-manga/vim-marching'        " Completado c/cpp
     Plugin 'artur-shaik/vim-javacomplete2'  " Completado de java
+    Plugin 'fortran.vim'
+    "Plugin 'ternjs/tern_for_vim'            " Completado de javascript
     Plugin 'jcommenter.vim'                 " Javadoc
     Plugin 'davidhalter/jedi-vim'           " Completado de python
     Plugin 'vim-utils/vim-man'              " Visualizar manuales dentro de vim
