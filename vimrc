@@ -92,7 +92,8 @@
     "Plugin 'ternjs/tern_for_vim'            " Completado de javascript
     Plugin 'jcommenter.vim'                 " Javadoc
     Plugin 'davidhalter/jedi-vim'           " Completado de python
-    "Plugin 'vim-utils/vim-man'              " Visualizar manuales dentro de vim
+    Plugin 'carlitux/deoplete-ternjs'       " Completado de js
+    Plugin 'vim-utils/vim-man'              " Visualizar manuales dentro de vim
     if has('nvim') || (v:version >= 800)    " RevisiOn de errores
         Plugin 'w0rp/ale'
     else
