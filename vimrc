@@ -4,19 +4,22 @@
     filetype off
 
     " ConfiguraciOn texto y navegaciOn
+    set fileformat=unix   " De observa el ^M en los archivos modo dos
+    set textwidth=100
+    set ruler
+    set showcmd
+    set showmatch
+    set matchpairs+=¡:!
+
     set number
     set relativenumber " NumeraciOn de lIneas desde tu posiciOn actual
     set linebreak
     set showbreak=...\              " Se muestran 3 puntos para simbolizar continuaciOn
-    set showcmd
     if has('patch-7.4.354') || has('nvim')
         set breakindent
     endif
-    set textwidth=100
-    set showmatch
-    set matchpairs+=¡:!
-    set visualbell
-    set ruler
+    set undolevels=1000
+    set backspace=indent,eol,start
 
     " ConfiguraciOn para la busqueda
     set hlsearch
@@ -24,9 +27,10 @@
     set ignorecase
     set incsearch
 
-    " Ex menU
+    " Apertura de archivos en menú de modo ex
     "set path+=**       " BUsqueda recursiva de archivos
-    set wildmenu        " Se pueden visualizar las opciones con tab
+    set wildmenu        " Visualizar las opciones del menu ex tab con tab
+    set wildignore=*.o,*.obj,*.bak,*.exe,*.py[co],*.swp,*~,*.pyc,.svn
 
     " ConfiguraciOn para el indentado automAtico
     set autoindent
@@ -46,11 +50,11 @@
     set colorcolumn=80
 
     " Extras
+    set nobackup
+    set visualbell
     set autowrite
-    set spelllang=es
     set spell
-    set undolevels=1000
-    set backspace=indent,eol,start
+    set spelllang=es
     set splitright
     set splitbelow
     set nrformats+=alpha
@@ -200,14 +204,16 @@
     " ConfiguraciOn de ale / Syntastic
     if has('nvim') || (v:version >= 800)
         let g:ale_set_quickfix = 1
-        let g:ale_cpp_clangcheck_options = "-extra-arg='-std=c++17"
-        let g:ale_c_gcc_options = '-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra'
-        let g:ale_c_clang_options = '-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra'
+        let g:ale_cpp_clangcheck_options = "-extra-arg='-std=c++14 -Wall -Wextra"
+        let g:ale_cpp_gcc_options = '-std=c++14 -Wall -Wextra'
+        let g:ale_cpp_clang_options = '-std=c++14 -Wall -Wextra'
+        let g:ale_c_gcc_options = '-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra -std=gnu11'
+        let g:ale_c_clang_options = '-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra -std=gnu11'
         let g:ale_haskell_ghc_options = '-dynamic'
         let g:ale_fortran_gcc_options = '-Wall -Wextra'
     else
-        let g:syntastic_cpp_compiler_options = '-std=c++17'
-        let g:syntastic_c_compiler_options = '-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra'
+        let g:syntastic_cpp_compiler_options = '-std=c++17 -Wall -Wextra'
+        let g:syntastic_c_compiler_options = '-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra -std=gnu11'
         let g:syntastic_haskell_compiler_options = '-dynamic'
         let g:syntastic_fotran_compiler_options = '-Wall -Wextra'
     endif
@@ -324,12 +330,12 @@
         autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
         autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
         autocmd FileType java setlocal omnifunc=javacomplete#Complete
-    augroup END
+    augroup end
     " Definiendo el make
     augroup makecomnads
         autocmd!
         autocmd Filetype c          setlocal makeprg=gcc\ `pkg-config\ --cflags\ gtk+-3.0`\ %\ -std=c11\ -o\ %:t:r\ -Wall\ -lm\ `pkg-config\ --libs\ gtk+-3.0`
-        autocmd Filetype cpp        setlocal makeprg=g++\ %\ -std=c++17\ -o\ %:t:r\ -Wall\ -Wextra\ -lm
+        autocmd Filetype cpp        setlocal makeprg=g++\ %\ -std=c++14\ -o\ %:t:r\ -Wall\ -Wextra\ -lm
         autocmd Filetype fortran    setlocal makeprg=gfortran\ %\ -o\ %:t:r\ -Wall\ -Wextra
         autocmd Filetype java       setlocal makeprg=javac\ %
         autocmd Filetype html       setlocal makeprg=xdg-open\ %
@@ -337,7 +343,7 @@
         autocmd Filetype cs         setlocal makeprg=mcs\ %
         autocmd Filetype sh         setlocal makeprg=bash\ -n\ %
         autocmd Filetype haskell    setlocal makeprg=ghc\ %\ -dynamic
-    augroup END
+    augroup end
 
     " Definiendo configuraciOnes especificas para cada tipo de archivos
     augroup fileconfig
@@ -346,9 +352,9 @@
         autocmd BufEnter *.jade setlocal filetype=pug
         autocmd BufEnter *.h setlocal filetype=c
         autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-        autocmd Filetype html,css,scss,sass,pug,php,fortran setlocal ts=2 sw=2 sts=2
+        autocmd Filetype html,css,scss,sass,pug,php setlocal ts=2 sw=2 sts=2
         autocmd Filetype html,css,scss,sass,pug setlocal iskeyword+=-
-    augroup END
+    augroup end
 " }
 
 " Mapeos {
@@ -367,6 +373,71 @@
     nnoremap <leader>R :%s/\<<C-r>=expand("<cWORD>")<CR>\>\C//g<Left><Left>
     inoremap <leader>pk <Esc>:VCoolor<Return>a
     inoremap <leader>scp <Esc>:!gpick<Return>a
+
+    " Operadores para el siguiente bloque
+    onoremap in( :<c-u>normal! f)vi(<cr>
+    onoremap in) :<c-u>normal! f)vi(<cr>
+    vnoremap in( f(lo%h
+    vnoremap in) f(lo%h
+    onoremap an( :<c-u>normal! f)va(<cr>
+    onoremap an) :<c-u>normal! f)va(<cr>
+    vnoremap an( f(o%
+    vnoremap an) f(o%
+
+    onoremap il( :<c-u>normal! F)vi(<cr>
+    onoremap il) :<c-u>normal! F)vi(<cr>
+    vnoremap il( F)oF)%ohol
+    vnoremap il) F)oF)%ohol
+    onoremap al( :<c-u>normal! F)va(<cr>
+    onoremap al) :<c-u>normal! F)va(<cr>
+    vnoremap al( F)oF)%
+    vnoremap al) F)oF)%
+
+    onoremap in{ :<c-u>normal! f}vi{<cr>
+    onoremap in} :<c-u>normal! f}vi{<cr>
+    vnoremap in{ f{lo%h
+    vnoremap in} f{lo%h
+    onoremap an{ :<c-u>normal! f}va{<cr>
+    onoremap an} :<c-u>normal! f}va{<cr>
+    vnoremap an{ f{o%
+    vnoremap an} f{o%
+
+    onoremap il{ :<c-u>normal! F}vi{<cr>
+    onoremap il} :<c-u>normal! F}vi{<cr>
+    vnoremap il{ F}oF}%ohol
+    vnoremap il} F}oF}%ohol
+    onoremap al{ :<c-u>normal! F}va{<cr>
+    onoremap al} :<c-u>normal! F}va{<cr>
+    vnoremap al{ F}oF}%
+    vnoremap al} F}oF}%
+
+    onoremap in[ :<c-u>normal! F]vi[<cr>
+    onoremap in] :<c-u>normal! F]vi[<cr>
+    vnoremap in[ f[lo%h
+    vnoremap in] f[lo%h
+    onoremap an[ :<c-u>normal! f]va[<cr>
+    onoremap an] :<c-u>normal! f]va[<cr>
+    vnoremap an[ f[o%
+    vnoremap an] f[o%
+
+    onoremap il[ :<c-u>normal! F]vi[<cr>
+    onoremap il] :<c-u>normal! F]vi[<cr>
+    vnoremap il[ F]oF]%ohol
+    vnoremap il] F]oF]%ohol
+    onoremap al[ :<c-u>normal! F]va[<cr>
+    onoremap al] :<c-u>normal! F]va[<cr>
+    vnoremap al[ F]oF]%
+    vnoremap al] F]oF]%
+
+    onoremap in" :<c-u>normal! f"vi"<cr>
+    vnoremap in" i"
+    onoremap an" :<c-u>normal! f"va"<cr>
+    vnoremap an" a"
+
+    onoremap il" :<c-u>normal! F"vi"<cr>
+    vnoremap il" F"o2F"loh
+    onoremap al" :<c-u>normal! F"va"<cr>
+    vnoremap al" 2F"oF"
 
     " Para modificar fácilmente este archivo
     nnoremap <leader>av :tabnew $MYVIMRC<CR>
@@ -410,7 +481,7 @@
         autocmd!
         autocmd FileType c   nnoremap <buffer> <leader>F :Man <C-r><C-w>
         autocmd FileType cpp nnoremap <buffer> <leader>F :Man std::<C-r><C-w>
-    augroup END
+    augroup end
 
     " Mapeos del modo comando {
         " Movimiento estilo emacs

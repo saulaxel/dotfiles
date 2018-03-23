@@ -88,14 +88,14 @@ abbr        if () {} else {}
 snippet     fori
 options     head
 abbr        for (int i; ...; ++i) {}
-    for (int ${1} = 0; $1 < ${2}; ++$1}) {
+    for (int ${1:i} = 0; $1 < ${2}; ++$1) {
         ${0:#:TARGET}
     }
 
 snippet     forri
 options     head
 abbr        for (int i; ...; --i) {}
-    for (int ${1} = ${2}; $1 >= 0; --$1}) {
+    for (int ${1:i} = ${2}; $1 >= 0; --$1) {
         ${0:#:TARGET}
     }
 
