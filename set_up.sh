@@ -114,7 +114,6 @@ cp ./vim/snips/emmet.vim ~/.vim/bundle/emmet-vim/autoload
 cp ./vim/other_scripts/jcommenter.vim ~/.vim/bundle/jcommenter.vim/plugin/
 cp ./vim/other_scripts/c_conceal.vim ~/.vim/bundle/c-conceal/after/syntax/c.vim
 cp ./vim/snips/*.snip ~/.vim/bundle/neosnippet-snippets/neosnippets
-cp ./vim/colors/solarized.vim ~/.vim/colors
 cp ./vim/colors/tender.vim ~/.vim/bundle/awesome-vim-colorschemes/colors
 
 vim +VimProcInstall +qall
@@ -125,4 +124,3 @@ else
 fi
 
 echo "La preparación del ambiente está lista"
-exit 0
