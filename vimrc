@@ -58,6 +58,7 @@
     set splitright
     set splitbelow
     set nrformats+=alpha
+    set lazyredraw
     if has('conceal')
         set concealcursor=
     endif
@@ -384,14 +385,14 @@
     vnoremap an( f(o%
     vnoremap an) f(o%
 
-    onoremap il( :<c-u>normal! F)vi(<cr>
-    onoremap il) :<c-u>normal! F)vi(<cr>
-    vnoremap il( F)oF)%ohol
-    vnoremap il) F)oF)%ohol
-    onoremap al( :<c-u>normal! F)va(<cr>
-    onoremap al) :<c-u>normal! F)va(<cr>
-    vnoremap al( F)oF)%
-    vnoremap al) F)oF)%
+    onoremap ia( :<c-u>normal! F)vi(<cr>
+    onoremap ia) :<c-u>normal! F)vi(<cr>
+    vnoremap ia( F)oF)%ohol
+    vnoremap ia) F)oF)%ohol
+    onoremap aa( :<c-u>normal! F)va(<cr>
+    onoremap aa) :<c-u>normal! F)va(<cr>
+    vnoremap aa( F)oF)%
+    vnoremap aa) F)oF)%
 
     onoremap in{ :<c-u>normal! f}vi{<cr>
     onoremap in} :<c-u>normal! f}vi{<cr>
@@ -402,14 +403,14 @@
     vnoremap an{ f{o%
     vnoremap an} f{o%
 
-    onoremap il{ :<c-u>normal! F}vi{<cr>
-    onoremap il} :<c-u>normal! F}vi{<cr>
-    vnoremap il{ F}oF}%ohol
-    vnoremap il} F}oF}%ohol
-    onoremap al{ :<c-u>normal! F}va{<cr>
-    onoremap al} :<c-u>normal! F}va{<cr>
-    vnoremap al{ F}oF}%
-    vnoremap al} F}oF}%
+    onoremap ia{ :<c-u>normal! F}vi{<cr>
+    onoremap ia} :<c-u>normal! F}vi{<cr>
+    vnoremap ia{ F}oF}%ohol
+    vnoremap ia} F}oF}%ohol
+    onoremap aa{ :<c-u>normal! F}va{<cr>
+    onoremap aa} :<c-u>normal! F}va{<cr>
+    vnoremap aa{ F}oF}%
+    vnoremap aa} F}oF}%
 
     onoremap in[ :<c-u>normal! F]vi[<cr>
     onoremap in] :<c-u>normal! F]vi[<cr>
@@ -420,38 +421,28 @@
     vnoremap an[ f[o%
     vnoremap an] f[o%
 
-    onoremap il[ :<c-u>normal! F]vi[<cr>
-    onoremap il] :<c-u>normal! F]vi[<cr>
-    vnoremap il[ F]oF]%ohol
-    vnoremap il] F]oF]%ohol
-    onoremap al[ :<c-u>normal! F]va[<cr>
-    onoremap al] :<c-u>normal! F]va[<cr>
-    vnoremap al[ F]oF]%
-    vnoremap al] F]oF]%
+    onoremap ia[ :<c-u>normal! F]vi[<cr>
+    onoremap ia] :<c-u>normal! F]vi[<cr>
+    vnoremap ia[ F]oF]%ohol
+    vnoremap ia] F]oF]%ohol
+    onoremap aa[ :<c-u>normal! F]va[<cr>
+    onoremap aa] :<c-u>normal! F]va[<cr>
+    vnoremap aa[ F]oF]%
+    vnoremap aa] F]oF]%
 
     onoremap in" :<c-u>normal! f"vi"<cr>
     vnoremap in" i"
     onoremap an" :<c-u>normal! f"va"<cr>
     vnoremap an" a"
 
-    onoremap il" :<c-u>normal! F"vi"<cr>
-    vnoremap il" F"o2F"loh
-    onoremap al" :<c-u>normal! F"va"<cr>
-    vnoremap al" 2F"oF"
+    onoremap ia" :<c-u>normal! F"vi"<cr>
+    vnoremap ia" F"o2F"loh
+    onoremap aa" :<c-u>normal! F"va"<cr>
+    vnoremap aa" 2F"oF"
 
     " Para modificar fácilmente este archivo
     nnoremap <leader>av :tabnew $MYVIMRC<CR>
     nnoremap <leader>sv :source $MYVIMRC<CR>
-
-    " Abreviaciones
-    iabbrev fro for
-    iabbrev lenght length
-    iabbrev widht  width
-    iabbrev heigth height
-    iabbrev prt    ptr
-    iabbrev tis    this
-    iabbrev tihs   this
-    iabbrev form   from
 
     " Manejo de ventanas
     nnoremap \| :vsplit<space>
