@@ -111,10 +111,11 @@ else
 fi
 
 cp ./vim/snips/emmet.vim ~/.vim/bundle/emmet-vim/autoload
-cp ./vim/other_scripts/jcommenter.vim ~/.vim/bundle/jcommenter.vim/plugin/
-cp ./vim/other_scripts/c_conceal.vim ~/.vim/bundle/c-conceal/after/syntax/c.vim
 cp ./vim/snips/*.snip ~/.vim/bundle/neosnippet-snippets/neosnippets
 cp ./vim/colors/tender.vim ~/.vim/bundle/awesome-vim-colorschemes/colors
+cp ./vim/other_scripts/jcommenter.vim ~/.vim/bundle/jcommenter.vim/plugin/
+cp ./vim/other_scripts/c_conceal.vim ~/.vim/bundle/c-conceal/after/syntax/c.vim
+cp ./vim/other_scripts/next-object.vim ~/.vim/bundle/vim-next-object/plugin
 
 vim +VimProcInstall +qall
 if [ "$1" != "windows" ]; then

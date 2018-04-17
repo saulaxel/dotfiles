@@ -15,9 +15,7 @@
     set relativenumber " NumeraciOn de lIneas desde tu posiciOn actual
     set linebreak
     set showbreak=...\              " Se muestran 3 puntos para simbolizar continuaciOn
-    if has('patch-7.4.354') || has('nvim')
-        set breakindent
-    endif
+    set breakindent
     set undolevels=1000
     set backspace=indent,eol,start
 
@@ -59,9 +57,7 @@
     set splitbelow
     set nrformats+=alpha
     set lazyredraw
-    if has('conceal')
-        set concealcursor=
-    endif
+    set concealcursor=
 " }
 
 " Plugins y sus configuraciones {
