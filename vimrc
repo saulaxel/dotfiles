@@ -1,63 +1,63 @@
 " ConfiguraciOn general {
-    " ConfiguraciOn vim
     scriptencoding utf-8
     filetype off
 
-    " ConfiguraciOn texto y navegaciOn
-    set fileformat=unix   " De observa el ^M en los archivos modo dos
-    set textwidth=100
-    set ruler
-    set showcmd
-    set showmatch
-    set matchpairs+=¡:!
-
+    " VisualizaciOn de elementos auxiliares
     set number
-    set relativenumber " NumeraciOn de lIneas desde tu posiciOn actual
-    set linebreak
-    set showbreak=...\              " Se muestran 3 puntos para simbolizar continuaciOn
-    set breakindent
-    set undolevels=1000
-    set backspace=indent,eol,start
+    set relativenumber
+    set ruler             " Ver lInea y columna actual en la barra inferior
+    set showcmd           " Visualizar comandos en la barra inferior
 
-    " ConfiguraciOn para la busqueda
-    set hlsearch
-    set smartcase
-    set ignorecase
-    set incsearch
-
-    " Apertura de archivos en menú de modo ex
-    "set path+=**       " BUsqueda recursiva de archivos
-    set wildmenu        " Visualizar las opciones del menu ex tab con tab
-    set wildignore=*.o,*.obj,*.bak,*.exe,*.py[co],*.swp,*~,*.pyc,.svn
-
-    " ConfiguraciOn para el indentado automAtico
-    set autoindent
-    set smarttab
-    set tabstop=4
-    set softtabstop=4
-    set shiftwidth=4
-    set expandtab
-
-    " RepresentaciOn de los carActeres invisibles
-    set list
+    set list              " Ver representaciOn de carActeres invisibles
     set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮
 
-    " Guias visuales, se resalta la lInea y columna actuales y la columna 80
+    set linebreak
+    set showbreak=...\    " 3 puntos para simbolizar continuaciOn
+    set breakindent
     set cursorline
     set cursorcolumn
     set colorcolumn=80
 
-    " Extras
-    set nobackup
-    set visualbell
-    set autowrite
-    set spell
-    set spelllang=es
+    " Texto y ediciOn
+    set fileformat=unix   " De observa el ^M en los archivos modo DOS
+    set textwidth=100
+    set showmatch
+    set backspace=indent,eol,start
+    set whichwrap=<,>,h,l " Se puede retroceder/avazar lIneas moviendose horizontalmente
+
     set splitright
     set splitbelow
+
+    " Busqueda
+    set hlsearch
+    set smartcase
+    set ignorecase
+    set incsearch
     set nrformats+=alpha
+
+    " MenU de modo comando
+    "set path+=**       " BUsqueda recursiva de archivos
+    set wildmenu
+    set wildignore=*.o,*.obj,*.bak,*.exe,*.py[co],*.swp,*~,*.pyc,.svn
+
+    " Indentado automAtico
+    set autoindent
+    set smarttab
+    set tabstop=4 softtabstop=4 shiftwidth=4
+    set expandtab
+
+    " Lenguaje
+    set spell
+    set spelllang=es
+
+    " Extras
+    set noswapfile
+    set visualbell
+    set autowrite
     set lazyredraw
     set concealcursor=
+    set formatprg=clang-format
+    set undolevels=1000
 " }
 
 " Plugins y sus configuraciones {
@@ -70,72 +70,61 @@
     Plugin 'tpope/vim-fugitive'
 
     " Completado y revisiOn de cOdigo
-    if has('nvim')                          " Ventana de auto-completado
+    if has('nvim') || (v:version >= 800 && has('python3'))
         Plugin 'Shougo/deoplete.nvim'
-    else
-        if v:version >= 800 && has('python3')
-            Plugin 'Shougo/deoplete.nvim'
+        if !has('nvim')
             Plugin 'roxma/nvim-yarp'
             Plugin 'roxma/vim-hug-neovim-rpc'
-        elseif has('lua')
-            Plugin 'Shougo/neocomplete'
         endif
+        Plugin 'w0rp/ale'                   " RevisiOn de sintaxis
+        Plugin 'carlitux/deoplete-ternjs'   " Completado de javascript
+    else
+        Plugin 'Shougo/neocomplete'
+        Plugin 'Syntastic'                  " RevisiOn de sintaxis
+        Plugin 'ternjs/tern_for_vim'        " Completado de javascript
     endif
-    Plugin 'Shougo/neosnippet'              " Gestor de plantillas
+    Plugin 'Shougo/neosnippet'              " Gestor de plantillas de cOdigo
     Plugin 'Shougo/neosnippet-snippets'     " Plantillas de fabrica
-    Plugin 'Shougo/neoinclude.vim'          " Completado de archivos
+    Plugin 'Shougo/neoinclude.vim'          " Completado de cabeceras
     Plugin 'Shougo/neco-vim'                " Completado de vimscript
     Plugin 'mattn/emmet-vim'                " Completado de html/css
     Plugin 'Shougo/vimproc.vim'             " Requerimiento del que sigue
-    Plugin 'osyo-manga/vim-marching'        " Completado c/cpp
+    Plugin 'osyo-manga/vim-marching'        " Completado C/cpp
     Plugin 'artur-shaik/vim-javacomplete2'  " Completado de java
-    Plugin 'fortran.vim'
-    "Plugin 'ternjs/tern_for_vim'            " Completado de javascript
-    Plugin 'jcommenter.vim'                 " Javadoc
+    Plugin 'jcommenter.vim'                 " Hacer comentarios de java
     Plugin 'davidhalter/jedi-vim'           " Completado de python
-    Plugin 'carlitux/deoplete-ternjs'       " Completado de js
-    Plugin 'vim-utils/vim-man'              " Visualizar manuales dentro de vim
-    if has('nvim') || (v:version >= 800)    " RevisiOn de errores
-        Plugin 'w0rp/ale'
-    else
-        Plugin 'Syntastic'
-    endif
 
-    " Mejoras en la ediciOn y movimiento
+    " EdiciOn
     Plugin 'scrooloose/nerdtree.git'        " Arbol de directorios
-    Plugin 'majutsushi/tagbar'              " Arbol de tags
-    Plugin 'kshenoy/vim-signature'          " Marcas sobre lIneas
+    Plugin 'majutsushi/tagbar'              " Lista de etiquetas de navegaciOn
+    Plugin 'kshenoy/vim-signature'          " Marcas visuales
     Plugin 'matchit.zip'                    " Moverse entre etiquetas html
+    Plugin 'tpope/vim-repeat'               " Repetir plugins con .
+    Plugin 'Tabular'                        " Funciones para alinear cOdigo
+
     Plugin 'PeterRincker/vim-argumentative' " Objeto de texto 'argumento'
     Plugin 'vim-indent-object'              " Objeto de texto 'indentado'
-    Plugin 'kana/vim-textobj-user'          " Definir objetos de texto
+    Plugin 'kana/vim-textobj-user'          " Requerimiento de los proximos
     Plugin 'kana/vim-textobj-line'          " Objeto de texto 'lInea'
     Plugin 'kana/vim-textobj-function'      " Objeto de texto 'funciOn'
     Plugin 'glts/vim-textobj-comment'       " Objeto de texto 'comentario'
-    Plugin 'kana/vim-textobj-entire'        " Objeto de texto 'todo'
-    Plugin 'Julian/vim-textobj-variable-segment' " Segmento de variable
-    Plugin 'zandrmartin/vim-textobj-blanklines' " Bloques en blanco
+    Plugin 'kana/vim-textobj-entire'        " Objeto de texto 'documento entero'
+    Plugin 'svermeulen/vim-next-object'     " Objeto de texto 'siguiente'
     Plugin 'jiangmiao/auto-pairs'           " Completar pares de sImbolos
-    Plugin 'tpope/vim-surround'             " Encerrar / liberar secciones
-    Plugin 'The-NERD-Commenter'             " Comentar / des-comentar
-    Plugin 'tpope/vim-commentary'           " Comentar / des-comentar
-    Plugin 'ReplaceWithRegister'            " Manejo de registros
-    Plugin 'tpope/vim-repeat'               " Repetir plugins con .
-    Plugin 'christoomey/vim-system-copy'    " Copiar a la papelera del sistema
-    Plugin 'Tabular'                        " Alinear cOdigo
-    Plugin 'junegunn/vim-easy-align'        " ''' '''
+    Plugin 'tpope/vim-surround'             " Encerrar/liberar secciones
+    Plugin 'The-NERD-Commenter'             " Operador comentar/des-comentar
+    Plugin 'tpope/vim-commentary'           " Comentar/des-comentar (no es operador)
+    Plugin 'ReplaceWithRegister'            " Operador para manejo de registros
     Plugin 'KabbAmine/vCoolor.vim'          " InserciOn de valores RGB
 
     " Estilo visual y reconocimiento de sintaxis
-    Plugin 'Solarized'                      " Tema de color
+    Plugin 'Solarized'                      " Tema de color 'Solarized'
     Plugin 'rafi/awesome-vim-colorschemes'  " MAs temas de color
-    Plugin 'vim-airline/vim-airline'        " Barra inferior
-    Plugin 'vim-airline/vim-airline-themes' " Temas de color para barra
-    Plugin 'gregsexton/MatchTag'            " Iluminar etiqueta hermana
+    Plugin 'vim-airline/vim-airline'        " Tener una barra inferior cool
+    Plugin 'vim-airline/vim-airline-themes' " Temas de color para el plugin anterior
+    Plugin 'gregsexton/MatchTag'            " Iluminar etiqueta hermana (html)
     Plugin 'ryanoasis/vim-devicons'         " Iconos para los archivos
     Plugin 'ap/vim-css-color'               " Colorear valores RGB
-    "Plugin 'Rykka/colorv.vim'
-    "Plugin 'mattn/webapi-vim'
     Plugin 'sheerun/vim-polyglot'           " Sintaxis de varios lenguajes
     Plugin 'boeckmann/vim-freepascal'       " Sintaxis de freepascal
     Plugin 'dag/vim-fish'                   " Sintaxis de fish
@@ -146,11 +135,6 @@
     Plugin 'discoloda/c-conceal'            " <-+-sImbolos unicode
     Plugin 'dkinzer/vim-schemer'            " <-+-
     Plugin 'calebsmith/vim-lambdify'        " <-+
-
-    " Otros plugins interesantes
-    "Plugin 'thoughtstream/Damian-Conway-s-Vim-Setup/blob/master/plugin/SWTC.vim'
-    "Plugin 'sokoban.vim'
-    "Plugin 'johngrib/vim-game-code-break'
 
     " Todos los plugins deben ir antes de la siguiente lInea
     call vundle#end()
@@ -167,8 +151,6 @@
     smap <C-e> <Plug>(neosnippet_expand_or_jump)
     xmap <C-e> <Plug>(neosnippet_expand_target)
 
-    inoremap <expr><C-g> neocomplete#undo_completion()
-
     " ConfiguraciOn de neosnippet
     let g:neosnippet#enable_snipmate_compatibility = 1
 
@@ -179,7 +161,6 @@
     \   }
 
     let g:marching_enable_neocomplete = 1
-
     set updatetime=50
 
     imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
@@ -199,18 +180,23 @@
     nmap ga <Plug>(EasyAlign)
 
     " ConfiguraciOn de ale / Syntastic
+    let g:opciones_para_C = '-std=gnu11 -Wall -Wextra `pkg-config --cflags glib-2.0`'
+    let g:opciones_para_Cpp = '-std=c++14 -Wall -Wextra'
+
     if has('nvim') || (v:version >= 800)
         let g:ale_set_quickfix = 1
-        let g:ale_cpp_clangcheck_options = "-extra-arg='-std=c++14 -Wall -Wextra"
-        let g:ale_cpp_gcc_options = '-std=c++14 -Wall -Wextra'
-        let g:ale_cpp_clang_options = '-std=c++14 -Wall -Wextra'
-        let g:ale_c_gcc_options = '-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra -std=gnu11'
-        let g:ale_c_clang_options = '-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra -std=gnu11'
+        let g:ale_cpp_clangcheck_options = "-extra-arg='" . g:opciones_para_Cpp
+        let g:ale_cpp_gcc_options = g:opciones_para_Cpp
+        let g:ale_cpp_clang_options = g:opciones_para_Cpp
+        let g:ale_cpp_clangtidy_options = g:opciones_para_Cpp
+        let g:ale_c_gcc_options = g:opciones_para_C
+        let g:ale_c_clang_options = g:opciones_para_C
+        let g:ale_c_clangtidy_options = g:opciones_para_C
         let g:ale_haskell_ghc_options = '-dynamic'
         let g:ale_fortran_gcc_options = '-Wall -Wextra'
     else
-        let g:syntastic_cpp_compiler_options = '-std=c++17 -Wall -Wextra'
-        let g:syntastic_c_compiler_options = '-pthread -I/usr/include/gtk-3.0 -I/usr/include/at-spi2-atk/2.0 -I/usr/include/at-spi-2.0 -I/usr/include/dbus-1.0 -I/usr/lib/x86_64-linux-gnu/dbus-1.0/include -I/usr/include/gtk-3.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/mirclient -I/usr/include/mircore -I/usr/include/mircookie -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/harfbuzz -I/usr/include/pango-1.0 -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12 -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/libpng12 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -Wall -Wextra -std=gnu11'
+        let g:syntastic_cpp_compiler_options = g:opciones_para_Cpp
+        let g:syntastic_c_compiler_options = g:opciones_para_C
         let g:syntastic_haskell_compiler_options = '-dynamic'
         let g:syntastic_fotran_compiler_options = '-Wall -Wextra'
     endif
@@ -226,7 +212,7 @@
                 \ '¡' : '!'
                 \}
 
-    " ConfiguraciOn de airline (La barra de informaciOn de abajo)
+    " ConfiguraciOn de airline
     set laststatus=2
     let g:airline_theme='angr'
     let g:airline#extensions#tabline#enabled = 1
@@ -248,7 +234,6 @@
 
     " ConfiguraciOn de vim-devicons
     set guifont=DroidSansMono\ Nerd\ Font\ 11
-
 " }
 
 " Funciones {
@@ -261,34 +246,13 @@
         set foldnestmax=1
     endfunction
 
-    function! ModoDificil()
-        inoremap <Esc>   <NOp>
-
-        inoremap <Up>    <NOp>
-        inoremap <Down>  <NOp>
-        inoremap <Left>  <NOp>
-        inoremap <Right> <NOp>
-
-        nnoremap <Up>    <NOp>
-        nnoremap <Down>  <NOp>
-        nnoremap <Left>  <NOp>
-        nnoremap <Right> <NOp>
-
-        nnoremap h       <NOp>
-        nnoremap j       <NOp>
-        nnoremap k       <NOp>
-        nnoremap l       <NOp>
-
-        set norelativenumber
-    endfunction
-
     function! ModoWeb()
         set nolist
-        imap <expr><Tab> neosnippet#expandable_or_jumpable() ?
+        imap <Expr><Tab> neosnippet#expandable_or_jumpable() ?
                 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
-        smap <expr><Tab> neosnippet#expandable_or_jumpable() ?
+        smap <Expr><Tab> neosnippet#expandable_or_jumpable() ?
                 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
-        xmap <expr><Tab> neosnippet#expandable_or_jumpable() ?
+        xmap <Expr><Tab> neosnippet#expandable_or_jumpable() ?
                 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
 
         imap <Up>    <C-p>
@@ -328,10 +292,11 @@
         autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
         autocmd FileType java setlocal omnifunc=javacomplete#Complete
     augroup end
+
     " Definiendo el make
     augroup makecomnads
         autocmd!
-        autocmd Filetype c          setlocal makeprg=gcc\ `pkg-config\ --cflags\ gtk+-3.0`\ %\ -std=c11\ -o\ %:t:r\ -Wall\ -lm\ `pkg-config\ --libs\ gtk+-3.0`
+        autocmd Filetype c          setlocal makeprg=gcc\ `pkg-config\ --cflags\ gtk+-3.0`\ %\ -std=gnu11\ -o\ %:t:r\ -Wall\ -lm\ -pthread\ `pkg-config\ --libs\ gtk+-3.0`
         autocmd Filetype cpp        setlocal makeprg=g++\ %\ -std=c++14\ -o\ %:t:r\ -Wall\ -Wextra\ -lm
         autocmd Filetype fortran    setlocal makeprg=gfortran\ %\ -o\ %:t:r\ -Wall\ -Wextra
         autocmd Filetype java       setlocal makeprg=javac\ %
@@ -347,10 +312,10 @@
         autocmd!
         autocmd BufEnter *.nasm setlocal filetype=nasm
         autocmd BufEnter *.jade setlocal filetype=pug
-        autocmd BufEnter *.h setlocal filetype=c
-        autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+        autocmd BufEnter *.h    setlocal filetype=c
+        autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <Expr> <Tab> emmet#expandAbbrIntelligent("\<Tab>")
         autocmd Filetype html,css,scss,sass,pug,php setlocal ts=2 sw=2 sts=2
-        autocmd Filetype html,css,scss,sass,pug setlocal iskeyword+=-
+        autocmd Filetype html,css,scss,sass,pug     setlocal iskeyword+=-
     augroup end
 " }
 
@@ -358,87 +323,20 @@
 
     " Mapeos bAsicos
     let g:mapleader = ','
-    nnoremap Q <nop>
+    nnoremap Q <NOp>
     inoremap kj <Esc>
-    nnoremap <C-k> -l
-    nnoremap <C-j> +l
-    nnoremap <space> za
     nnoremap Y y$
     nmap <leader>ff zfaf
-    nnoremap <leader>cbox :Tabularize /*<cr>vip<Esc>:substitute/ /=/g<cr>r A/<Esc>vipo<Esc>0r/:substitute/ /=/g<cr>:nohlsearch<cr>
-    nnoremap <leader>r :%s/\<<C-r>=expand("<cword>")<CR>\>\C//g<Left><Left>
-    nnoremap <leader>R :%s/\<<C-r>=expand("<cWORD>")<CR>\>\C//g<Left><Left>
+    nnoremap <space> za
+    nnoremap <leader>cbox :Tabularize /*<Return>vip<Esc>:substitute/ /=/g<Return>r A/<Esc>vipo<Esc>0r/:substitute/ /=/g<Return>:nohlsearch<Return>
+    nnoremap <leader>r :%s/\<<C-r>=expand("<cword>")<Return>\>\C//g<Left><Left>
+    nnoremap <leader>R :%s/\<<C-r>=expand("<cWORD>")<Return>\>\C//g<Left><Left>
     inoremap <leader>pk <Esc>:VCoolor<Return>a
     inoremap <leader>scp <Esc>:!gpick<Return>a
 
-    " Operadores para el siguiente bloque
-    onoremap in( :<c-u>normal! f)vi(<cr>
-    onoremap in) :<c-u>normal! f)vi(<cr>
-    vnoremap in( f(lo%h
-    vnoremap in) f(lo%h
-    onoremap an( :<c-u>normal! f)va(<cr>
-    onoremap an) :<c-u>normal! f)va(<cr>
-    vnoremap an( f(o%
-    vnoremap an) f(o%
-
-    onoremap ia( :<c-u>normal! F)vi(<cr>
-    onoremap ia) :<c-u>normal! F)vi(<cr>
-    vnoremap ia( F)oF)%ohol
-    vnoremap ia) F)oF)%ohol
-    onoremap aa( :<c-u>normal! F)va(<cr>
-    onoremap aa) :<c-u>normal! F)va(<cr>
-    vnoremap aa( F)oF)%
-    vnoremap aa) F)oF)%
-
-    onoremap in{ :<c-u>normal! f}vi{<cr>
-    onoremap in} :<c-u>normal! f}vi{<cr>
-    vnoremap in{ f{lo%h
-    vnoremap in} f{lo%h
-    onoremap an{ :<c-u>normal! f}va{<cr>
-    onoremap an} :<c-u>normal! f}va{<cr>
-    vnoremap an{ f{o%
-    vnoremap an} f{o%
-
-    onoremap ia{ :<c-u>normal! F}vi{<cr>
-    onoremap ia} :<c-u>normal! F}vi{<cr>
-    vnoremap ia{ F}oF}%ohol
-    vnoremap ia} F}oF}%ohol
-    onoremap aa{ :<c-u>normal! F}va{<cr>
-    onoremap aa} :<c-u>normal! F}va{<cr>
-    vnoremap aa{ F}oF}%
-    vnoremap aa} F}oF}%
-
-    onoremap in[ :<c-u>normal! F]vi[<cr>
-    onoremap in] :<c-u>normal! F]vi[<cr>
-    vnoremap in[ f[lo%h
-    vnoremap in] f[lo%h
-    onoremap an[ :<c-u>normal! f]va[<cr>
-    onoremap an] :<c-u>normal! f]va[<cr>
-    vnoremap an[ f[o%
-    vnoremap an] f[o%
-
-    onoremap ia[ :<c-u>normal! F]vi[<cr>
-    onoremap ia] :<c-u>normal! F]vi[<cr>
-    vnoremap ia[ F]oF]%ohol
-    vnoremap ia] F]oF]%ohol
-    onoremap aa[ :<c-u>normal! F]va[<cr>
-    onoremap aa] :<c-u>normal! F]va[<cr>
-    vnoremap aa[ F]oF]%
-    vnoremap aa] F]oF]%
-
-    onoremap in" :<c-u>normal! f"vi"<cr>
-    vnoremap in" i"
-    onoremap an" :<c-u>normal! f"va"<cr>
-    vnoremap an" a"
-
-    onoremap ia" :<c-u>normal! F"vi"<cr>
-    vnoremap ia" F"o2F"loh
-    onoremap aa" :<c-u>normal! F"va"<cr>
-    vnoremap aa" 2F"oF"
-
-    " Para modificar fácilmente este archivo
-    nnoremap <leader>av :tabnew $MYVIMRC<CR>
-    nnoremap <leader>sv :source $MYVIMRC<CR>
+    " Para modificar este archivo y aplicar los cambios
+    nnoremap <leader>av :tabnew $MYVIMRC<Return>
+    nnoremap <leader>sv :source $MYVIMRC<Return>
 
     " Manejo de ventanas
     nnoremap \| :vsplit<space>
@@ -446,28 +344,24 @@
 
     " Manejo de buffers
     nnoremap <leader>bn :edit<Space>
-
-    nnoremap <leader>bk :bnext<CR>
-    nnoremap <leader>bj :bprevious<CR>
-    nnoremap <leader>bh :bfirst<CR>
-    nnoremap <leader>bl :blast<CR>
-
-    nnoremap <leader>bd :bdelete<CR>
+    nnoremap <leader>bk :bnext<Return>
+    nnoremap <leader>bj :bprevious<Return>
+    nnoremap <leader>bh :bfirst<Return>
+    nnoremap <leader>bl :blast<Return>
+    nnoremap <leader>bd :bdelete<Return>
 
     " Manejo de tabulaciones
     nnoremap <leader>tn :tabnew<Space>
-
-    nnoremap <leader>tk :tabnext<CR>
-    nnoremap <leader>tj :tabprev<CR>
-    nnoremap <leader>th :tabfirst<CR>
-    nnoremap <leader>tl :tablast<CR>
-    nnoremap <leader>td :q<CR>
+    nnoremap <leader>tk :tabnext<Return>
+    nnoremap <leader>tj :tabprev<Return>
+    nnoremap <leader>th :tabfirst<Return>
+    nnoremap <leader>tl :tablast<Return>
+    nnoremap <leader>td :quit<Return>
 
     " Abrir manuales desde el archivo
-    augroup man
+    augroup configuracion_comando_man
         autocmd!
-        autocmd FileType c   nnoremap <buffer> <leader>F :Man <C-r><C-w>
-        autocmd FileType cpp nnoremap <buffer> <leader>F :Man std::<C-r><C-w>
+        autocmd FileType cpp nnoremap <buffer> K yiw:sp<CR>:te<CR>Acppman <C-\><C-n>pA<CR>
     augroup end
 
     " Mapeos del modo comando {
@@ -482,8 +376,8 @@
 
         " Escribir archivos que requieren sudo
         cnoremap w!! w !sudo tee % >/dev/null
-        " Evitar el uso errOneo de mayUsculas
-        " al intentar salir o guardar un archivo
+
+        " Evitar uso errOneo de mayUsculas al intentar salIr
         cnoremap Q q
         cnoremap W w
         cnoremap WW W
@@ -497,19 +391,15 @@
         tmap     kj    <Esc>
     endif
 
-    " Abrir fAcilmente el Arbol de directorios y de etiquetas
+    " Ayudas estilo IDE
     noremap <F5> :NERDTreeToggle<Return>
     noremap <F6> :TagbarToggle<Return>
-
-    " CorrecciOn de errores en el mismo archivo
     noremap <F9> :make<Return>:call Ejecutar()<Return>
 " }
 
 " Tema de color {
     " ConfiguraciOn de la paleta de colores
     syntax enable
-    "set background=dark
     set t_Co=256            " Usar terminal con 256 colores
-    "let g:solarized_termcolors=16
     colorscheme tender
 " }
