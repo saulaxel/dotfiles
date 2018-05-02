@@ -19,11 +19,11 @@
     set colorcolumn=80
 
     " Texto y ediciOn
-    set fileformat=unix   " De observa el ^M en los archivos modo DOS
+    set fileformat=unix
     set textwidth=100
     set showmatch
     set backspace=indent,eol,start
-    set whichwrap=<,>,h,l " Se puede retroceder/avazar lIneas moviendose horizontalmente
+    set whichwrap=<,>,h,l " Se puede retroceder/avanzar lIneas moviendose horizontalmente
 
     set splitright
     set splitbelow
@@ -93,6 +93,7 @@
     Plugin 'artur-shaik/vim-javacomplete2'  " Completado de java
     Plugin 'jcommenter.vim'                 " Hacer comentarios de java
     Plugin 'davidhalter/jedi-vim'           " Completado de python
+    Plugin 'tkhren/vim-fake'                " Insertar texto de muestra
 
     " EdiciOn
     Plugin 'scrooloose/nerdtree.git'        " Arbol de directorios
@@ -116,6 +117,7 @@
     Plugin 'tpope/vim-commentary'           " Comentar/des-comentar (no es operador)
     Plugin 'ReplaceWithRegister'            " Operador para manejo de registros
     Plugin 'KabbAmine/vCoolor.vim'          " InserciOn de valores RGB
+    Plugin 'sedm0784/vim-you-autocorrect'   " Corrección de errores
 
     " Estilo visual y reconocimiento de sintaxis
     Plugin 'Solarized'                      " Tema de color 'Solarized'
@@ -175,12 +177,27 @@
     " ConfiguraciOn de jcommenter
     nnoremap <leader>jd :call JCommentWriter()<Return>
 
+    " ConfiguraciOn de vim-fake
+    call fake#define('sex', 'fake#choice(["male", "female"])')
+    call fake#define('name', 'fake#int(1) ? fake#gen("male_name")'
+                            \ . ' : fake#gen("female_name")')
+    call fake#define('fullname', 'fake#gen("name") . " " . fake#gen("surname")')
+    call fake#define('sentense', 'fake#capitalize('
+                            \ . 'join(map(range(fake#int(3,15)),"fake#gen(\"nonsense\")"))'
+                            \ . ' . fake#chars(1,"..............!?"))')
+    call fake#define('paragraph', 'join(map(range(fake#int(3,10)),"fake#gen(\"sentense\")"))')
+    call fake#define('email', 'tolower(fake#gen("name")'
+                            \ . '. (fake#int(1) ? "" : fake#choice(["_", "."]) . fake#gen("surname"))'
+                            \ . '. (fake#int(1) ? "" : (fake#int(10, 99)))'
+                            \ . '. "@" . fake#choice(["google", "yahoo", "hotmail", "outlook"])'
+                            \ . '. fake#choice([".com", ".unam.mx", ".net", ".com.mx", ".co.uk"]))')
+
     " ConfiguraciOn de easy-align
     xmap ga <Plug>(EasyAlign)
     nmap ga <Plug>(EasyAlign)
 
     " ConfiguraciOn de ale / Syntastic
-    let g:opciones_para_C = '-std=gnu11 -Wall -Wextra -Wstrict-prototypes `pkg-config --cflags glib-2.0`'
+    let g:opciones_para_C = '-std=gnu11 -Wall -Wextra -Wstrict-prototypes `pkg-config --cflags glib-2.0` -Wno-missing-field-initializers'
     let g:opciones_para_Cpp = '-std=c++14 -Wall -Wextra'
 
     if has('nvim') || (v:version >= 800)
@@ -192,6 +209,8 @@
         let g:ale_c_gcc_options = g:opciones_para_C
         let g:ale_c_clang_options = g:opciones_para_C
         let g:ale_c_clangtidy_options = g:opciones_para_C
+        let g:ale_c_clangtidy_checks = ['*', '-readability-braces-around-statements',
+                    \'-google-readability-braces-around-statements', '-llvm-header-guard']
         let g:ale_haskell_ghc_options = '-dynamic'
         let g:ale_fortran_gcc_options = '-Wall -Wextra'
     else
@@ -248,11 +267,11 @@
 
     function! ModoWeb()
         set nolist
-        imap <Expr><Tab> neosnippet#expandable_or_jumpable() ?
+        imap <expr><Tab> neosnippet#expandable_or_jumpable() ?
                 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
-        smap <Expr><Tab> neosnippet#expandable_or_jumpable() ?
+        smap <expr><Tab> neosnippet#expandable_or_jumpable() ?
                 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
-        xmap <Expr><Tab> neosnippet#expandable_or_jumpable() ?
+        xmap <expr><Tab> neosnippet#expandable_or_jumpable() ?
                 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
 
         imap <Up>    <C-p>
@@ -296,7 +315,7 @@
     " Definiendo el make
     augroup makecomnads
         autocmd!
-        autocmd Filetype c          setlocal makeprg=gcc\ `pkg-config\ --cflags\ gtk+-3.0`\ %\ -std=gnu11\ -o\ %:t:r\ -Wall\ -lm\ -pthread\ `pkg-config\ --libs\ gtk+-3.0`
+        autocmd Filetype c          setlocal makeprg=gcc\ `pkg-config\ --cflags\ gtk+-3.0`\ %\ -std=gnu11\ -o\ %:t:r\ -lm\ -pthread\ -lX11\ `pkg-config\ --libs\ gtk+-3.0`
         autocmd Filetype cpp        setlocal makeprg=g++\ %\ -std=c++14\ -o\ %:t:r\ -Wall\ -Wextra\ -lm
         autocmd Filetype fortran    setlocal makeprg=gfortran\ %\ -o\ %:t:r\ -Wall\ -Wextra
         autocmd Filetype java       setlocal makeprg=javac\ %
@@ -313,7 +332,7 @@
         autocmd BufEnter *.nasm setlocal filetype=nasm
         autocmd BufEnter *.jade setlocal filetype=pug
         autocmd BufEnter *.h    setlocal filetype=c
-        autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <Expr> <Tab> emmet#expandAbbrIntelligent("\<Tab>")
+        autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <expr> <Tab> emmet#expandAbbrIntelligent("\<Tab>")
         autocmd Filetype html,css,scss,sass,pug,php setlocal ts=2 sw=2 sts=2
         autocmd Filetype html,css,scss,sass,pug     setlocal iskeyword+=-
     augroup end
@@ -398,7 +417,6 @@
 " }
 
 " Tema de color {
-    " ConfiguraciOn de la paleta de colores
     syntax enable
     set t_Co=256            " Usar terminal con 256 colores
     colorscheme tender
