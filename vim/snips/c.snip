@@ -6,7 +6,6 @@ abbr        main()
 	int main(void)
 	{
 		${2}
-		return 0;
 	}
 
 snippet     basic2
@@ -15,7 +14,7 @@ abbr        int main(...)
 	#include <stdio.h>
 	#include <stdlib.h>${1}
 	
-	int main(int argc, char ** argv)
+	int main(int argc, char * argv[])
 	{
 		${0}
 
@@ -33,7 +32,7 @@ abbr        int main(...) { EXIT... }
 	
 	int main(int argc, char **argv)
 	{
-		if( argc < ${2:2} ) {
+		if (argc < ${2:2}) {
 			display_usage();
 			return EXIT_SUCCESS;
 		}
@@ -55,8 +54,13 @@ abbr        int main(...) { EXIT... }
 		exit(EXIT_FAILURE);
 	}
 
-snippet     p
+snippet     puts
+alias p
     puts(${1})
+
+snippet     fputs
+alias fp
+    fputs(${1}, ${2:stderr})
 
 snippet     if
 options     head
@@ -159,6 +163,7 @@ abbr        struct {}
 # Typedef struct
 snippet struct_typedef
 options     head
+alias   typedef_struct
     typedef struct ${1:#:name} {
         ${0:TARGET:data}
     };
@@ -176,16 +181,14 @@ options head
 	int main(void)
 	{
 		${0:TARGET}
-		return 0;
 	}
 
 
 snippet main2
 options     head
-	int main(int argc, char *argv[])
+	int main(int argc, char * argv[])
 	{
 		${0:TARGET}
-		return 0;
 	}
 
 # #include <...>
@@ -202,10 +205,10 @@ alias   #inc2, #include2
 
 snippet ifndef
 options     head
-alias   #ifndef
+alias   #ifndef,once
 abbr #ifndef ... #define ... #endif
-    #ifndef $1
-    #define ${1:#:SYMBOL}
+    #ifndef ${1:#:SYMBOL}
+    #define $1
     ${2}
     #endif /* $1 */
 
@@ -213,16 +216,6 @@ snippet def
 options     head
 alias   #def, #define
     #define 
-
-# Include-Guard
-snippet once
-options     head
-abbr include-guard
-    #ifndef ${1:SYMBOL}
-        #define $1
-
-        ${0:TARGET}
-    #endif /* end of include guard */
 
 # Ternary conditional operator
 snippet conditional
@@ -243,6 +236,10 @@ snippet scanf
 abbr    scanf("...",...);
     scanf("${1}", ${2})
 
+snippet fscanf
+abbr    fscanf("...",...);
+    fscanf(${1:archivo}, "${2}", ${3})
+
 snippet comment
 alias /*
     /* ${1:#:comment} */
@@ -254,10 +251,11 @@ alias size
 
 snippet helloworld
 options     head
+alias   holamundo
     #include <stdio.h>
     int main(int argc, char const* argv[])
     {
-        puts("hello, world!");
+        puts("¡Hola, Mundo!");
         return 0;
     }
 

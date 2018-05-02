@@ -116,6 +116,9 @@ cp ./vim/colors/tender.vim ~/.vim/bundle/awesome-vim-colorschemes/colors
 cp ./vim/other_scripts/jcommenter.vim ~/.vim/bundle/jcommenter.vim/plugin/
 cp ./vim/other_scripts/c_conceal.vim ~/.vim/bundle/c-conceal/after/syntax/c.vim
 cp ./vim/other_scripts/next-object.vim ~/.vim/bundle/vim-next-object/plugin
+cp ./vim/other_scripts/clang_tidy_sangria_correcta.sh ~/.vim
+gcc ./vim/other_scripts/quitar_espacios.c -o ~/.vim/cortar
+gcc ./vim/other_scripts/aniadir_espacios.c -o ~/.vim/pegar
 
 vim +VimProcInstall +qall
 if [ "$1" != "windows" ]; then

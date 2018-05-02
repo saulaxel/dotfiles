@@ -5,24 +5,22 @@ options     head
 abbr        main()
 	#include <iostream>${1}
 
-	int main(void) {
+	int main()
+	{
 		${2}
-		return 0;
 	}
 
 snippet     basic2
 options     head
 abbr        int main(...)
-	#include <iostream>${1}
-
+	#include <iostream>
 	using std::cout;
-	using std::cin ;
-	using std::endl;${2}
+	using std::cin;
+	using std::endl;${1}
 
-	int main(int argc, char ** argv) {
+	int main(int argc, char * argv[])
+	{
 		${0}
-
-		return EXIT_SUCCESS;
 	}
 
 # #include <...>
@@ -140,7 +138,8 @@ snippet     helloworld
 abbr        #include<iostream> int main...
     #include <iostream>
 
-    int main(int argc, char const* argv[]) {
+    int main(int argc, char const* argv[])
+    {
         std::cout << "hello, world!" << std::endl;
         return 0;
     }

@@ -56,7 +56,7 @@
     set autowrite
     set lazyredraw
     set concealcursor=
-    set formatprg=clang-format
+    set formatprg=~/.vim/clang_tidy_sangria_correcta.sh
     set undolevels=1000
 " }
 
@@ -180,7 +180,7 @@
     nmap ga <Plug>(EasyAlign)
 
     " ConfiguraciOn de ale / Syntastic
-    let g:opciones_para_C = '-std=gnu11 -Wall -Wextra `pkg-config --cflags glib-2.0`'
+    let g:opciones_para_C = '-std=gnu11 -Wall -Wextra -Wstrict-prototypes `pkg-config --cflags glib-2.0`'
     let g:opciones_para_Cpp = '-std=c++14 -Wall -Wextra'
 
     if has('nvim') || (v:version >= 800)
