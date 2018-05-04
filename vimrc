@@ -178,19 +178,7 @@
     nnoremap <leader>jd :call JCommentWriter()<Return>
 
     " ConfiguraciOn de vim-fake
-    call fake#define('sex', 'fake#choice(["male", "female"])')
-    call fake#define('name', 'fake#int(1) ? fake#gen("male_name")'
-                            \ . ' : fake#gen("female_name")')
-    call fake#define('fullname', 'fake#gen("name") . " " . fake#gen("surname")')
-    call fake#define('sentense', 'fake#capitalize('
-                            \ . 'join(map(range(fake#int(3,15)),"fake#gen(\"nonsense\")"))'
-                            \ . ' . fake#chars(1,"..............!?"))')
-    call fake#define('paragraph', 'join(map(range(fake#int(3,10)),"fake#gen(\"sentense\")"))')
-    call fake#define('email', 'tolower(fake#gen("name")'
-                            \ . '. (fake#int(1) ? "" : fake#choice(["_", "."]) . fake#gen("surname"))'
-                            \ . '. (fake#int(1) ? "" : (fake#int(10, 99)))'
-                            \ . '. "@" . fake#choice(["google", "yahoo", "hotmail", "outlook"])'
-                            \ . '. fake#choice([".com", ".unam.mx", ".net", ".com.mx", ".co.uk"]))')
+    let g:fake_bootstrap = 1
 
     " ConfiguraciOn de easy-align
     xmap ga <Plug>(EasyAlign)
