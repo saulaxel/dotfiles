@@ -1,4 +1,4 @@
-" ConfiguraciOn general {
+" ConfiguraciOn general {{{
     scriptencoding utf-8
     filetype off
 
@@ -23,7 +23,6 @@
     set textwidth=100
     set showmatch
     set backspace=indent,eol,start
-    set whichwrap=<,>,h,l " Se puede retroceder/avanzar lIneas moviendose horizontalmente
 
     set splitright
     set splitbelow
@@ -58,9 +57,9 @@
     set concealcursor=
     set formatprg=~/.vim/clang_tidy_sangria_correcta.sh
     set undolevels=1000
-" }
+" }}}
 
-" Plugins y sus configuraciones {
+" Plugins y sus configuraciones {{{
     " Fijar la ruta en tiempo de ejecuciOn para incluir Vundle e inicializarlo
     set runtimepath+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
@@ -241,9 +240,9 @@
 
     " ConfiguraciOn de vim-devicons
     set guifont=DroidSansMono\ Nerd\ Font\ 11
-" }
+" }}}
 
-" Funciones {
+" Funciones {{{
     function! VerMarcas()
         syntax enable
     endfunction
@@ -286,9 +285,9 @@
             setlocal nospell
         endif
     endfunction
-" }
+" }}}
 
-" Comandos automAticos {
+" Comandos automAticos {{{
     " Definiendo el gestor de autocompletado de cada tipo
     augroup omnifunctions
         autocmd!
@@ -320,13 +319,13 @@
         autocmd BufEnter *.nasm setlocal filetype=nasm
         autocmd BufEnter *.jade setlocal filetype=pug
         autocmd BufEnter *.h    setlocal filetype=c
-        autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <expr> <Tab> emmet#expandAbbrIntelligent("\<Tab>")
+        autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <buffer> <expr> <Tab> emmet#expandAbbrIntelligent("\<Tab>")
         autocmd Filetype html,css,scss,sass,pug,php setlocal ts=2 sw=2 sts=2
         autocmd Filetype html,css,scss,sass,pug     setlocal iskeyword+=-
     augroup end
-" }
+" }}}
 
-" Mapeos {
+" Mapeos {{{
 
     " Mapeos bAsicos
     let g:mapleader = ','
@@ -376,10 +375,10 @@
         cnoremap <C-a> <Home>
         cnoremap <C-b> <Left>
         cnoremap <C-f> <Right>
-        cnoremap <C-d> <Delete>
+        "cnoremap <C-d> <Delete>
         cnoremap <M-b> <S-left>
         cnoremap <M-f> <S-right>
-        cnoremap <M-d> <S-right><C-w>
+        "cnoremap <M-d> <S-right><C-w>
 
         " Escribir archivos que requieren sudo
         cnoremap w!! w !sudo tee % >/dev/null
@@ -404,8 +403,15 @@
     noremap <F9> :make<Return>:call Ejecutar()<Return>
 " }
 
-" Tema de color {
+" }}}
+
+" Tema de color {{{
     syntax enable
     set t_Co=256            " Usar terminal con 256 colores
     colorscheme tender
-" }
+" }}}
+
+"let g:ale_linters = {
+            "\   'c': ['gcc', 'clang'],
+            "\}
+" vim: fdm=marker

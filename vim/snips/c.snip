@@ -90,42 +90,36 @@ abbr        if () {} else {}
     }
 
 snippet     fori
-options     head
 abbr        for (int i; ...; ++i) {}
     for (int ${1:i} = 0; $1 < ${2}; ++$1) {
         ${0:#:TARGET}
     }
 
 snippet     forri
-options     head
 abbr        for (int i; ...; --i) {}
     for (int ${1:i} = ${2}; $1 >= 0; --$1) {
         ${0:#:TARGET}
     }
 
 snippet     for
-options     head
 abbr        for () {}
     for (${1:int }${2:i} = ${3:0}; $2 < ${4}; $2${5}) {
         ${0:#:TARGET}
     }
 
 snippet     while
-options     head
 abbr        while () {}
     while (${1:#:condition}) {
         ${0:TARGET}
     }
 
 snippet     do_while
-options     head
 alias       do
     do {
         ${0:TARGET:code}
     } while(${1:#:condition});
 
 snippet     switch
-options     head
 abbr        switch () {}
 	switch (${1:#:var}) {
 		case ${2:#:val}:
