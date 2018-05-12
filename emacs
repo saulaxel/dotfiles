@@ -44,7 +44,11 @@
 (global-hl-line-mode t)
 
 ; Un tamanio de fuente considerable
-(set-default-font "Ubuntu Mono-8")
+; (set-default-font "Ubuntu Mono-8")
+
+; Desactivar la creación de archivos extra
+(setq make-backup-files nil)
+(setq auto-save-default nil)
 
 ;; Repositorios de paquetes
 (require 'package)
