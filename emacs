@@ -4,6 +4,8 @@
 (set-default 'cursor-typel
              'hbar)
 
+(blink-cursor-mode 0)
+
 ; Sin barra de menU
 (menu-bar-mode 0)
 
@@ -44,7 +46,7 @@
 (global-hl-line-mode t)
 
 ; Un tamanio de fuente considerable
-; (set-default-font "Ubuntu Mono-8")
+(set-frame-font "Ubuntu Mono-10" nil t)
 
 ; Desactivar la creación de archivos extra
 (setq make-backup-files nil)
@@ -56,6 +58,7 @@
              '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
+(setq evil-want-C-u-scroll t)
 (require 'evil)
 (evil-mode 1)
 
@@ -76,6 +79,15 @@
 (require 'evil-surround)
 (global-evil-surround-mode 1)
 
+(require 'evil-args)
+(define-key evil-inner-text-objects-map "," 'evil-inner-arg)
+(define-key evil-outer-text-objects-map "," 'evil-outer-arg)
+(define-key evil-normal-state-map ",n" 'evil-forward-arg)
+(define-key evil-normal-state-map ",N" 'evil-backward-arg)
+;; (define-key evil-motion-state-map ",n" 'evil-forward-arg)
+;; (define-key evil-motion-state-map ",p" 'evil-backward-arg)
+(define-key evil-normal-state-map ",o" 'evil-jump-out-args)
+
 (require 'evil-matchit)
 (global-evil-matchit-mode 1)
 
@@ -89,8 +101,12 @@
 (setq whitespace-style '(face empty tabs lines-trail trailing))
 (global-whitespace-mode t)
 
+(require 'flycheck)
+(setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+(global-flycheck-mode)
+
 ; Para emacs 25 o superior:
-;(require 'fill-column-indicator)kjjk
+;(require 'fill-column-indicator)
 
 ; Salir de modo normal presionando "kj"
 (key-chord-define evil-insert-state-map "kj" 'evil-normal-state)

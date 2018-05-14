@@ -54,6 +54,7 @@
     set visualbell
     set autowrite
     set lazyredraw
+    set path+=/usr/lib/gcc/x86_64-linux-gnu/5/include,/usr/include/x86_64-linux-gnu/,/usr/include/glib-2.0/,/usr/include/glib-2.0/glib,/usr/include/gtk-3.0,/usr/include/gtk-3.0/unix-print
     set concealcursor=
     set formatprg=~/.vim/clang_tidy_sangria_correcta.sh
     set undolevels=1000
@@ -98,6 +99,7 @@
     Plugin 'scrooloose/nerdtree.git'        " Arbol de directorios
     Plugin 'majutsushi/tagbar'              " Lista de etiquetas de navegaciOn
     Plugin 'kshenoy/vim-signature'          " Marcas visuales
+    Plugin 'prendradjaja/vim-vertigo'       " Movimiento lIneas
     Plugin 'matchit.zip'                    " Moverse entre etiquetas html
     Plugin 'tpope/vim-repeat'               " Repetir plugins con .
     Plugin 'Tabular'                        " Funciones para alinear cOdigo
@@ -217,6 +219,14 @@
                 \ '¿' : '?',
                 \ '¡' : '!'
                 \}
+
+    " ConfiguraciOn de vim-vertigo
+    nnoremap <silent> <C-j> :<C-U>VertigoDown n<CR>
+    vnoremap <silent> <C-j> :<C-U>VertigoDown v<CR>
+    onoremap <silent> <C-j> :<C-U>VertigoDown o<CR>
+    nnoremap <silent> <C-k> :<C-U>VertigoUp n<CR>
+    vnoremap <silent> <C-k> :<C-U>VertigoUp v<CR>
+    onoremap <silent> <C-k> :<C-U>VertigoUp o<CR>
 
     " ConfiguraciOn de airline
     set laststatus=2
