@@ -166,7 +166,7 @@ snippet switch
 abbr    switch () {}
     switch (${1:#:var})
     {
-    case ${2:#:val}:
+      case ${2:#:val}:
         ${0:TARGET}
         break;
     }
@@ -174,8 +174,8 @@ abbr    switch () {}
 snippet case
 options head
     case ${1:#:val}:
-        ${0:TARGET}
-        break;
+      ${0:TARGET}
+      break;
 
 snippet break
 options head

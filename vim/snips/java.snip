@@ -82,15 +82,24 @@ alias   fore
         ${3:TARGET}
     }
 
-snippet switch
-    switch (${1}) {
-        ${2:TARGET}
-    }
+snippet     switch
+abbr        switch () {}
+	switch (${1:#:var}) {
+	  case ${2:#:val}:
+		${3:TARGET}
+		break;
 
-snippet case
+	  default:
+		${0:TARGET}
+		break;
+	}
+
+snippet     case
+options     head
+abbr        case: break;
     case ${1}:
-        ${2:TARGET}
-        break;
+      ${2:TARGET}
+      break;
 
 snippet br
     break;
@@ -98,7 +107,7 @@ snippet br
 snippet default
 alias   de
     default:
-        ${0}
+      ${0}
 
 snippet try
     try {

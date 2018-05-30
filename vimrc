@@ -114,8 +114,8 @@
     Plugin 'svermeulen/vim-next-object'     " Objeto de texto 'siguiente'
     Plugin 'jiangmiao/auto-pairs'           " Completar pares de sImbolos
     Plugin 'tpope/vim-surround'             " Encerrar/liberar secciones
-    Plugin 'The-NERD-Commenter'             " Operador comentar/des-comentar
-    Plugin 'tpope/vim-commentary'           " Comentar/des-comentar (no es operador)
+    Plugin 'tpope/vim-commentary'           " Operador comentar/des-comentar
+    Plugin 'The-NERD-Commenter'             " Comentar/des-comentar (no es operador)
     Plugin 'ReplaceWithRegister'            " Operador para manejo de registros
     Plugin 'KabbAmine/vCoolor.vim'          " InserciOn de valores RGB
     Plugin 'sedm0784/vim-you-autocorrect'   " Corrección de errores
@@ -411,7 +411,6 @@
     noremap <F5> :NERDTreeToggle<Return>
     noremap <F6> :TagbarToggle<Return>
     noremap <F9> :make<Return>:call Ejecutar()<Return>
-" }
 
 " }}}
 

@@ -122,21 +122,21 @@ alias       do
 snippet     switch
 abbr        switch () {}
 	switch (${1:#:var}) {
-		case ${2:#:val}:
-			${3:TARGET}
-			break;${4}
+	  case ${2:#:val}:
+		${3:TARGET}
+		break;
 
-		default:
-			${0:TARGET}
-			break;
+	  default:
+		${0:TARGET}
+		break;
 	}
 
 snippet     case
 options     head
 abbr        case: break;
 	case ${1}:
-		${2}
-		break;
+	  ${2}
+	  break;
 
 snippet     function
 options     head
