@@ -1,3 +1,26 @@
+snippet     basic1
+options     head
+	class Program
+	{
+		public static void Main()
+		{
+			${0}
+		}
+	}
+
+snippet		basic2
+options		head
+	namespace ${1:#:Name}
+	{
+		class Program
+		{
+			public static void Main(string[] args)
+			{
+				${0}
+			}
+		}
+	}
+
 # Structure
 snippet namespace
 alias   name

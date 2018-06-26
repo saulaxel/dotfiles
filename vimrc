@@ -190,6 +190,10 @@
     let g:opciones_para_Cpp = '-std=c++14 -Wall -Wextra'
 
     if has('nvim') || (v:version >= 800)
+        let g:ale_linters = {
+                    \   'c': ['clang'],
+                    \   'cpp': ['clang'],
+                    \}
         let g:ale_set_quickfix = 1
         let g:ale_cpp_clangcheck_options = "-extra-arg='" . g:opciones_para_Cpp
         let g:ale_cpp_gcc_options = g:opciones_para_Cpp
@@ -221,6 +225,7 @@
                 \}
 
     " ConfiguraciOn de vim-vertigo
+    let g:Vertigo_homerow = 'asdfghjkl-'
     nnoremap <silent> <C-j> :<C-U>VertigoDown n<CR>
     vnoremap <silent> <C-j> :<C-U>VertigoDown v<CR>
     onoremap <silent> <C-j> :<C-U>VertigoDown o<CR>
@@ -295,6 +300,19 @@
             setlocal nospell
         endif
     endfunction
+
+    function! AlternarRevisionEstatica()
+        ALEDisable
+        if empty(g:ale_linters)
+            let g:ale_linters = {
+                        \   'c': ['clang'],
+                        \   'cpp': ['clang'],
+                        \}
+        else
+            let g:ale_linters = {}
+        endif
+        ALEEnable
+    endfunction
 " }}}
 
 " Comandos automAticos {{{
@@ -339,7 +357,9 @@
 
     " Mapeos bAsicos
     let g:mapleader = ','
-    nnoremap Q <NOp>
+    nnoremap Q !!$SHELL<Return>
+    vnoremap Q !$SHELL<Return>
+    nnoremap ñ "
     inoremap kj <Esc>
     nnoremap Y y$
     nmap <leader>ff zfaf
@@ -419,8 +439,4 @@
     set t_Co=256            " Usar terminal con 256 colores
     colorscheme tender
 " }}}
-
-"let g:ale_linters = {
-            "\   'c': ['gcc', 'clang'],
-            "\}
 " vim: fdm=marker

@@ -91,6 +91,9 @@
 (require 'evil-matchit)
 (global-evil-matchit-mode 1)
 
+(require 'linum-relative)
+(linum-relative-mode)
+
 (require 'emmet-mode)
 (emmet-mode 1)
 
