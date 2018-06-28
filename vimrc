@@ -186,7 +186,7 @@
     nmap ga <Plug>(EasyAlign)
 
     " ConfiguraciOn de ale / Syntastic
-    let g:opciones_para_C = '-std=gnu11 -Wall -Wextra -Wstrict-prototypes `pkg-config --cflags glib-2.0` -Wno-missing-field-initializers'
+    let g:opciones_para_C = '-std=gnu11 -Wall -Wextra -Wstrict-prototypes `pkg-config --cflags glib-2.0` -Wno-missing-field-initializers -Wno-unused-function'
     let g:opciones_para_Cpp = '-std=c++14 -Wall -Wextra'
 
     if has('nvim') || (v:version >= 800)
@@ -359,9 +359,14 @@
     let g:mapleader = ','
     nnoremap Q !!$SHELL<Return>
     vnoremap Q !$SHELL<Return>
-    nnoremap ñ "
+    nnoremap <Up>    <C-W>+
+    nnoremap <Down>  <C-W>-
+    nnoremap <Left>  <C-W>>
+    nnoremap <Right> <C-W><
     inoremap kj <Esc>
     nnoremap Y y$
+    nnoremap ñ "
+    nnoremap // :noh<Return>
     nmap <leader>ff zfaf
     nnoremap <space> za
     nnoremap <leader>cbox :Tabularize /*<Return>vip<Esc>:substitute/ /=/g<Return>r A/<Esc>vipo<Esc>0r/:substitute/ /=/g<Return>:nohlsearch<Return>
