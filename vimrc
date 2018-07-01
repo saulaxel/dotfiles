@@ -258,10 +258,6 @@
 " }}}
 
 " Funciones {{{
-    function! VerMarcas()
-        syntax enable
-    endfunction
-
     function! DoblarFunciones()
         set foldmethod=syntax
         set foldnestmax=1
@@ -380,8 +376,9 @@
     nnoremap <leader>sv :source $MYVIMRC<Return>
 
     " Manejo de ventanas
-    nnoremap \| :vsplit<space>
-    nnoremap _ :split<space>
+    nnoremap \| :vsplit<Space>
+    nnoremap _ :split<Space>
+    nnoremap <leader>wh :hide<Return>
 
     " Manejo de buffers
     nnoremap <leader>bn :edit<Space>
@@ -427,9 +424,9 @@
 
     " Mapeos de modo terminal neovim
     if has('nvim')
-        nnoremap <leader>ot :5sp<CR>:te<CR><C-\><C-n>:setlocal nospell<CR>A
+        nnoremap <leader>ot :5sp<bar>te<CR>:setlocal nospell nonu nornu<CR>A
+        nnoremap <leader>oot :1sb<bar>res 5<CR>
         tnoremap <Esc> <C-\><C-n>
-        tmap     kj    <Esc>
     endif
 
     " Ayudas estilo IDE

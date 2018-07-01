@@ -5,6 +5,7 @@ alias vi='vim'
 alias nv='nvim'
 alias cls='clear'
 alias tmux="TERM=screen-256color-bce tmux"
+alias nshell='nvim term://szh +"setlocal nonu nospell"'
 export VTE_VERSION="100"
 
 xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
