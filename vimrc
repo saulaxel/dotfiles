@@ -16,11 +16,11 @@
     set breakindent
     set cursorline
     set cursorcolumn
-    set colorcolumn=80
+    set colorcolumn=+1
 
     " Texto y ediciOn
     set fileformat=unix
-    set textwidth=100
+    set textwidth=80
     set showmatch
     set backspace=indent,eol,start
 
@@ -99,14 +99,14 @@
     Plugin 'scrooloose/nerdtree.git'        " Arbol de directorios
     Plugin 'majutsushi/tagbar'              " Lista de etiquetas de navegaciOn
     Plugin 'kshenoy/vim-signature'          " Marcas visuales
-    Plugin 'prendradjaja/vim-vertigo'       " Movimiento lIneas
     Plugin 'matchit.zip'                    " Moverse entre etiquetas html
+    Plugin 'vim-move'                       " Mover líneas verticalmente
     Plugin 'tpope/vim-repeat'               " Repetir plugins con .
     Plugin 'Tabular'                        " Funciones para alinear cOdigo
 
     Plugin 'PeterRincker/vim-argumentative' " Objeto de texto 'argumento'
     Plugin 'vim-indent-object'              " Objeto de texto 'indentado'
-    Plugin 'kana/vim-textobj-user'          " Requerimiento de los proximos
+    Plugin 'kana/vim-textobj-user'          " Requerimiento de los prOximos
     Plugin 'kana/vim-textobj-line'          " Objeto de texto 'lInea'
     Plugin 'kana/vim-textobj-function'      " Objeto de texto 'funciOn'
     Plugin 'glts/vim-textobj-comment'       " Objeto de texto 'comentario'
@@ -223,15 +223,6 @@
                 \ '¿' : '?',
                 \ '¡' : '!'
                 \}
-
-    " ConfiguraciOn de vim-vertigo
-    let g:Vertigo_homerow = 'asdfghjkl-'
-    nnoremap <silent> <C-j> :<C-U>VertigoDown n<CR>
-    vnoremap <silent> <C-j> :<C-U>VertigoDown v<CR>
-    onoremap <silent> <C-j> :<C-U>VertigoDown o<CR>
-    nnoremap <silent> <C-k> :<C-U>VertigoUp n<CR>
-    vnoremap <silent> <C-k> :<C-U>VertigoUp v<CR>
-    onoremap <silent> <C-k> :<C-U>VertigoUp o<CR>
 
     " ConfiguraciOn de airline
     set laststatus=2
@@ -360,6 +351,9 @@
     nnoremap <Left>  <C-W>>
     nnoremap <Right> <C-W><
     inoremap kj <Esc>
+    inoremap <M-k><M-j> <Esc>dd
+    inoremap <leader>} <space><Esc>r}==
+    nnoremap <leader>} A<space><Esc>r}==
     nnoremap Y y$
     nnoremap ñ "
     nnoremap // :noh<Return>
@@ -424,8 +418,11 @@
 
     " Mapeos de modo terminal neovim
     if has('nvim')
-        nnoremap <leader>ot :5sp<bar>te<CR>:setlocal nospell nonu nornu<CR>A
+        nnoremap <leader>ot :5sp<bar>te<CR>:setlocal nospell nonu<CR>A
         nnoremap <leader>oot :1sb<bar>res 5<CR>
+        tnoremap <Esc> <C-\><C-n>
+    elseif has('terminal')
+        nnoremap <leader>ot :terminal
         tnoremap <Esc> <C-\><C-n>
     endif
 
