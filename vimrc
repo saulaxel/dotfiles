@@ -105,7 +105,7 @@ if s:usar_plugins
         " para revisar código en el lenguaje que uses
         nnoremap <leader>tsr :call AlternarRevisionEstatica()<return>
         let s:linters_restringidos = {
-                    \   'c': ['clang'],
+                    \   'c': ['gcc'],
                     \   'cpp': ['clang'],
                     \}
         let g:ale_linters = s:linters_restringidos
@@ -182,8 +182,8 @@ if s:usar_plugins
     Plug 'kshenoy/vim-signature'          " Marcas visuales
     Plug 'tpope/vim-repeat'               " Repetir plugins con .
     Plug 'godlygeek/Tabular'              " Funciones para alinear texto
-    nnoremap <Leader>tb :Tabularize<Space>
-    vnoremap <Leader>tb :Tabularize<Space>
+    nnoremap <Leader>tb   :Tabularize /
+    xnoremap <Leader>tb   :Tabularize /
     nnoremap <Leader>tbox :Tabularize /*<Return>vip<Esc>:substitute/ /=/g<Return>r A/<Esc>vipo<Esc>0r/:substitute/ /=/g<Return>:nohlsearch<Return>
 
     Plug 'PeterRincker/vim-argumentative' " Objeto de texto 'argumento'
@@ -199,7 +199,7 @@ if s:usar_plugins
     nnoremap <Leader>vc :VCoolor<Return>
     Plug 'sedm0784/vim-you-autocorrect'   " Corrección de errores sintácticos
     " :EnableAutoCorrect - Activar autocorrección ortográfica
-    "                      en el lenguaje que indique 'spelllang'
+    " :DisableAutoCorrect - Desactivar autocorrección ortográfica
     Plug 'scrooloose/nerdcommenter'       " Utilidades para comentar código
 
     " Objetos de texto y operadores
@@ -217,6 +217,7 @@ if s:usar_plugins
 
     " Estilo visual y reconocimiento de sintaxis
     Plug 'rafi/awesome-vim-colorschemes'  " Paquete de temas de color
+    Plug 'iCyMind/NeoSolarized'          " Solarized para neovim
 
     Plug 'vim-airline/vim-airline'        " Línea de estado ligera
     let g:airline_powerline_fonts = 1
@@ -361,9 +362,17 @@ set smarttab      " Usar tabs de acuerdo a 'shiftwidth'
 
 " ##### Ventanas, buffers y navegación ##### {{{
 " +++ General +++ {{{
-set virtualedit=onemore " Poder alcanzar la última posición de la pantalla
 set scrolloff=2         " Mínimas líneas por encima/debajo del cursor
-"set scrolljump=3        " Líneas que recorrer al salír de la pantalla
+"set scrolljump=3        " Líneas que recorrer al salir de la pantalla
+set virtualedit=onemore " Poder alcanzar la última posición de la pantalla
+nnoremap <Leader>tve :call AlternarEdicionVirtual()<Return>
+function! AlternarEdicionVirtual()
+    if &virtualedit ==# 'onemore'
+        let &virtualedit = 'all'
+    else
+        let &virtualedit = 'onemore'
+    endif
+endfunction
 
 " Configuración de las líneas largas
 " Si quiere que las líneas largas se envuelvan en la pantalla deje la
@@ -434,8 +443,8 @@ nnoremap <C-w>> :<C-u>call RepetirRedimensionadoVentana('>', v:count)<Return>
 function! RepetirRedimensionadoVentana(inicial, cuenta)
     let l:tecla = a:inicial
     let l:cuenta = a:cuenta ? a:cuenta : 0
-    while stridx('+-><', l:tecla) != -1 || l:tecla =~ '\d'
-        if l:tecla =~ '\d'
+    while stridx('+-><', l:tecla) != -1 || l:tecla =~# '\d'
+        if l:tecla =~# '\d'
             let l:cuenta = l:cuenta * 10 + l:tecla
         else
             execute 'normal! ' . (l:cuenta ? l:cuenta : 1) . "\<C-w>" . l:tecla
@@ -482,6 +491,7 @@ set tabpagemax=15    " Solo mostrar 15 tabs
 " Comandos para abrir y cerrar tabulaciones
 nnoremap <Leader>tn :tabnew<Space>
 nnoremap <Leader>to :tabonly<Return>
+" :tab all - Convertir buffers en tabs
 " :tabfind - Intentar abrir archivo en 'path'
 " <C-w>gf  - Abrir tab y editar archivo bajo el cursor
 " Convertir ventana actual en tabulación
@@ -501,7 +511,7 @@ nnoremap <Leader>t< :tabmove 0<Return>
 nnoremap <Leader>t> :tabmove $<Return>
 
 " Un "modo" especial que abrevia las operaciones con tabulaciones
-nnoremap <silent> <Leader>tm :<C-u>call ModoAccionTabulacion(v:count)<Return>
+nnoremap <silent> <Leader>tm :<C-u>call ModoAccionTabulacion()<Return>
 
 function! ModoAccionTabulacion()
     if tabpagenr('$') == 1
@@ -614,6 +624,7 @@ cnoremap <A-b> <S-Left>
 cnoremap <A-f> <S-Right>
 cnoremap <C-d> <Del>
 cnoremap <A-d> <S-Right><C-w>
+cnoremap <A-D> <C-e><C-u>
 "   +++ }}}
 
 " +++ Dobleces (folds) +++ {{{
@@ -672,14 +683,14 @@ set ttimeoutlen=1     " interfaz para que <Esc> no se tarde
 
 " Rotar entre los diferentes modos visuales con v
 xnoremap <expr>v
-               \ (mode() ==# 'v' ? "\<C-v>" : mode() ==# 'V' ?
-               \ 'v' : 'V')
+               \ (mode() ==# 'v' ? 'V' : mode() ==# 'V' ?
+               \ "\<C-v>" : 'v')
 "   +++ }}}
 
 " +++ Copiando, pegando y moviendo texto +++ {{{
 set nopaste           " 'paste' estará desactivada por defecto
 set pastetoggle=<F2>  " Botón para activar/desactivar 'paste'
-nnoremap <Leader>tps setlocal paste!<Return>
+nnoremap <Leader>tps :setlocal paste!<Return>
 
 " Copiar y pegar por medio de la papelera del sistema si se puede
 let s:usar_portapapeles_del_sistema = 0
@@ -690,6 +701,10 @@ if s:usar_portapapeles_del_sistema && has('clipboard')
         set clipboard=unnamed
     endif
 endif
+
+" Pegando texto respetando la indentación (put under y put over)
+nnoremap <Leader>pu ]p
+nnoremap <Leader>po [p
 
 " Manejo de registros por medio de la letra ñ
 nnoremap ñ "
@@ -734,7 +749,7 @@ inoremap jk <Esc>
 " Texto previamente insertado
 nnoremap gV `[v`]
 " Texto previamente pegado
-nnoremap gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+nnoremap <expr>gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 " gv - Reseleccionar texto previamente seleccionado
 
 " Eliminar texto hacia enfrente con comandos basados en la D
@@ -744,7 +759,7 @@ inoremap <expr><A-D> '<Esc>' . (col('.') == 1 ? "" : "l") . 'C'
 
 " Regresar a modo normal eliminando la línea actual
 inoremap <A-k><A-j> <Esc>ddk
-inoremap <A-j><A-k> <Esc>ddk
+inoremap <A-j><A-k> <Esc>ddj
 
 " Añadir línea vacía por arriba y por debajo
 nnoremap <A-o> :call append(line('.'), '')<Return>
@@ -834,6 +849,33 @@ function! s:columnaMaxima(cadena, linea_ini, linea_fin, columna)
     return l:columna_maxima
 endfunction
 
+" Comentar (remplazo sencillo de vim-comentary)
+if !s:usar_plugins
+    let b:inicio_comentario = '//'
+    augroup DetectarInicioComentario
+        autocmd FileType py,sh   let b:inicio_comentario = '#'
+        autocmd FileType fortran let b:inicio_comentario = '!'
+        autocmd FileType vim     let b:inicio_comentario = '"'
+    augroup END
+
+    nnoremap gc :set operatorfunc=OperadorComentarLineas<Return>g@
+    xnoremap gc :<C-u>call OperadorComentarLineas(visualmode(), 1)<Return>
+
+    function! OperadorComentarLineas(tipo, ...)
+        let l:marca_inicio = (a:0 ? "'<" : "'[")
+        let l:marca_final  = (a:0 ? "'>" : "']")
+
+        let l:primera_liena = getline(line(l:marca_inicio))
+        let l:rango = l:marca_inicio . ',' . l:marca_final
+        if l:primera_liena =~# '^\s*' . b:inicio_comentario
+            execute l:rango . 's/\v(^\s*)' . escape(b:inicio_comentario, '\/') . '\v\s*/\1/e'
+        else
+            execute l:rango . 's/^\s*/&' . escape(b:inicio_comentario, '\/') . ' /e'
+        endif
+        execute 'normal! ' . l:marca_inicio
+    endfunction
+endif
+
 " Extraer variable (variable extract)
 nnoremap <Leader>ve viw:call ExtraerVariable()<Return>
 xnoremap <Leader>ve :call ExtraerVariable()<Return>
@@ -848,7 +890,7 @@ function! ExtraerVariable()
     endif
 
     exec 'normal! c' . l:name
-    let l:selection = @""
+    let l:selection = @"
     exec 'normal! O' l:tipo . ' ' . l:name . ' = '
     exec 'normal! pa;'
     call feedkeys(':.+1,$s/\V\C' . escape(l:selection, '/\') . '/' . escape(l:name, '/\') . "/gec\<cr>")
@@ -866,7 +908,8 @@ imap     <Leader>b <Leader>)
 nmap     <Leader>b <Leader>)
 
 " Borrar todo de la línea de comandos excepto el propio comando
-cnoremap <M-BS> <C-\>esplit(getcmdline(), " ")[0]<return><space>
+cnoremap <A-w> <C-\>esplit(getcmdline(), " ")[0]<return><space>
+cmap <A-BS> <A-BS>
 "   +++ }}}
 
 " +++ Objetos de texto +++ {{{
@@ -883,12 +926,14 @@ xnoremap a% GoggV
 onoremap a% :<C-u>normal vi%<Return>
 
 " Objeto de texto "comentario de bloque"
-xnoremap ic ?<C-r>=escape(split(&commentstring, "%s")[0], '/*')<Return><Return>+0o
-            \ /<C-r>=escape(split(&commentstring, "%s")[1], '/*')<Return><Return>-$
-onoremap ic :<C-u>normal vic<Return>
-xnoremap ac ?<C-r>=escape(split(&commentstring, "%s")[0], '/*')<Return><Return>o
-            \ /<C-r>=escape(split(&commentstring, "%s")[1], '/*')<Return><Return>l
-onoremap ac :<C-u>normal vac<Return>
+if !s:usar_plugins
+    xnoremap ic ?<C-r>=escape(split(&commentstring, "%s")[0], '/*')<Return><Return>+0o
+                \ /<C-r>=escape(split(&commentstring, "%s")[1], '/*')<Return><Return>-$
+    onoremap ic :<C-u>normal vic<Return>
+    xnoremap ac ?<C-r>=escape(split(&commentstring, "%s")[0], '/*')<Return><Return>o
+                \ /<C-r>=escape(split(&commentstring, "%s")[1], '/*')<Return><Return>l
+    onoremap ac :<C-u>normal vac<Return>
+endif
 "   +++ }}}
 " ### }}}
 
@@ -967,6 +1012,7 @@ nnoremap <Leader>rl :s//g<Left><Left>
 nnoremap <Leader>rg :%s//g<Left><Left>
 nnoremap <Leader>rw :%s/\<<C-r><C-w>\>\C//g<Left><Left>
 nnoremap <Leader>rW :%s/\<<C-r>=expand("<cWORD>")<Return>\>\C//g<Left><Left>
+xnoremap <Leader>r :<C-u>call SeleccionVisual()<Return>:%s/<C-r>=@/<Return>//g<Left><Left>
 
 " Saltar entre conflictos merge
 nnoremap <silent> <Leader>ml /\v^(\<\|\=\|\>){7}([^=].+)?$<Return>
