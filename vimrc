@@ -692,7 +692,7 @@ set pastetoggle=<F2>  " Botón para activar/desactivar 'paste'
 nnoremap <Leader>tps :setlocal paste!<Return>
 
 " Copiar y pegar por medio de la papelera del sistema si se puede
-let s:usar_portapapeles_del_sistema = 0
+let s:usar_portapapeles_del_sistema = 1
 if s:usar_portapapeles_del_sistema && has('clipboard')
     if has('unnamedplus') " Cuando se pueda usar el registro + para copiar-pegar
         set clipboard=unnamed,unnamedplus
@@ -1439,11 +1439,11 @@ endif
   " <C-]> - Ir a la definición del objeto (solo si ya se generaron las etiquetas)
 
 " Establecer la siguiente variable a 1 para activar revisión ortográfica
-let s:activar_revision_ortorgrafica = 1
+let s:activar_revision_ortorgrafica = 0
 if s:activar_revision_ortorgrafica
     " Si se quiere revisión ortográfica en español establecer la siguiente
     " variable a 1
-    let s:revision_otrografica_en_espaniol = 1
+    let s:revision_otrografica_en_espaniol = 0
     set spell             " Activa la revisión ortográfica
     " Alternar entre revisión activa e inactiva con ,tsp
     nnoremap <Leader>tsp :setlocal spell!<Return>
