@@ -217,7 +217,6 @@ if s:usar_plugins
 
     " Estilo visual y reconocimiento de sintaxis
     Plug 'rafi/awesome-vim-colorschemes'  " Paquete de temas de color
-    Plug 'iCyMind/NeoSolarized'          " Solarized para neovim
 
     Plug 'vim-airline/vim-airline'        " Línea de estado ligera
     let g:airline_powerline_fonts = 1
