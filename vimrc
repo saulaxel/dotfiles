@@ -191,7 +191,7 @@
 
     if has('nvim') || (v:version >= 800)
         let g:ale_linters = {
-                    \   'c': ['clang'],
+                    \   'c': ['clang', 'gcc'],
                     \   'cpp': ['clang'],
                     \}
         let g:ale_set_quickfix = 1
