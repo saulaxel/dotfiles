@@ -1,12 +1,14 @@
+; Tema de color "misterioso"
 (load-theme 'misterioso)
 
 ; Usar cursor con forma de barrita cuadrada
 (set-default 'cursor-typel
              'hbar)
 
+; Desactivar el parpadeo del cursor
 (blink-cursor-mode 0)
 
-; Sin barra de menU
+; Sin barra de menú
 (menu-bar-mode 0)
 
 ; Sin barra de opciones
@@ -18,34 +20,34 @@
 ; Capacidad de escribir acentos
 (require 'iso-transl)
 
-; Ver numeraciOn de lIneas
+; Ver numeración de líneas
 (global-linum-mode t)
 
-; Mostrar el parentesis correspondiente
+; Mostrar el paréntesis correspondiente
 (show-paren-mode)
 
-; Insertar el parEntesis/corchete/llave de cierre cuando se presione
+; Insertar el paréntesis/corchete/llave de cierre cuando se presione
 ; la de apertura
 (electric-pair-mode)
 
 ; Usar espacios en lugar de tabulaciones
 (setq-default indent-tabs-mode nil)
 
-; Usar 4 espacios por cada tabulaciOn
+; Usar 4 espacios por cada tabulación
 (setq tab-width 4)
 
-; De nuevo 4 espacios, pero esta vez especificamente para archivos de C
+; De nuevo 4 espacios, pero esta vez específicamente para archivos de C
 (setq-default c-basic-offset 4)
 
-;; ; Estilo de indentaciOn para modo C
+;; ; Estilo de indentación para modo C
 ;; (setq c-default-style '((java-mode . "java")
 ;;                         (awk-mode . "awk")
 ;;                         (other . "linux")))
 
-; Resaltar la lInea de escritura
+; Resaltar la línea de escritura
 (global-hl-line-mode t)
 
-; Un tamanio de fuente considerable
+; Un tamaño de fuente considerable
 (set-frame-font "Ubuntu Mono-10" nil t)
 
 ; Desactivar la creación de archivos extra

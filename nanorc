@@ -1,13 +1,13 @@
-## ConfiguraciOn simple para el editor nano
+## Configuración simple para el editor nano
 ##
 ## Se debe configurar nano con --enable-nanorc para que
 ## este archivo sea leido.
 ##
 
-## Indentado automAtico
+## Indentado automático
 set autoindent
 
-## Copia automAtica de seguridad al directorio ""
+## Copia automática de seguridad al directorio ""
 #lset backup
 #set backupdir ""
 
@@ -27,24 +27,24 @@ set casesensitive
 ## Muestra la posicion del cursor en la barra de estado
 #set const
 
-## Usar "cut" por defecto para terminar la lInea
+## Usar "cut" por defecto para terminar la línea
 # set cut
 
-## Definir el ancho de una lInea como ancho de pantalla +- fill
+## Definir el ancho de una línea como ancho de pantalla +- fill
 #set fill -25
 
 ## Definir juego de caracteres cerrados y abiertos
 set matchbrackets "(<[{¿¡)>]}?!"
 
-## Usar la lInea vacia del final como un espacio mAs para
-## la ediciOn
+## Usar la línea vacia del final como un espacio más para
+## la edición
 set morespace
 
-## Habilita el ratOn
+## Habilita el ratón
 set mouse
 
 ## Permitir multiples buffers (debe existir la
-## configuraciOn --enable-multibuffer para que funcione)
+## configuración --enable-multibuffer para que funcione)
 #set multibuffer
 
 ## No convertir archivos en formatos DOS/Mac
@@ -56,29 +56,29 @@ set mouse
 ## No mostrar la ayuda al final de la pantalla
 #set hohelp
 
-## No aniadir nuevas lIneas al final de los archivos
+## No aniadir nuevas líneas al final de los archivos
 # set nonewlines
 
-## No representar una lInea larga como varias lIneas
+## No representar una línea larga como varias líneas
 # set nowrap
 
 ## Establecer directorio de trabajo para limitar la
-## ediciOn con nano fuera del mismo
+## edición con nano fuera del mismo
 #set operatingdir ""
 
 ## Preservar las teclas XON y XOFF (^Q y ^S)
 #set preserve
 
-## Conjunto de caracteres de cierre de puntuaciOn
+## Conjunto de caracteres de cierre de puntuación
 set punct "!.?"
 
 ## Hacer aparecer una barra de estatus pasajera
 #set quickblank
 
-## Arreglar la confuciOn entre Backspace y Delete
+## Arreglar la confución entre Backspace y Delete
 #set rebinddelete
 
-## Arreglar la confuciOn de los numeros del teclado
+## Arreglar la confución de los numeros del teclado
 #set rebindkeypad
 
 ## Hacer busquedas con expresiones regulares
@@ -87,31 +87,31 @@ set regexp
 ## Lo saltos producidos por la tecla home son mas utiles
 set smarthome
 
-## Usar navegaciOn suavizada
+## Usar navegación suavizada
 set smooth
 
-## DefiniciOn de un checador de ortografIa externo
+## Definición de un checador de ortografía externo
 #set soekker "aspell -x -c"
 
 ## Permitir que nano se suspenda
 set suspend
 
-## Usar tabulaciOnes de 4 espacios
+## Usar tabulaciónes de 4 espacios
 set tabsize 4
 
-## Convertir tabulaciOnes a espacios
+## Convertir tabulaciónes a espacios
 set tabstospaces
 
-## Guardar automAticamente al salir
+## Guardar automáticamente al salir
 #set tempfile
 
 ## Hacer que nano sea para solo lectura (no se pa k la vdd)
 #set view
 
-## RepresentaciOn grAfica de los espacios
+## Representación gráfica de los espacios
 set whitespace ". "
 
 ## Detectar los extremos de una palabra por medio de la
-## puntuaciOn
+## puntuación
 #set wordbounds
 

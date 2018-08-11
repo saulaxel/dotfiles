@@ -4,6 +4,7 @@ function install_common_debian {
     sudo apt-get install git zsh vim vim-nox ruby tmux clang figlet cowsay fortune oneko
     sudo apt-get install software-properties-common
     sudo apt-get install python-dev python-pip python3-dev python3-pip
+    sudo apt-get install fonts-powerline
     sudo python2 -m pip install neovim
     sudo python3 -m pip install neovim
 }
@@ -90,8 +91,6 @@ if [ ! -d ~/.config/nvim ]; then
 fi
 ln -n ~/.vimrc ~/.config/nvim/init.vim
 
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
 if [ "$(grep "BASH_CONFIG_INCLUDED" < "$shell")" == "" ]; then
     cat bashrc >> "$shell"
 fi
@@ -102,7 +101,7 @@ if [ ! -d ~/.vim/bundle/Vundle.vim ]; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
 
-vim +PluginInstall +qall
+vim +PlugInstall +qall
 
 if [ "$1" != "windows" ]; then
     nvim +PluginInstall +qall
@@ -110,22 +109,15 @@ else
     nvim-qt +PluginInstall +qall
 fi
 
-cp ./vim/snips/emmet.vim ~/.vim/bundle/emmet-vim/autoload
-cp ./vim/snips/*.snip ~/.vim/bundle/neosnippet-snippets/neosnippets
-cp ./vim/colors/tender.vim ~/.vim/bundle/awesome-vim-colorschemes/colors
-cp ./vim/other_scripts/jcommenter.vim ~/.vim/bundle/jcommenter.vim/plugin/
-cp ./vim/other_scripts/c_conceal.vim ~/.vim/bundle/c-conceal/after/syntax/c.vim
-cp ./vim/other_scripts/next-object.vim ~/.vim/bundle/vim-next-object/plugin
+cp ./vim/snips/emmet.vim ~/.vim/plugged/emmet-vim/autoload
+cp ./vim/snips/*.snip ~/.vim/plugged/neosnippet-snippets/neosnippets
+cp ./vim/colors/tender.vim ~/.vim/plugged/awesome-vim-colorschemes/colors
+cp ./vim/other_scripts/jcommenter.vim ~/.vim/plugged/jcommenter.vim/plugin/
+cp ./vim/other_scripts/c_conceal.vim ~/.vim/plugged/c-conceal/after/syntax/c.vim
 cp ./vim/other_scripts/clang_tidy_sangria_correcta.sh ~/.vim
 cp ./clang-format1 ~/.clang-format
 gcc ./vim/other_scripts/quitar_espacios.c -o ~/.vim/cortar
 gcc ./vim/other_scripts/aniadir_espacios.c -o ~/.vim/pegar
 
-vim +VimProcInstall +qall
-if [ "$1" != "windows" ]; then
-    nvim +UpdateRemotePlugins +qall
-else
-    nvim-qt +UpdateRemotePlugins +qall
-fi
 
 echo "La preparación del ambiente está lista"
