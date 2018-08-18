@@ -225,6 +225,10 @@ if s:usar_plugins
     Plug 'iamcco/markdown-preview.vim'    " Visualizar markdown
 
     " Objetos de texto y operadores
+    Plug 't9md/vim-textmanip'
+    xmap <Leader>tgtm <Plug>(textmanip-toggle-mode)
+    nmap <Leader>tgtm <Plug>(textmanip-toggle-mode)
+
     Plug 'easymotion/vim-easymotion'      " Movimiento rápida caracteres
     map <Leader>em <Plug>(easymotion-prefix)
     Plug 'michaeljsmith/vim-indent-object' " Objeto de texto 'indentado'
@@ -633,33 +637,6 @@ function! AlternarInicioMedioFinalComoEnEmacs()
 
     redraw
 endfunction
-
-" Cero (o en su defecto <Home>) alterna entre primer carácter visible y primer
-" columna de línea y $ (o <End>) alterna entre ultimo carácter visible y
-" última columna
-nnoremap <silent> 0 :call VisibleOAbsoluto('inicio')<Return>
-nnoremap <silent> $ :call VisibleOAbsoluto('final')<Return>
-nmap <silent> <Home> 0
-nmap <silent> <End>  $
-
-function! VisibleOAbsoluto(direccion)
-    let l:col_inicial = col('.')
-
-    if a:direccion ==# 'inicio'
-        normal! ^
-    else
-        normal! g_
-    endif
-    let l:col_tras_moverse = col('.')
-
-    if l:col_inicial == l:col_tras_moverse
-        if a:direccion ==# 'inicio'
-            normal! 0
-        else
-            normal! $
-        endif
-    endif
-endfunction
 "   +++ }}}
 
 " +++ Movimiento en modo comando +++ {{{
@@ -735,7 +712,7 @@ set ttimeout          " ttimeout y ttimeoutlen controlan el retraso de la
 set ttimeoutlen=1     " interfaz para que <Esc> no se tarde
 
 " Rotar entre los diferentes modos visuales con v
-xnoremap <expr>v
+xnoremap <expr> v
                \ (mode() ==# 'v' ? 'V' : mode() ==# 'V' ?
                \ "\<C-v>" : 'v')
 "   +++ }}}
@@ -770,23 +747,49 @@ noremap Y y$
 xnoremap <C-c> "+y
 nnoremap <C-c> "+yy
 
-" Copiar texto por arriba y por debajo
-nnoremap <A-y> yyP
-vnoremap <A-y> y`>pgv
-nnoremap <A-Y> yyp
-vnoremap <A-Y> y`<Pgv
-
 " Mover lineas visuales hacia arriba y hacia abajo
-nnoremap <A-j> :move +<Return>==
-nnoremap <A-k> :move -2<Return>==
-vnoremap <A-j> :move '>+1<Return>gv=gv
-vnoremap <A-k> :move '<-2<Return>gv=gv
+if !s:usar_plugins
+    " Copiar texto por arriba y por debajo
+    nnoremap <expr> <A-y> "<Esc>yy" . v:count . 'P'
+    vnoremap <expr> <A-y> 'y`>' . v:count . 'pgv'
+    nnoremap <expr> <A-Y> "<Esc>yy" . v:count . 'gpge'
+    vnoremap <expr> <A-Y> 'y`<' . v:count . 'Pgv'
 
-" Mover bloques visuales a la izquierda y a la derecha
-nnoremap <A-l> xp
-nnoremap <A-h> xhP
-vnoremap <A-l> xp`[<C-V>`]
-vnoremap <A-h> xhP`[<C-V>`]
+    nnoremap <expr> <A-j> ':<C-u>move +' . CantMover(0) . "<Return>=="
+    vnoremap <expr> <A-j> ":move '>+" . CantMover(0) . "<Return>gv=gv"
+    nnoremap <expr> <A-k> ':<C-u>move -' . CantMover(1) . "<Return>=="
+    vnoremap <expr> <A-k> ":move '<-" . CantMover(1) . "<Return>gv=gv"
+
+    function! CantMover(abajo)
+        return (v:count ? v:count : 1) + a:abajo
+    endfunction
+
+    " Mover bloques visuales a la izquierda y a la derecha
+    nnoremap <expr> <A-l> '<Esc>x' . (v:count > 1 ? (v:count - 1) . 'l' : '') . 'p'
+    vnoremap <expr> <A-l> 'd' . (v:count > 1 ? (v:count - 1) . 'l' : '') . 'p`[<C-v>`]'
+    nnoremap <expr> <A-h> '<Esc>x' . (v:count ? v:count : 1) . 'hP'
+    vnoremap <expr> <A-h> 'd' . (v:count ? v:count : 1) . 'hP`[<C-v>`]'
+else
+    nmap <A-y> <Plug>(textmanip-duplicate-up)
+    xmap <A-y> <Plug>(textmanip-duplicate-up)
+    nmap <A-Y> <Plug>(textmanip-duplicate-down)
+    xmap <A-Y> <Plug>(textmanip-duplicate-down)
+
+    nmap <A-j> V<A-j>
+    xmap <A-j> <Plug>(textmanip-move-down)
+    nmap <A-k> V<A-k>
+    xmap <A-k> <Plug>(textmanip-move-up)
+
+    nmap <A-h> v<A-h>
+    xmap <A-h> <Plug>(textmanip-move-left)
+    nmap <A-l> v<A-l>
+    xmap <A-l> <Plug>(textmanip-move-right)
+
+    xmap <Up>     <Plug>(textmanip-move-up-r)
+    xmap <Down>   <Plug>(textmanip-move-down-r)
+    xmap <Left>   <Plug>(textmanip-move-left-r)
+    xmap <Right>  <Plug>(textmanip-move-right-r)
+endif
 
 " Mantener el modo visual después de > y <
 xnoremap < <gv
@@ -806,13 +809,13 @@ inoremap jk <Esc>
 " Texto previamente insertado
 nnoremap gV `[v`]
 " Texto previamente pegado
-nnoremap <expr>gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 " gv - Reseleccionar texto previamente seleccionado
 
 " Eliminar texto hacia enfrente con comandos basados en la D
 inoremap <C-d> <Del>
-inoremap <expr><A-d> '<Esc>' . (col('.') == 1 ? "" : "l") . 'dwi'
-inoremap <expr><A-D> '<Esc>' . (col('.') == 1 ? "" : "l") . 'C'
+inoremap <expr> <A-d> '<Esc>' . (col('.') == 1 ? "" : "l") . 'dwi'
+inoremap <expr> <A-D> '<Esc>' . (col('.') == 1 ? "" : "l") . 'C'
 
 " Regresar a modo normal eliminando la línea actual
 inoremap <A-k><A-j> <Esc>ddk
