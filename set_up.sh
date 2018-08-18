@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function install_common_debian {
-    sudo apt-get install git zsh vim vim-nox ruby tmux clang figlet cowsay fortune oneko
+    sudo apt-get install git zsh ruby tmux clang figlet cowsay fortune oneko
     sudo apt-get install software-properties-common
     sudo apt-get install python-dev python-pip python3-dev python3-pip
     sudo apt-get install fonts-powerline
@@ -22,7 +22,7 @@ function install_ubuntu {
 }
 
 function install_arch {
-    sudo pacman -S git zsh vim neovim ruby tmux clang figlet cowsay fortune-mod
+    sudo pacman -S git zsh neovim ruby tmux clang figlet cowsay fortune-mod
     sudo pacman -S python-pip
     sudo python2 -m pip install neovim
     sudo python3 -m pip install neovim
@@ -30,7 +30,7 @@ function install_arch {
 }
 
 function install_fedora {
-    sudo dnf -y install git zsh vim ruby tmux clang figlet cowsay fortune-mod oneko
+    sudo dnf -y install git zsh ruby tmux clang figlet cowsay fortune-mod oneko
     sudo dnf -y install neovim python2-neovim python3-neovim
     sudo dnf -y install python-pip python3-pip
     sudo python2 -m pip install neovim
@@ -38,14 +38,6 @@ function install_fedora {
 }
 
 function install_git_console {
-    echo "¿Tienes instalado chocolately? (s/n)"
-    read -r ans
-
-    if [ "$ans" != "s" ]; then
-        echo "La instalación continuará una vez instalado chocolately"
-        exit
-    fi
-
     choco install -y neovim
 }
 
@@ -61,7 +53,6 @@ if [ $# -ne 1 ]; then
 fi
 
 shell="$HOME/.zshrc"
-# Set the package manager
 if [ "$1" == "debian" ]; then
     install_debian
 elif [ "$1" == "ubuntu" ]; then
@@ -97,27 +88,15 @@ fi
 
 cp ./nanorc ~/.nanorc
 
-if [ ! -d ~/.vim/bundle/Vundle.vim ]; then
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-fi
-
-vim +PlugInstall +qall
-
-if [ "$1" != "windows" ]; then
-    nvim +PluginInstall +qall
-else
-    nvim-qt +PluginInstall +qall
-fi
+nvim +qall
 
 cp ./vim/snips/emmet.vim ~/.vim/plugged/emmet-vim/autoload
 cp ./vim/snips/*.snip ~/.vim/plugged/neosnippet-snippets/neosnippets
 cp ./vim/colors/tender.vim ~/.vim/plugged/awesome-vim-colorschemes/colors
-cp ./vim/other_scripts/jcommenter.vim ~/.vim/plugged/jcommenter.vim/plugin/
 cp ./vim/other_scripts/c_conceal.vim ~/.vim/plugged/c-conceal/after/syntax/c.vim
 cp ./vim/other_scripts/clang_tidy_sangria_correcta.sh ~/.vim
 cp ./clang-format1 ~/.clang-format
 gcc ./vim/other_scripts/quitar_espacios.c -o ~/.vim/cortar
 gcc ./vim/other_scripts/aniadir_espacios.c -o ~/.vim/pegar
-
 
 echo "La preparación del ambiente está lista"
