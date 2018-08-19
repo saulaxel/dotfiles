@@ -88,7 +88,7 @@ fi
 
 cp ./nanorc ~/.nanorc
 
-nvim +qall
+nvim +qall # Just run config to install plugins and exit
 
 cp ./vim/snips/emmet.vim ~/.vim/plugged/emmet-vim/autoload
 cp ./vim/snips/*.snip ~/.vim/plugged/neosnippet-snippets/neosnippets

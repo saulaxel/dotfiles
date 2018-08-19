@@ -1,4 +1,3 @@
-; Tema de color "misterioso"
 (load-theme 'misterioso)
 
 ; Usar cursor con forma de barrita cuadrada
@@ -60,6 +59,7 @@
              '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
+(defvar evil-want-C-u-scroll)
 (setq evil-want-C-u-scroll t)
 (require 'evil)
 (evil-mode 1)
@@ -93,8 +93,8 @@
 (require 'evil-matchit)
 (global-evil-matchit-mode 1)
 
-(require 'linum-relative)
-(linum-relative-mode)
+;; (require 'linum-relative)
+;; (linum-relative-mode)
 
 (require 'emmet-mode)
 (emmet-mode 1)
@@ -115,3 +115,9 @@
 
 ; Salir de modo normal presionando "kj"
 (key-chord-define evil-insert-state-map "kj" 'evil-normal-state)
+
+; Borrar usando <C-h> (estándar de unix) y usar <C-?> para ayuda
+(global-set-key (kbd "C-?") 'help-command)
+(global-set-key (kbd "M-?") 'mark-paragraph)
+(global-set-key (kbd "C-h") 'delete-backward-char)
+(global-set-key (kbd "M-h") 'backward-kill-word)

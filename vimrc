@@ -1224,7 +1224,7 @@ let g:op_compilacion['archivos'] = '%'
 let g:op_compilacion['nombre_ejecutable'] = '%:t:r'
 let g:op_compilacion['c'] = {
             \ 'compilador': 'gcc',
-            \ 'banderas': '-std=gnu11 -Wall -Wextra -Wstrict-prototypes -Wno-missing-field-initializers',
+            \ 'banderas': '-std=gnu11 -Wall -Wextra -Wno-missing-field-initializers -Wstrict-prototypes',
             \ 'salida': '-o'
             \}
 let g:op_compilacion['cpp'] = {
@@ -1392,7 +1392,6 @@ endfunction
 
 " +++ Revisión de código +++ {{{
 if s:usar_plugins && (has('nvim') || (v:version >= 800))
-    let g:ale_linters = s:linters_restringidos
     let g:ale_set_quickfix = 1
     let g:ale_cpp_clangcheck_options = "-extra-arg='" . g:op_compilacion['cpp'].banderas
     let g:ale_cpp_gcc_options = g:op_compilacion['cpp'].banderas
