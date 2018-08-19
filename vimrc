@@ -150,8 +150,9 @@ if s:usar_plugins
 
     Plug 'Shougo/neoinclude.vim'          " Completado de cabeceras
     Plug 'mattn/emmet-vim', { 'for': ['html', 'xml', 'css', 'sass'] }
-      " Ctrl-y + , (coma) - Completar abreviación emmet
-      " Ctrl-y + n - Saltar al siguiente punto de edición de emmet
+    let g:user_emmet_leader_key = '<C-b>'
+      " Ctrl-b + , (coma) - Completar abreviación emmet
+      " Ctrl-b + n - Saltar al siguiente punto de edición de emmet
     Plug 'Shougo/neco-vim', { 'for': 'vim'}
     Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
     Plug 'saulaxel/jcommenter.vim', { 'for': 'java' }
@@ -327,24 +328,40 @@ set synmaxcol=200 " Solo resaltar primeros 200 caracteres
 set background=dark
 " Usar 256 colores cuando sea posible
 if (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256') || has('nvim')
-    let &t_Co = 256
+    set t_Co=256
 endif
 " Para ver los temas de color presionar :colorscheme + <Tab>
 if s:usar_plugins
     colorscheme tender
     let s:lista_colores = [ '256_noir', 'PaperColor',
         \ 'abstract', 'alduin', 'angr', 'apprentice', 'challenger_deep',
-        \ 'deus', 'github', 'gruvbox', 'gotham256', 'hybrid', 'hybrid_material',
+        \ 'deus', 'gruvbox', 'gotham256', 'hybrid', 'hybrid_material',
         \ 'jellybeans', 'lightning', 'lucid', 'lucius', 'materialbox',
         \ 'meta5', 'minimalist', 'molokai', 'molokayo', 'nord', 'one',
-        \ 'onedark', 'orbital', 'paramount', 'rdark-terminal2', 'scheakur',
-        \ 'seoul256', 'seoul256-light', 'sierra', 'tender', 'two-firewatch' ]
+        \ 'onedark', 'paramount', 'rdark-terminal2', 'scheakur',
+        \ 'seoul256-light', 'sierra', 'tender', 'two-firewatch' ]
+
+    let s:lista_colores += [ 'NeoSolarized', 'gruvbox', 'nova', 'dracula' ]
 
     let s:posicion_actual = index(s:lista_colores, 'tender')
 
+    nnoremap <leader>cr :call RotarColor()<Return>
     function! RotarColor()
         let s:posicion_actual = (s:posicion_actual + 1) % len(s:lista_colores)
         execute 'colorscheme ' . s:lista_colores[s:posicion_actual]
+
+        for l:i in range(len(s:lista_colores))
+            for l:color in ['two-firewatch', 'lucid', 'paramount']
+                if l:color ==# s:lista_colores[l:i]
+                    set background=dark
+                endif
+            endfor
+            for l:color in ['256_noir']
+                if l:color ==# s:lista_colores[l:i]
+                    set background=light
+                endif
+            endfor
+        endfor
     endfunction
 endif
 
@@ -380,11 +397,7 @@ highlight Conflicto ctermbg=1 guifg=#FF2233
 
 " +++ Tabulado y sangría +++ {{{
 " Cantidad de espacios para sangría
-set tabstop=4     " Longitud de cada tabulación
-set shiftwidth=4  " Tamaño de sangría
-set softtabstop=4 " Simula la longitud de tab
-
-function! CambiarIndentacion(espacios)
+function! CambiarIndentacion(espacios, ...)
     " Cambia tres opciones por el precio de una llamada a función
     " Ejemplo de uso:
     "    :call Cambi<tab>
@@ -396,8 +409,11 @@ function! CambiarIndentacion(espacios)
     let &softtabstop = a:espacios
 
     " Reindenta el código existente
-    execute "normal! gg=G\<C-o>\<C-o>"
+    if len(a:000)
+        execute "normal! gg=G\<C-o>\<C-o>"
+    endif
 endfunction
+call CambiarIndentacion(4)
 
 " Otras configuraciones con respecto a la sangría
 set expandtab     " Se sangra el código con espacios
@@ -668,7 +684,7 @@ set foldcolumn=1  " Una columna para mostrar la extensión de un dobles
 " zE - elimina todos los dobleces de la ventana
 
 " Abrir y cerrar dobleces
-nnoremap <Space>   za
+nnoremap <Space>    za
 nnoremap <Leader>tf za
 " zO - Abrir dobleces sobre la posición actual recursivamente
 " zC - Cerrar dobleces sobre la posición actual recursivamente
@@ -1153,7 +1169,7 @@ inoremap <C-s> <Esc>:update<Return>a
 " cursor se quede en la posición inicial
 
 " Guardar con sudo (cuando entraste a vim sin sudo, se pedirá contraseña)
-cnoremap w!! !sudo tee % > /dev/null<Return>
+cnoremap w!! w !sudo tee % > /dev/null<Return>
 
 augroup ComandosAutomaticosGuardarLeer
     autocmd!
