@@ -1,6 +1,9 @@
 ; Tema de color "misterioso"
 (load-theme 'misterioso)
 
+; Simplificar el título
+(setq frame-title-format "Emacs")
+
 ; Usar cursor con forma de barrita cuadrada
 (set-default 'cursor-typel
              'hbar)
@@ -48,7 +51,7 @@
 (global-hl-line-mode t)
 
 ; Un tamaño de fuente considerable
-(set-frame-font "Ubuntu Mono-10" nil t)
+;(set-frame-font "Ubuntu Mono-10" nil t)
 
 ; Desactivar la creación de archivos extra
 (setq make-backup-files nil)
@@ -59,6 +62,9 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
+
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages"))
 
 (setq evil-want-C-u-scroll t)
 (require 'evil)

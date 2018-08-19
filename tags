@@ -1,0 +1,533 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/c04ceb81/
+#	vimrc	/^nnoremap # #N$/;"	m
+#	vimrc	/^xnoremap # :<C-u>call SeleccionVisual()<Return>?<C-R>=@\/<Return><Return>N$/;"	m
+&	vimrc	/^nnoremap & :&&<Return>$/;"	m
+&	vimrc	/^xnoremap & :&&<Return>$/;"	m
+*	vimrc	/^nnoremap * *N$/;"	m
+*	vimrc	/^xnoremap * :<C-u>call SeleccionVisual()<Return>\/<C-R>=@\/<Return><Return>N$/;"	m
+.	vimrc	/^xnoremap . :normal .<Return>$/;"	m
+//	vimrc	/^nnoremap \/\/ :nohlsearch<Return>$/;"	m
+<	vimrc	/^xnoremap < <gv$/;"	m
+<A-BS>	vimrc	/^cmap <A-BS> <A-BS>$/;"	m
+<A-D>	vimrc	/^cnoremap <A-D> <C-e><C-u>$/;"	m
+<A-D>	vimrc	/^inoremap <expr> <A-D> '<Esc>' . (col('.') == 1 ? "" : "l") . 'C'$/;"	m
+<A-O>	vimrc	/^nnoremap <A-O> :call append(line('.')-1, '')<Return>$/;"	m
+<A-Y>	vimrc	/^    nmap <A-Y> <Plug>(textmanip-duplicate-down)$/;"	m
+<A-Y>	vimrc	/^    nnoremap <expr> <A-Y> "<Esc>yy" . v:count . 'gpge'$/;"	m
+<A-Y>	vimrc	/^    vnoremap <expr> <A-Y> 'y`<' . v:count . 'Pgv'$/;"	m
+<A-Y>	vimrc	/^    xmap <A-Y> <Plug>(textmanip-duplicate-down)$/;"	m
+<A-b>	vimrc	/^cnoremap <A-b> <S-Left>$/;"	m
+<A-d>	vimrc	/^cnoremap <A-d> <S-Right><C-w>$/;"	m
+<A-d>	vimrc	/^inoremap <expr> <A-d> '<Esc>' . (col('.') == 1 ? "" : "l") . 'dwi'$/;"	m
+<A-f>	vimrc	/^cnoremap <A-f> <S-Right>$/;"	m
+<A-h>	vimrc	/^    nmap <A-h> v<A-h>$/;"	m
+<A-h>	vimrc	/^    nnoremap <expr> <A-h> '<Esc>x' . (v:count ? v:count : 1) . 'hP'$/;"	m
+<A-h>	vimrc	/^    vnoremap <expr> <A-h> 'd' . (v:count ? v:count : 1) . 'hP`[<C-v>`]'$/;"	m
+<A-h>	vimrc	/^    xmap <A-h> <Plug>(textmanip-move-left)$/;"	m
+<A-j>	vimrc	/^    nmap <A-j> V<A-j>$/;"	m
+<A-j>	vimrc	/^    nnoremap <expr> <A-j> ':<C-u>move +' . CantMover(0) . "<Return>=="$/;"	m
+<A-j>	vimrc	/^    vnoremap <expr> <A-j> ":move '>+" . CantMover(0) . "<Return>gv=gv"$/;"	m
+<A-j>	vimrc	/^    xmap <A-j> <Plug>(textmanip-move-down)$/;"	m
+<A-j><A-k>	vimrc	/^inoremap <A-j><A-k> <Esc>ddj$/;"	m
+<A-k>	vimrc	/^    nmap <A-k> V<A-k>$/;"	m
+<A-k>	vimrc	/^    nnoremap <expr> <A-k> ':<C-u>move -' . CantMover(1) . "<Return>=="$/;"	m
+<A-k>	vimrc	/^    vnoremap <expr> <A-k> ":move '<-" . CantMover(1) . "<Return>gv=gv"$/;"	m
+<A-k>	vimrc	/^    xmap <A-k> <Plug>(textmanip-move-up)$/;"	m
+<A-k><A-j>	vimrc	/^inoremap <A-k><A-j> <Esc>ddk$/;"	m
+<A-l>	vimrc	/^    nmap <A-l> v<A-l>$/;"	m
+<A-l>	vimrc	/^    nnoremap <expr> <A-l> '<Esc>x' . (v:count > 1 ? (v:count - 1) . 'l' : '') . 'p'$/;"	m
+<A-l>	vimrc	/^    vnoremap <expr> <A-l> 'd' . (v:count > 1 ? (v:count - 1) . 'l' : '') . 'p`[<C-v>`]'$/;"	m
+<A-l>	vimrc	/^    xmap <A-l> <Plug>(textmanip-move-right)$/;"	m
+<A-o>	vimrc	/^nnoremap <A-o> :call append(line('.'), '')<Return>$/;"	m
+<A-w>	vimrc	/^cnoremap <A-w> <C-\\>esplit(getcmdline(), " ")[0]<return><space>$/;"	m
+<A-y>	vimrc	/^    nmap <A-y> <Plug>(textmanip-duplicate-up)$/;"	m
+<A-y>	vimrc	/^    nnoremap <expr> <A-y> "<Esc>yy" . v:count . 'P'$/;"	m
+<A-y>	vimrc	/^    vnoremap <expr> <A-y> 'y`>' . v:count . 'pgv'$/;"	m
+<A-y>	vimrc	/^    xmap <A-y> <Plug>(textmanip-duplicate-up)$/;"	m
+<C-a>	vimrc	/^cnoremap <C-a> <Home>$/;"	m
+<C-b>	vimrc	/^cnoremap <C-b> <Left>$/;"	m
+<C-c>	vimrc	/^nnoremap <C-c> "+yy$/;"	m
+<C-c>	vimrc	/^xnoremap <C-c> "+y$/;"	m
+<C-d>	vimrc	/^cnoremap <C-d> <Del>$/;"	m
+<C-d>	vimrc	/^inoremap <C-d> <Del>$/;"	m
+<C-e>	vimrc	/^    imap <C-e> <Plug>(neosnippet_expand_or_jump)$/;"	m
+<C-e>	vimrc	/^    smap <C-e> <Plug>(neosnippet_expand_or_jump)$/;"	m
+<C-e>	vimrc	/^    xmap <C-e> <Plug>(neosnippet_expand_target)$/;"	m
+<C-f>	vimrc	/^cnoremap <C-f> <Right>$/;"	m
+<C-l>	vimrc	/^nnoremap <C-l> :call AlternarInicioMedioFinalComoEnEmacs()<return>$/;"	m
+<C-n>	vimrc	/^cnoremap <C-n> <Down>$/;"	m
+<C-p>	vimrc	/^cnoremap <C-p> <Up>$/;"	m
+<C-s>	vimrc	/^inoremap <C-s> <Esc>:update<Return>a$/;"	m
+<C-s>	vimrc	/^nnoremap <C-s> :update<Return>$/;"	m
+<C-u>	vimrc	/^inoremap <C-u> <C-g>u<C-u>$/;"	m
+<C-w>+	vimrc	/^nnoremap <C-w>+ :<C-u>call RepetirRedimensionadoVentana('+', v:count)<Return>$/;"	m
+<C-w>-	vimrc	/^nnoremap <C-w>- :<C-u>call RepetirRedimensionadoVentana('-', v:count)<Return>$/;"	m
+<C-w><	vimrc	/^nnoremap <C-w>< :<C-u>call RepetirRedimensionadoVentana('<', v:count)<Return>$/;"	m
+<C-w>>	vimrc	/^nnoremap <C-w>> :<C-u>call RepetirRedimensionadoVentana('>', v:count)<Return>$/;"	m
+<Down>	vimrc	/^    xmap <Down>   <Plug>(textmanip-move-down-r)$/;"	m
+<Down>	vimrc	/^cnoremap <Down> <C-n>$/;"	m
+<F3>	vimrc	/^nnoremap <F3>        :setlocal relativenumber!<Return>$/;"	m
+<F4>	vimrc	/^nnoremap <F4> :call AlternarModoDiff()<Return>$/;"	m
+<F5>	vimrc	/^    nnoremap <F5>         :NERDTreeToggle<Return>$/;"	m
+<F6>	vimrc	/^    nnoremap <F6>         :TagbarToggle<Return>$/;"	m
+<F7>	vimrc	/^    nnoremap <F7>         :UndotreeToggle<Return>$/;"	m
+<F9>	vimrc	/^nnoremap <F9> :make<bar>call EjecutarSiNoHayErrores()<Return>$/;"	m
+<Leader>)	vimrc	/^inoremap <Leader>) <Space><Esc>r)a$/;"	m
+<Leader>)	vimrc	/^nnoremap <Leader>) i<Space><Esc>r)$/;"	m
+<Leader><C-h>	vimrc	/^nnoremap <Leader><C-h> <C-w>H$/;"	m
+<Leader><C-j>	vimrc	/^nnoremap <Leader><C-j> <C-w>J$/;"	m
+<Leader><C-k>	vimrc	/^nnoremap <Leader><C-k> <C-w>K$/;"	m
+<Leader><C-l>	vimrc	/^nnoremap <Leader><C-l> <C-w>L$/;"	m
+<Leader>B	vimrc	/^imap     <Leader>B <Leader>}$/;"	m
+<Leader>B	vimrc	/^nmap     <Leader>B <Leader>}$/;"	m
+<Leader>al	vimrc	/^nnoremap <Leader>al vip:Alinear<Space>$/;"	m
+<Leader>al	vimrc	/^xnoremap <Leader>al :Alinear<Space>$/;"	m
+<Leader>av	vimrc	/^nnoremap <Leader>av :tabnew $MYVIMRC<Return>$/;"	m
+<Leader>b	vimrc	/^imap     <Leader>b <Leader>)$/;"	m
+<Leader>b	vimrc	/^nmap     <Leader>b <Leader>)$/;"	m
+<Leader>bd	vimrc	/^nnoremap <Leader>bd  :bdelete!<Return>$/;"	m
+<Leader>bg	vimrc	/^nnoremap <Leader>bg :ls<Return>:buffer<Space>$/;"	m
+<Leader>bh	vimrc	/^nnoremap <Leader>bh :bfirst<Return>$/;"	m
+<Leader>bj	vimrc	/^nnoremap <Leader>bj :bprevious<Return>$/;"	m
+<Leader>bk	vimrc	/^nnoremap <Leader>bk :bnext<Return>$/;"	m
+<Leader>bl	vimrc	/^nnoremap <Leader>bl :last<Return>$/;"	m
+<Leader>bn	vimrc	/^nnoremap <Leader>bn :edit<Space>$/;"	m
+<Leader>cd	vimrc	/^nnoremap <Leader>cd :cd %:p:h<Return>:pwd<Return>$/;"	m
+<Leader>cfs	vimrc	/^nnoremap <Leader>cfs :source ~\/.vim\/session\/default<Return>$/;"	m
+<Leader>cs	vimrc	/^nnoremap <Leader>cs  :source ~\/.vim\/session\/$/;"	m
+<Leader>do	vimrc	/^nnoremap <Leader>do :DiffOrigen<Return>$/;"	m
+<Leader>em	vimrc	/^    map <Leader>em <Plug>(easymotion-prefix)$/;"	m
+<Leader>evn	vimrc	/^nnoremap <Leader>evn ^vg_y@"$/;"	m
+<Leader>evn	vimrc	/^xnoremap <Leader>evn y@"$/;"	m
+<Leader>evv	vimrc	/^nnoremap <silent> <Leader>evv :execute getline(".")<Return>$/;"	m
+<Leader>evv	vimrc	/^xnoremap <silent> <Leader>evv :<C-u>$/;"	m
+<Leader>faf	vimrc	/^nnoremap <Leader>faf :call DoblarFunciones()<Return>$/;"	m
+<Leader>fc	vimrc	/^nnoremap <Leader>fc zM$/;"	m
+<Leader>ff	vimrc	/^nmap <Leader>ff zfaf$/;"	m
+<Leader>fo	vimrc	/^nnoremap <Leader>fo zR$/;"	m
+<Leader>gcd	vimrc	/^nnoremap <Leader>gcd :lvimgrep<Space><Space>.\/*<Left><Left><Left><Left>$/;"	m
+<Leader>gcw	vimrc	/^nnoremap <Leader>gcw :lvimgrep<Space><C-r><C-w><Space>$/;"	m
+<Leader>gg	vimrc	/^nnoremap <Leader>gg  :lvimgrep<Space>$/;"	m
+<Leader>gob	vimrc	/^nnoremap <Leader>gob :BuscarBuffers<Space>$/;"	m
+<Leader>gsr	vimrc	/^nnoremap <Leader>gsr :lopen<Return>$/;"	m
+<Leader>gwd	vimrc	/^nnoremap <Leader>gwd :lvimgrep<Space><C-r><C-w><Space>.\/*<Return>$/;"	m
+<Leader>hsc	vimrc	/^nnoremap <Leader>hsc :nohlsearch<bar>let @\/ = ''<Return>$/;"	m
+<Leader>jd	vimrc	/^    nnoremap <Leader>jd :call JCommentWriter()<Return>$/;"	m
+<Leader>mds	vimrc	/^nnoremap <Leader>mds :mksession! ~\/.vim\/session\/default<Return>$/;"	m
+<Leader>mh	vimrc	/^nnoremap <silent> <Leader>mh ?\\v^(\\<\\|\\=\\|\\>){7}([^=].+)\\?$<Return>$/;"	m
+<Leader>ml	vimrc	/^nnoremap <silent> <Leader>ml \/\\v^(\\<\\|\\=\\|\\>){7}([^=].+)?$<Return>$/;"	m
+<Leader>ms	vimrc	/^nnoremap <Leader>ms  :mksession! ~\/.vim\/session\/$/;"	m
+<Leader>ot	vimrc	/^    nnoremap <Leader>ot :5sp<bar>te<CR>:setlocal nospell nonu<Return>A$/;"	m
+<Leader>ot	vimrc	/^    nnoremap <Leader>ot :terminal<Return>$/;"	m
+<Leader>po	vimrc	/^nnoremap <Leader>po [p$/;"	m
+<Leader>pu	vimrc	/^nnoremap <Leader>pu ]p$/;"	m
+<Leader>rW	vimrc	/^nnoremap <Leader>rW :%s\/\\<<C-r>=expand("<cWORD>")<Return>\\>\\C\/$/;"	m
+<Leader>rg	vimrc	/^nnoremap <Leader>rg :%s\/$/;"	m
+<Leader>rg	vimrc	/^xmap     <Leader>rg <Esc><Leader>rg$/;"	m
+<Leader>rl	vimrc	/^nnoremap <Leader>rl :s\/$/;"	m
+<Leader>rl	vimrc	/^xnoremap <Leader>rl :s\/$/;"	m
+<Leader>rs	vimrc	/^xnoremap <Leader>rs :<C-u>call SeleccionVisual()<Return>:%s\/<C-r>=@\/<Return>\/$/;"	m
+<Leader>rw	vimrc	/^nnoremap <Leader>rw :%s\/\\<<C-r><C-w>\\>\\C\/$/;"	m
+<Leader>sa	vimrc	/^    nnoremap <Leader>sa zg$/;"	m
+<Leader>scc	vimrc	/^    nnoremap <Leader>scc 1z=$/;"	m
+<Leader>scp	vimrc	/^    nnoremap <Leader>scp [s1z=<C-o>$/;"	m
+<Leader>sh	vimrc	/^    nnoremap <Leader>sh [szzzv$/;"	m
+<Leader>sl	vimrc	/^    nnoremap <Leader>sl ]szzzv$/;"	m
+<Leader>ss	vimrc	/^    nnoremap <Leader>ss  z=$/;"	m
+<Leader>sv	vimrc	/^nnoremap <Leader>sv :source $MYVIMRC<Return>$/;"	m
+<Leader>t+	vimrc	/^nnoremap <Leader>t+ :tabmove +<Return>$/;"	m
+<Leader>t-	vimrc	/^nnoremap <Leader>t- :tabmove -<Return>$/;"	m
+<Leader>t<	vimrc	/^nnoremap <Leader>t< :tabmove 0<Return>$/;"	m
+<Leader>t>	vimrc	/^nnoremap <Leader>t> :tabmove $<Return>$/;"	m
+<Leader>taf	vimrc	/^nnoremap <Leader>taf :call AlternarFormatoAlfanumerico()<Return>$/;"	m
+<Leader>tb	vimrc	/^    nnoremap <Leader>tb   :Tabularize \/$/;"	m
+<Leader>tb	vimrc	/^    xnoremap <Leader>tb   :Tabularize \/$/;"	m
+<Leader>tbox	vimrc	/^    nnoremap <Leader>tbox :Tabularize \/*<Return>vip<Esc>:substitute\/ \/=\/g<Return>r A\/<Esc>v/;"	m
+<Leader>tdm	vimrc	/^nnoremap <Leader>tdm :call AlternarModoDiff()<Return>$/;"	m
+<Leader>tf	vimrc	/^nnoremap <Leader>tf za$/;"	m
+<Leader>tgnt	vimrc	/^    nnoremap <Leader>tgnt :NERDTreeToggle<Return>$/;"	m
+<Leader>tgtb	vimrc	/^    nnoremap <Leader>tgtb :TagbarToggle<Return>$/;"	m
+<Leader>tgtm	vimrc	/^    nmap <Leader>tgtm <Plug>(textmanip-toggle-mode)$/;"	m
+<Leader>tgtm	vimrc	/^    xmap <Leader>tgtm <Plug>(textmanip-toggle-mode)$/;"	m
+<Leader>tgut	vimrc	/^    nnoremap <Leader>tgut :UndotreeToggle<Return>$/;"	m
+<Leader>th	vimrc	/^nnoremap <Leader>th :tabfirst<Return>$/;"	m
+<Leader>tj	vimrc	/^nnoremap <Leader>tj :tabprevious<Return>$/;"	m
+<Leader>tk	vimrc	/^nnoremap <Leader>tk :tabnext<Return>$/;"	m
+<Leader>tl	vimrc	/^nnoremap <Leader>tl :tablast<Return>$/;"	m
+<Leader>tm	vimrc	/^nnoremap <silent> <Leader>tm :<C-u>call ModoAccionTabulacion()<Return>$/;"	m
+<Leader>tn	vimrc	/^nnoremap <Leader>tn :tabnew<Space>$/;"	m
+<Leader>to	vimrc	/^nnoremap <Leader>to :tabonly<Return>$/;"	m
+<Leader>tps	vimrc	/^nnoremap <Leader>tps :setlocal paste!<Return>$/;"	m
+<Leader>trn	vimrc	/^nnoremap <Leader>trn :setlocal relativenumber!<Return>$/;"	m
+<Leader>tsp	vimrc	/^    nnoremap <Leader>tsp :setlocal spell!<Return>$/;"	m
+<Leader>tve	vimrc	/^nnoremap <Leader>tve :call AlternarEdicionVirtual()<Return>$/;"	m
+<Leader>tw	vimrc	/^nnoremap <Leader>tw <C-w>T$/;"	m
+<Leader>ut	vimrc	/^    nnoremap <Leader>ut :!ctags -R .&<Return>$/;"	m
+<Leader>ut	vimrc	/^    nnoremap <Leader>ut :UpdateTags<Return>$/;"	m
+<Leader>vc	vimrc	/^    nnoremap <Leader>vc :VCoolor<Return>$/;"	m
+<Leader>ve	vimrc	/^nnoremap <Leader>ve viw:call ExtraerVariable()<Return>$/;"	m
+<Leader>ve	vimrc	/^xnoremap <Leader>ve :call ExtraerVariable()<Return>$/;"	m
+<Leader>wh	vimrc	/^nnoremap <Leader>wh :<C-u>hide<Return>$/;"	m
+<Leader>wo	vimrc	/^nnoremap <Leader>wo :<C-u>only<Return>$/;"	m
+<Leader>}	vimrc	/^inoremap <Leader>} <Space><Esc>r}==$/;"	m
+<Leader>}	vimrc	/^nnoremap <Leader>} A<Space><Esc>r}==$/;"	m
+<Left>	vimrc	/^    xmap <Left>   <Plug>(textmanip-move-left-r)$/;"	m
+<M-c>	vim/other_scripts/jcommenter.vim	/^imap <M-c> <esc>:call JCommentWriter()<CR>$/;"	m
+<M-c>	vim/other_scripts/jcommenter.vim	/^map <M-c> :call JCommentWriter()<CR>$/;"	m
+<M-n>	vim/other_scripts/jcommenter.vim	/^imap <M-n> <esc>:call SearchInvalidComment(0)<cr>a$/;"	m
+<M-n>	vim/other_scripts/jcommenter.vim	/^map <M-n> :call SearchInvalidComment(0)<cr>$/;"	m
+<M-p>	vim/other_scripts/jcommenter.vim	/^imap <M-p> <esc>:call SearchInvalidComment(1)<cr>a$/;"	m
+<M-p>	vim/other_scripts/jcommenter.vim	/^map <M-p> :call SearchInvalidComment(1)<cr>$/;"	m
+<Return>	vimrc	/^inoremap <Return> <C-g>u<Return>$/;"	m
+<Right>	vimrc	/^    xmap <Right>  <Plug>(textmanip-move-right-r)$/;"	m
+<Space>	vimrc	/^nnoremap <Space>    za$/;"	m
+<Up>	vimrc	/^    xmap <Up>     <Plug>(textmanip-move-up-r)$/;"	m
+<Up>	vimrc	/^cnoremap <Up>   <C-p>$/;"	m
+<leader>cr	vimrc	/^    nnoremap <leader>cr :call RotarColor()<Return>$/;"	m
+<leader>tsr	vimrc	/^        nnoremap <leader>tsr :call AlternarRevisionEstatica()<return>$/;"	m
+<leader>tth	vimrc	/^nnoremap <leader>tth :call ToggleTextAndHelpFiles()<Return>$/;"	m
+>	vimrc	/^xnoremap > >gv$/;"	m
+ActualizarComandosCompilacion	vimrc	/^function! ActualizarComandosCompilacion()$/;"	f
+Alinear	vimrc	/^command! -nargs=1 -range Alinear '<,'>call Alinear(<f-args>)$/;"	c
+Alinear	vimrc	/^function! Alinear(cadena) range$/;"	f
+AlternarEdicionVirtual	vimrc	/^function! AlternarEdicionVirtual()$/;"	f
+AlternarFormatoAlfanumerico	vimrc	/^function! AlternarFormatoAlfanumerico()$/;"	f
+AlternarInicioMedioFinalComoEnEmacs	vimrc	/^function! AlternarInicioMedioFinalComoEnEmacs()$/;"	f
+AlternarModoDiff	vimrc	/^function! AlternarModoDiff()$/;"	f
+AlternarRevisionEstatica	vimrc	/^        function! AlternarRevisionEstatica()$/;"	f
+AplicarConfiguracion	vimrc	/^function! AplicarConfiguracion()$/;"	f
+ArchivoGrande	vimrc	/^augroup ArchivoGrande$/;"	a
+ArchivoGrande	vimrc	/^function! ArchivoGrande()$/;"	f
+BuscarBuffers	vimrc	/^command! -nargs=1 BuscarBuffers call BuscarBuffers(<q-args>)$/;"	c
+BuscarBuffers	vimrc	/^function! BuscarBuffers(patron)$/;"	f
+CambiarIndentacion	vimrc	/^function! CambiarIndentacion(espacios, ...)$/;"	f
+CantMover	vimrc	/^    function! CantMover(abajo)$/;"	f
+CaracteresHermanos	vimrc	/^function! CaracteresHermanos(caracter)$/;"	f
+ComandosAutomaticosGuardarLeer	vimrc	/^augroup ComandosAutomaticosGuardarLeer$/;"	a
+ConditionalWriter	vim/other_scripts/jcommenter.vim	/^function! ConditionalWriter()$/;"	f
+ConfiguracionComandoK	vimrc	/^augroup ConfiguracionComandoK$/;"	a
+ConfiguracionesEspecificasLenguaje	vimrc	/^augroup ConfiguracionesEspecificasLenguaje$/;"	a
+CrearDirectorioSiNoExiste	vimrc	/^function! CrearDirectorioSiNoExiste() abort$/;"	f
+DeteccionLenguajes	vimrc	/^augroup DeteccionLenguajes$/;"	a
+DetectarInicioComentario	vimrc	/^    augroup DetectarInicioComentario$/;"	a
+DiffOrigen	vimrc	/^command! DiffOrigen vert new | set buftype=nofile | read ++edit # | 0d_$/;"	c
+DoblarFunciones	vimrc	/^function! DoblarFunciones()$/;"	f
+E	vimrc	/^command! -bang -nargs=* -complete=file E  e<bang> <args>$/;"	c
+EjecutarSiNoHayErrores	vimrc	/^function! EjecutarSiNoHayErrores()$/;"	f
+ExtraerVariable	vimrc	/^function! ExtraerVariable()$/;"	f
+GenerarArchivoConfiguracion	vimrc	/^function! GenerarArchivoConfiguracion()$/;"	f
+JCommentWriter	vim/other_scripts/jcommenter.vim	/^function! JCommentWriter() range$/;"	f
+LongitudesArchivosEspeciales	vimrc	/^augroup LongitudesArchivosEspeciales$/;"	a
+ModoAccionTabulacion	vimrc	/^function! ModoAccionTabulacion()$/;"	f
+N	vimrc	/^nnoremap N Nzzzv$/;"	m
+OmnifuncionesCompletado	vimrc	/^    augroup OmnifuncionesCompletado$/;"	a
+OperadorComentarLineas	vimrc	/^    function! OperadorComentarLineas(tipo, ...)$/;"	f
+Q	vimrc	/^command! -bang Q q<bang>$/;"	c
+Q	vimrc	/^nnoremap Q !!$SHELL<Return>$/;"	m
+Q	vimrc	/^xnoremap Q !$SHELL<Return>$/;"	m
+QA	vimrc	/^command! -bang QA qa<bang>$/;"	c
+Qa	vimrc	/^command! -bang Qa qa<bang>$/;"	c
+RepetirRedimensionadoVentana	vimrc	/^function! RepetirRedimensionadoVentana(inicial, cuenta)$/;"	f
+RodearPalabra	vimrc	/^    function! RodearPalabra()$/;"	f
+RodearSeleccion	vimrc	/^    function! RodearSeleccion()$/;"	f
+RotarColor	vimrc	/^    function! RotarColor()$/;"	f
+S	vimrc	/^    xnoremap S <Esc>:call RodearSeleccion()<Return>$/;"	m
+SalBuffer	vimrc	/^command! -nargs=* -complete=command SalBuffer call SalidaBuffer(<q-args>)$/;"	c
+SalidaBuffer	vimrc	/^function! SalidaBuffer(comando)$/;"	f
+SearchInvalidComment	vim/other_scripts/jcommenter.vim	/^fun! SearchInvalidComment(backwards)$/;"	f
+SeleccionVisual	vimrc	/^function! SeleccionVisual() range$/;"	f
+TamanioVentana	vimrc	/^augroup TamanioVentana$/;"	a
+Test	vim/other_scripts/jcommenter.vim	/^function! Test()$/;"	f
+ToggleTextAndHelpFiles	vimrc	/^function! ToggleTextAndHelpFiles() abort$/;"	f
+VerComandosActivos	vimrc	/^function! VerComandosActivos()$/;"	f
+W	vimrc	/^command! -bang -nargs=* -complete=file W  w<bang> <args>$/;"	c
+WA	vimrc	/^command! -bang WA wa<bang>$/;"	c
+WQ	vimrc	/^command! -bang -nargs=* -complete=file WQ wq<bang> <args>$/;"	c
+WQA	vimrc	/^command! -bang WQA wqa<bang>$/;"	c
+WQa	vimrc	/^command! -bang WQa wqa<bang>$/;"	c
+Wa	vimrc	/^command! -bang Wa wa<bang>$/;"	c
+Wq	vimrc	/^command! -bang -nargs=* -complete=file Wq wq<bang> <args>$/;"	c
+Wqa	vimrc	/^command! -bang Wqa wqa<bang>$/;"	c
+XA	vimrc	/^command! -bang XA xa<bang>$/;"	c
+Xa	vimrc	/^command! -bang Xa xa<bang>$/;"	c
+Y	vimrc	/^noremap Y y\$$/;"	m
+ZA	vimrc	/^nnoremap ZA :quitall!<Return>$/;"	m
+ZG	vimrc	/^nnoremap ZG :exit all<Return>$/;"	m
+[h	vimrc	/^    nmap [h <Plug>GitGutterPrevHunk$/;"	m
+\\|	vimrc	/^nnoremap \\|   :<C-u>vsplit<Space>$/;"	m
+\\|\\|	vimrc	/^nnoremap \\|\\| :<C-u>vsplit<Return>$/;"	m
+]h	vimrc	/^    nmap ]h <Plug>GitGutterNextHunk$/;"	m
+_	vimrc	/^nnoremap _    :<C-u>split<Space>$/;"	m
+__	vimrc	/^nnoremap __   :<C-u>split<Return>$/;"	m
+a%	vimrc	/^onoremap a% :<C-u>normal vi%<Return>$/;"	m
+a%	vimrc	/^xnoremap a% GoggV$/;"	m
+ac	vimrc	/^    onoremap ac :<C-u>normal vac<Return>$/;"	m
+ac	vimrc	/^    xnoremap ac ?<C-r>=escape(split(&commentstring, "%s")[0], '\/*')<Return><Return>o$/;"	m
+ah	vimrc	/^    omap ah <Plug>GitGutterTextObjectOuterPending$/;"	m
+al	vimrc	/^onoremap al :<C-u>normal val<Return>$/;"	m
+al	vimrc	/^xnoremap al $o0$/;"	m
+b:did_javacom	vim/other_scripts/jcommenter.vim	/^let b:did_javacom = 1$/;"	v
+b:inicio_comentario	vimrc	/^    let b:inicio_comentario = '\/\/'$/;"	v
+b:jcommenter_add_empty_line	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_add_empty_line = 1$/;"	v
+b:jcommenter_autostart_insert_mode	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_autostart_insert_mode = 1$/;"	v
+b:jcommenter_class_author	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_class_author = ''$/;"	v
+b:jcommenter_class_description_space	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_class_description_space = 2$/;"	v
+b:jcommenter_class_version	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_class_version = ''$/;"	v
+b:jcommenter_description_starts_from_first_line	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_description_starts_from_first_line = 0$/;"	v
+b:jcommenter_field_description_space	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_field_description_space = 1$/;"	v
+b:jcommenter_file_author	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_file_author = ''$/;"	v
+b:jcommenter_file_copyright	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_file_copyright = ''$/;"	v
+b:jcommenter_file_noautotime	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_file_noautotime = 0 $/;"	v
+b:jcommenter_method_description_space	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_method_description_space = 2$/;"	v
+b:jcommenter_modeline	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_modeline = "\/* vim: set " . (&et ? "et" : "noet") . " sw=" . &sw . " ts=" . &t/;"	v
+b:jcommenter_move_cursor	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_move_cursor = 1$/;"	v
+b:jcommenter_remove_tags_on_update	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_remove_tags_on_update = 1$/;"	v
+b:jcommenter_smart_method_description_spacing	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_smart_method_description_spacing = 1$/;"	v
+b:jcommenter_update_comments	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_update_comments = 1$/;"	v
+b:jcommenter_use_exception_tag	vim/other_scripts/jcommenter.vim	/^let b:jcommenter_use_exception_tag = 0$/;"	v
+emmet#anchorizeURL	vim/snips/emmet.vim	/^function! emmet#anchorizeURL(flag) abort$/;"	f
+emmet#balanceTag	vim/snips/emmet.vim	/^function! emmet#balanceTag(flag) range abort$/;"	f
+emmet#codePretty	vim/snips/emmet.vim	/^function! emmet#codePretty() range abort$/;"	f
+emmet#completeTag	vim/snips/emmet.vim	/^function! emmet#completeTag(findstart, base) abort$/;"	f
+emmet#encodeImage	vim/snips/emmet.vim	/^function! emmet#encodeImage() abort$/;"	f
+emmet#expandAbbr	vim/snips/emmet.vim	/^function! emmet#expandAbbr(mode, abbr) range abort$/;"	f
+emmet#expandAbbrIntelligent	vim/snips/emmet.vim	/^function! emmet#expandAbbrIntelligent(feedkey) abort$/;"	f
+emmet#expandCursorExpr	vim/snips/emmet.vim	/^function! emmet#expandCursorExpr(expand, mode) abort$/;"	f
+emmet#expandDollarExpr	vim/snips/emmet.vim	/^function! emmet#expandDollarExpr(expand) abort$/;"	f
+emmet#expandWord	vim/snips/emmet.vim	/^function! emmet#expandWord(abbr, type, orig) abort$/;"	f
+emmet#getBaseType	vim/snips/emmet.vim	/^function! emmet#getBaseType(type) abort$/;"	f
+emmet#getDollarExprs	vim/snips/emmet.vim	/^function! emmet#getDollarExprs(expand) abort$/;"	f
+emmet#getDollarValueByKey	vim/snips/emmet.vim	/^function! emmet#getDollarValueByKey(key) abort$/;"	f
+emmet#getExpandos	vim/snips/emmet.vim	/^function! emmet#getExpandos(type, key) abort$/;"	f
+emmet#getFileType	vim/snips/emmet.vim	/^function! emmet#getFileType(...) abort$/;"	f
+emmet#getFilters	vim/snips/emmet.vim	/^function! emmet#getFilters(type) abort$/;"	f
+emmet#getIndentation	vim/snips/emmet.vim	/^function! emmet#getIndentation(...) abort$/;"	f
+emmet#getResource	vim/snips/emmet.vim	/^function! emmet#getResource(type, name, default) abort$/;"	f
+emmet#getSettings	vim/snips/emmet.vim	/^function! emmet#getSettings() abort$/;"	f
+emmet#getSnippets	vim/snips/emmet.vim	/^function! emmet#getSnippets(type) abort$/;"	f
+emmet#imageSize	vim/snips/emmet.vim	/^function! emmet#imageSize() abort$/;"	f
+emmet#isExpandable	vim/snips/emmet.vim	/^function! emmet#isExpandable() abort$/;"	f
+emmet#isExtends	vim/snips/emmet.vim	/^function! emmet#isExtends(type, extend) abort$/;"	f
+emmet#mergeConfig	vim/snips/emmet.vim	/^function! emmet#mergeConfig(lhs, rhs) abort$/;"	f
+emmet#mergeLines	vim/snips/emmet.vim	/^function! emmet#mergeLines() range abort$/;"	f
+emmet#moveNextPrev	vim/snips/emmet.vim	/^function! emmet#moveNextPrev(flag) abort$/;"	f
+emmet#moveNextPrevItem	vim/snips/emmet.vim	/^function! emmet#moveNextPrevItem(flag) abort$/;"	f
+emmet#newNode	vim/snips/emmet.vim	/^function! emmet#newNode() abort$/;"	f
+emmet#parseIntoTree	vim/snips/emmet.vim	/^function! emmet#parseIntoTree(abbr, type) abort$/;"	f
+emmet#reExpandDollarExpr	vim/snips/emmet.vim	/^function! emmet#reExpandDollarExpr(expand, times) abort$/;"	f
+emmet#removeTag	vim/snips/emmet.vim	/^function! emmet#removeTag() abort$/;"	f
+emmet#splitFilterArg	vim/snips/emmet.vim	/^function! emmet#splitFilterArg(filters) abort$/;"	f
+emmet#splitJoinTag	vim/snips/emmet.vim	/^function! emmet#splitJoinTag() abort$/;"	f
+emmet#toString	vim/snips/emmet.vim	/^function! emmet#toString(...) abort$/;"	f
+emmet#toggleComment	vim/snips/emmet.vim	/^function! emmet#toggleComment() abort$/;"	f
+emmet#unescapeDollarExpr	vim/snips/emmet.vim	/^function! emmet#unescapeDollarExpr(expand) abort$/;"	f
+emmet#updateTag	vim/snips/emmet.vim	/^function! emmet#updateTag() abort$/;"	f
+emmet#useFilter	vim/snips/emmet.vim	/^function! emmet#useFilter(filters, filter) abort$/;"	f
+g:AutoPairs	vimrc	/^    let g:AutoPairs = {$/;"	v
+g:airline#extensions#tabline#enabled	vimrc	/^    let g:airline#extensions#tabline#enabled = 1$/;"	v
+g:airline_powerline_fonts	vimrc	/^    let g:airline_powerline_fonts = 1$/;"	v
+g:ale_c_clang_options	vimrc	/^    let g:ale_c_clang_options = g:op_compilacion['c'].banderas$/;"	v
+g:ale_c_clangtidy_checks	vimrc	/^    let g:ale_c_clangtidy_checks = ['*', '-readability-braces-around-statements',$/;"	v
+g:ale_c_clangtidy_options	vimrc	/^    let g:ale_c_clangtidy_options = g:op_compilacion['c'].banderas$/;"	v
+g:ale_c_gcc_options	vimrc	/^    let g:ale_c_gcc_options = g:op_compilacion['c'].banderas$/;"	v
+g:ale_cpp_clang_options	vimrc	/^    let g:ale_cpp_clang_options = g:op_compilacion['cpp'].banderas$/;"	v
+g:ale_cpp_clangcheck_options	vimrc	/^    let g:ale_cpp_clangcheck_options = "-extra-arg='" . g:op_compilacion['cpp'].banderas$/;"	v
+g:ale_cpp_clangtidy_options	vimrc	/^    let g:ale_cpp_clangtidy_options = g:op_compilacion['cpp'].banderas$/;"	v
+g:ale_cpp_gcc_options	vimrc	/^    let g:ale_cpp_gcc_options = g:op_compilacion['cpp'].banderas$/;"	v
+g:ale_fortran_gcc_options	vimrc	/^    let g:ale_fortran_gcc_options = g:op_compilacion['fortran'].banderas$/;"	v
+g:ale_haskell_ghc_options	vimrc	/^    let g:ale_haskell_ghc_options = g:op_compilacion['haskell'].banderas$/;"	v
+g:ale_linters	vimrc	/^                let g:ale_linters = s:linters_restringidos$/;"	v
+g:ale_linters	vimrc	/^                let g:ale_linters = {}$/;"	v
+g:ale_linters	vimrc	/^        let g:ale_linters = s:linters_restringidos$/;"	v
+g:ale_linters	vimrc	/^    let g:ale_linters = s:linters_restringidos$/;"	v
+g:ale_set_quickfix	vimrc	/^    let g:ale_set_quickfix = 1$/;"	v
+g:clang_library_path	vimrc	/^    let g:clang_library_path = '\/usr\/lib\/llvm-3.8\/lib\/libclang.so.1'$/;"	v
+g:clang_make_default_keymappings	vimrc	/^    let g:clang_make_default_keymappings = 0$/;"	v
+g:colors_name	vim/colors/tender.vim	/^let g:colors_name="tender"$/;"	v
+g:comando_compilacion	vimrc	/^            let g:comando_compilacion[l:el[0]] = 'make'$/;"	v
+g:comando_compilacion	vimrc	/^            let g:comando_compilacion[l:el[0]] = l:dict[l:el[0]]$/;"	v
+g:comando_compilacion	vimrc	/^let g:comando_compilacion = {}$/;"	v
+g:deoplete#enable_at_startup	vimrc	/^        let g:deoplete#enable_at_startup = 1$/;"	v
+g:deoplete#sources#ternjs#docs	vimrc	/^            let g:deoplete#sources#ternjs#docs = 1$/;"	v
+g:deoplete#sources#ternjs#include_keywords	vimrc	/^            let g:deoplete#sources#ternjs#include_keywords = 1$/;"	v
+g:fake_bootstrap	vimrc	/^    let g:fake_bootstrap = 1        " Cargar definiciones extra de vim-fake$/;"	v
+g:gitgutter_map_keys	vimrc	/^    let g:gitgutter_map_keys = 0$/;"	v
+g:jedi#auto_vim_configuration	vimrc	/^    let g:jedi#auto_vim_configuration = 0$/;"	v
+g:jedi#completions_enabled	vimrc	/^    let g:jedi#completions_enabled    = 1$/;"	v
+g:jedi#force_py_version	vimrc	/^    let g:jedi#force_py_version       = 3$/;"	v
+g:jedi#smart_auto_mappings	vimrc	/^    let g:jedi#smart_auto_mappings    = 0$/;"	v
+g:mapleader	vimrc	/^let g:mapleader = ','  " La tecla líder es , porque está a la mano$/;"	v
+g:neocomplete#enable_at_startup	vimrc	/^            let g:neocomplete#enable_at_startup = 1$/;"	v
+g:next_object_prev_letter	vimrc	/^    let g:next_object_prev_letter = 'v'$/;"	v
+g:next_object_wrap_file	vimrc	/^    let g:next_object_wrap_file = 1$/;"	v
+g:op_compilacion	vimrc	/^let g:op_compilacion = {}$/;"	v
+g:op_compilacion	vimrc	/^let g:op_compilacion['archivos'] = '%'$/;"	v
+g:op_compilacion	vimrc	/^let g:op_compilacion['c'] = {$/;"	v
+g:op_compilacion	vimrc	/^let g:op_compilacion['cpp'] = {$/;"	v
+g:op_compilacion	vimrc	/^let g:op_compilacion['cs'] = {$/;"	v
+g:op_compilacion	vimrc	/^let g:op_compilacion['fortran'] = {$/;"	v
+g:op_compilacion	vimrc	/^let g:op_compilacion['haskell'] = {$/;"	v
+g:op_compilacion	vimrc	/^let g:op_compilacion['html'] = {$/;"	v
+g:op_compilacion	vimrc	/^let g:op_compilacion['java'] = {$/;"	v
+g:op_compilacion	vimrc	/^let g:op_compilacion['nombre_ejecutable'] = '%:t:r'$/;"	v
+g:op_compilacion	vimrc	/^let g:op_compilacion['python'] = {$/;"	v
+g:op_compilacion	vimrc	/^let g:op_compilacion['sh'] = {$/;"	v
+g:syntastic_c_compiler_options	vimrc	/^    let g:syntastic_c_compiler_options = g:op_compilacion['c'].banderas$/;"	v
+g:syntastic_cpp_compiler_options	vimrc	/^    let g:syntastic_cpp_compiler_options = g:op_compilacion['cpp'].banderas$/;"	v
+g:syntastic_fotran_compiler_options	vimrc	/^    let g:syntastic_fotran_compiler_options = g:op_compilacion['fortran'].banderas$/;"	v
+g:syntastic_haskell_compiler_options	vimrc	/^    let g:syntastic_haskell_compiler_options = g:op_compilacion['haskell'].banderas$/;"	v
+g:terminal_color_0	vim/colors/tender.vim	/^let g:terminal_color_0 = "#282828"$/;"	v
+g:terminal_color_1	vim/colors/tender.vim	/^let g:terminal_color_1 = "#f43753"$/;"	v
+g:terminal_color_10	vim/colors/tender.vim	/^let g:terminal_color_10 = "#c9d05c"$/;"	v
+g:terminal_color_11	vim/colors/tender.vim	/^let g:terminal_color_11 = "#ffc24b"$/;"	v
+g:terminal_color_12	vim/colors/tender.vim	/^let g:terminal_color_12 = "#b3deef"$/;"	v
+g:terminal_color_13	vim/colors/tender.vim	/^let g:terminal_color_13 = "#d3b987"$/;"	v
+g:terminal_color_14	vim/colors/tender.vim	/^let g:terminal_color_14 = "#73cef4"$/;"	v
+g:terminal_color_15	vim/colors/tender.vim	/^let g:terminal_color_15 = "#ffffff"$/;"	v
+g:terminal_color_2	vim/colors/tender.vim	/^let g:terminal_color_2 = "#c9d05c"$/;"	v
+g:terminal_color_3	vim/colors/tender.vim	/^let g:terminal_color_3 = "#ffc24b"$/;"	v
+g:terminal_color_4	vim/colors/tender.vim	/^let g:terminal_color_4 = "#b3deef"$/;"	v
+g:terminal_color_5	vim/colors/tender.vim	/^let g:terminal_color_5 = "#d3b987"$/;"	v
+g:terminal_color_6	vim/colors/tender.vim	/^let g:terminal_color_6 = "#73cef4"$/;"	v
+g:terminal_color_7	vim/colors/tender.vim	/^let g:terminal_color_7 = "#eeeeee"$/;"	v
+g:terminal_color_8	vim/colors/tender.vim	/^let g:terminal_color_8 = "#1d1d1d"$/;"	v
+g:terminal_color_9	vim/colors/tender.vim	/^let g:terminal_color_9 = "#f43753"$/;"	v
+g:terminal_color_background	vim/colors/tender.vim	/^let g:terminal_color_background = "#eeeeee"$/;"	v
+g:terminal_color_foreground	vim/colors/tender.vim	/^let g:terminal_color_foreground = "#282828"$/;"	v
+g:tipo_archivo	vimrc	/^        let g:tipo_archivo = &filetype$/;"	v
+g:tipo_archivo	vimrc	/^        let g:tipo_archivo = input('Ingresa el lenguaje: ')$/;"	v
+g:user_emmet_leader_key	vimrc	/^    let g:user_emmet_leader_key = '<C-b>'$/;"	v
+gV	vimrc	/^nnoremap gV `[v`]$/;"	m
+gc	vimrc	/^    nnoremap gc :set operatorfunc=OperadorComentarLineas<Return>g@$/;"	m
+gc	vimrc	/^    xnoremap gc :<C-u>call OperadorComentarLineas(visualmode(), 1)<Return>$/;"	m
+gj	vimrc	/^nnoremap <silent> gj j$/;"	m
+gk	vimrc	/^nnoremap <silent> gk k$/;"	m
+gp	vimrc	/^nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'$/;"	m
+i%	vimrc	/^onoremap i% :<C-u>normal vi%<Return>$/;"	m
+i%	vimrc	/^xnoremap i% GoggV$/;"	m
+ic	vimrc	/^    onoremap ic :<C-u>normal vic<Return>$/;"	m
+ic	vimrc	/^    xnoremap ic ?<C-r>=escape(split(&commentstring, "%s")[0], '\/*')<Return><Return>+0o$/;"	m
+ih	vimrc	/^    omap ih <Plug>GitGutterTextObjectInnerPending$/;"	m
+ih	vimrc	/^    omap ih <Plug>GitGutterTextObjectInnerVisual omap ah <Plug>GitGutterTextObjectOuterVisual$/;"	m
+il	vimrc	/^onoremap il :<C-u>normal vil<Return>$/;"	m
+il	vimrc	/^xnoremap il g_o^$/;"	m
+install_arch	set_up.sh	/^function install_arch {$/;"	f
+install_common_debian	set_up.sh	/^function install_common_debian {$/;"	f
+install_debian	set_up.sh	/^function install_debian {$/;"	f
+install_fedora	set_up.sh	/^function install_fedora {$/;"	f
+install_git_console	set_up.sh	/^function install_git_console {$/;"	f
+install_ubuntu	set_up.sh	/^function install_ubuntu {$/;"	f
+j	vimrc	/^nnoremap <silent> j gj$/;"	m
+jk	vimrc	/^inoremap jk <Esc>$/;"	m
+k	vimrc	/^nnoremap <silent> k gk$/;"	m
+kj	vimrc	/^inoremap kj <Esc>$/;"	m
+main	vim/other_scripts/aniadir_espacios.c	/^int main(int argc, char *argv[])$/;"	f	typeref:typename:int
+main	vim/other_scripts/quitar_espacios.c	/^int main(void)$/;"	f	typeref:typename:int
+makecomnads	vimrc	/^augroup makecomnads " Definiendo :make según el tipo de archivo$/;"	a
+n	vimrc	/^nnoremap n nzzzv$/;"	m
+num_esp	vim/other_scripts/quitar_espacios.c	/^static int num_esp = 0;$/;"	v	typeref:typename:int	file:
+s:AddEmpty	vim/other_scripts/jcommenter.vim	/^fun! s:AddEmpty()$/;"	f
+s:AppendStars	vim/other_scripts/jcommenter.vim	/^function! s:AppendStars(amount)$/;"	f
+s:AppendStr	vim/other_scripts/jcommenter.vim	/^function! s:AppendStr(string)$/;"	f
+s:DIES_MEGAS	vimrc	/^    let s:DIES_MEGAS = 10 * 1024 * 1024$/;"	v
+s:ExpandSinglelineComments	vim/other_scripts/jcommenter.vim	/^function! s:ExpandSinglelineComments(line)$/;"	f
+s:ExpandSinglelineCommentsEx	vim/other_scripts/jcommenter.vim	/^function! s:ExpandSinglelineCommentsEx(line, space)$/;"	f
+s:FindAnyTag	vim/other_scripts/jcommenter.vim	/^function! s:FindAnyTag(rangeStart, rangeEnd)$/;"	f
+s:FindFirstTag	vim/other_scripts/jcommenter.vim	/^function! s:FindFirstTag(rangeStart, rangeEnd, tagName)$/;"	f
+s:FindTag	vim/other_scripts/jcommenter.vim	/^function! s:FindTag(rangeStart, rangeEnd, tagName, tagParam)$/;"	f
+s:GetCombinedString	vim/other_scripts/jcommenter.vim	/^function! s:GetCombinedString(rangeStart, rangeEnd)$/;"	f
+s:GetIndentation	vim/other_scripts/jcommenter.vim	/^function! s:GetIndentation(string)$/;"	f
+s:GetNextParameterName	vim/other_scripts/jcommenter.vim	/^function! s:GetNextParameterName()$/;"	f
+s:GetNextThrowName	vim/other_scripts/jcommenter.vim	/^function! s:GetNextThrowName()$/;"	f
+s:HasDocComments	vim/other_scripts/jcommenter.vim	/^function! s:HasDocComments()$/;"	f
+s:HasMultilineDocComments	vim/other_scripts/jcommenter.vim	/^function! s:HasMultilineDocComments()$/;"	f
+s:HasSingleLineDocComments	vim/other_scripts/jcommenter.vim	/^function! s:HasSingleLineDocComments()$/;"	f
+s:IsClass	vim/other_scripts/jcommenter.vim	/^function! s:IsClass()$/;"	f
+s:IsCommentTag	vim/other_scripts/jcommenter.vim	/^function! s:IsCommentTag()$/;"	f
+s:IsConstructor	vim/other_scripts/jcommenter.vim	/^function! s:IsConstructor(methodHeader)$/;"	f
+s:IsExceptionDeclaration	vim/other_scripts/jcommenter.vim	/^function! s:IsExceptionDeclaration()$/;"	f
+s:IsFileComments	vim/other_scripts/jcommenter.vim	/^function! s:IsFileComments() $/;"	f
+s:IsFunctionEnd	vim/other_scripts/jcommenter.vim	/^function! s:IsFunctionEnd()$/;"	f
+s:IsMethod	vim/other_scripts/jcommenter.vim	/^function! s:IsMethod()$/;"	f
+s:IsModeLine	vim/other_scripts/jcommenter.vim	/^function! s:IsModeLine()$/;"	f
+s:IsSinglelineComment	vim/other_scripts/jcommenter.vim	/^function! s:IsSinglelineComment()$/;"	f
+s:IsVariable	vim/other_scripts/jcommenter.vim	/^function! s:IsVariable()$/;"	f
+s:MarkUpdateMade	vim/other_scripts/jcommenter.vim	/^function! s:MarkUpdateMade(linenum)$/;"	f
+s:Message	vim/other_scripts/jcommenter.vim	/^function! s:Message(string)$/;"	f
+s:MoveCursor	vim/other_scripts/jcommenter.vim	/^function! s:MoveCursor() $/;"	f
+s:MoveCursorToEOL	vim/other_scripts/jcommenter.vim	/^function! s:MoveCursorToEOL(line)$/;"	f
+s:RemoveNonExistingParameters	vim/other_scripts/jcommenter.vim	/^function! s:RemoveNonExistingParameters()$/;"	f
+s:RemoveTag	vim/other_scripts/jcommenter.vim	/^function! s:RemoveTag(rangeStart, rangeEnd, tagName, tagParam)$/;"	f
+s:ResolveMethodParams	vim/other_scripts/jcommenter.vim	/^function! s:ResolveMethodParams(methodHeader)$/;"	f
+s:SearchPrevDocComments	vim/other_scripts/jcommenter.vim	/^function! s:SearchPrevDocComments()$/;"	f
+s:Trim	vim/other_scripts/jcommenter.vim	/^function! s:Trim(string)$/;"	f
+s:UpdateAllTags	vim/other_scripts/jcommenter.vim	/^function! s:UpdateAllTags()$/;"	f
+s:UpdateExceptions	vim/other_scripts/jcommenter.vim	/^function! s:UpdateExceptions()$/;"	f
+s:UpdateParameters	vim/other_scripts/jcommenter.vim	/^function! s:UpdateParameters()$/;"	f
+s:UpdateReturnValue	vim/other_scripts/jcommenter.vim	/^function! s:UpdateReturnValue()$/;"	f
+s:WriteClassComments	vim/other_scripts/jcommenter.vim	/^function! s:WriteClassComments()$/;"	f
+s:WriteCopyOfTag	vim/other_scripts/jcommenter.vim	/^function! s:WriteCopyOfTag()$/;"	f
+s:WriteFieldComments	vim/other_scripts/jcommenter.vim	/^function! s:WriteFieldComments()$/;"	f
+s:WriteFileComments	vim/other_scripts/jcommenter.vim	/^function! s:WriteFileComments()$/;"	f
+s:WriteFoundException	vim/other_scripts/jcommenter.vim	/^function! s:WriteFoundException()$/;"	f
+s:WriteFunctionEndComments	vim/other_scripts/jcommenter.vim	/^function! s:WriteFunctionEndComments()$/;"	f
+s:WriteMethodComments	vim/other_scripts/jcommenter.vim	/^function! s:WriteMethodComments()$/;"	f
+s:WriteModeLine	vim/other_scripts/jcommenter.vim	/^function! s:WriteModeLine()$/;"	f
+s:activar_revision_ortorgrafica	vimrc	/^let s:activar_revision_ortorgrafica = 0$/;"	v
+s:appendPos	vim/other_scripts/jcommenter.vim	/^let s:appendPos = 1$/;"	v
+s:brackets	vim/other_scripts/jcommenter.vim	/^let s:brackets = '\\(s*\\([\\s*]\\s\\+\\)\\=\\)'$/;"	v
+s:columnaMaxima	vimrc	/^function! s:columnaMaxima(cadena, linea_ini, linea_fin, columna)$/;"	f
+s:combinedString	vim/other_scripts/jcommenter.vim	/^let s:combinedString = ''$/;"	v
+s:commentTagPattern	vim/other_scripts/jcommenter.vim	/^let s:commentTagPattern     = '^\\s*\\*\\=\\s*@[a-zA-Z]\\+\\(\\s\\|$\\)'$/;"	v
+s:defaultClassDescriptionSpace	vim/other_scripts/jcommenter.vim	/^let s:defaultClassDescriptionSpace = 1$/;"	v
+s:defaultFieldDescriptionSpace	vim/other_scripts/jcommenter.vim	/^let s:defaultFieldDescriptionSpace = 1$/;"	v
+s:defaultMethodDescriptionSpace	vim/other_scripts/jcommenter.vim	/^let s:defaultMethodDescriptionSpace = 1$/;"	v
+s:defaultParamText	vim/other_scripts/jcommenter.vim	/^let s:defaultParamText  = (exists('b:jcommenter_default_param'))  ? b:jcommenter_default_param :/;"	v
+s:defaultReturnText	vim/other_scripts/jcommenter.vim	/^let s:defaultReturnText = (exists('b:jcommenter_default_return')) ? b:jcommenter_default_return /;"	v
+s:defaultThrowText	vim/other_scripts/jcommenter.vim	/^let s:defaultThrowText  = (exists('b:jcommenter_default_throw'))   ? b:jcommenter_default_throw /;"	v
+s:docCommentEnd	vim/other_scripts/jcommenter.vim	/^let s:docCommentEnd   = -1$/;"	v
+s:docCommentStart	vim/other_scripts/jcommenter.vim	/^let s:docCommentStart = -1$/;"	v
+s:emmet_settings	vim/snips/emmet.vim	/^let s:emmet_settings = {$/;"	v
+s:envolver_lineas_largas	vimrc	/^let s:envolver_lineas_largas = 1$/;"	v
+s:filtermx	vim/snips/emmet.vim	/^let s:filtermx = '|\\(\\%(bem\\|html\\|haml\\|slim\\|e\\|c\\|s\\|fc\\|xsl\\|t\\|\\\/[^ ]\\+\\)\\/;"	v
+s:indent	vim/other_scripts/jcommenter.vim	/^let s:indent = ''$/;"	v
+s:invalComments	vim/other_scripts/jcommenter.vim	/^let s:invalComments      = '\\%(' . s:noCommentTrunk . '\\)\\|\\%(' . s:noParamTagComment . '\\)/;"	v
+s:itemno	vim/snips/emmet.vim	/^function! s:itemno(itemno, current) abort$/;"	f
+s:javaClassPattern	vim/other_scripts/jcommenter.vim	/^let s:javaClassPattern	    = '\\(^\\|\\s\\)\\(class\\|interface\\)\\s\\+' . s:javaname . '\\({\\/;"	v
+s:javaMethodAntiPattern	vim/other_scripts/jcommenter.vim	/^let s:javaMethodAntiPattern = '='$/;"	v
+s:javaMethodPattern	vim/other_scripts/jcommenter.vim	/^let s:javaMethodPattern     = '\\(^\\|\\s\\+\\)' . s:javaname . '\\s*(.*)\\s*\\(throws\\|{\\|;\\/;"	v
+s:javaVariablePattern	vim/other_scripts/jcommenter.vim	/^let s:javaVariablePattern   = '\\(\\s\\|^\\)' . s:javaname . s:brackets . '.*\\(;\\|=.*;\\)'$/;"	v
+s:javaname	vim/other_scripts/jcommenter.vim	/^let s:javaname = '[a-zA-Z_][a-zA-Z0-9_]*'$/;"	v
+s:linesAppended	vim/other_scripts/jcommenter.vim	/^let s:linesAppended = 0 " this counter is increased when the AppendStr-method$/;"	v
+s:linters_restringidos	vimrc	/^        let s:linters_restringidos = {$/;"	v
+s:lista_colores	vimrc	/^    let s:lista_colores += [ 'NeoSolarized', 'gruvbox', 'nova', 'dracula' ]$/;"	v
+s:lista_colores	vimrc	/^    let s:lista_colores = [ '256_noir', 'PaperColor',$/;"	v
+s:manejador_plugins_recien_instalado	vimrc	/^        let s:manejador_plugins_recien_instalado = 1$/;"	v
+s:modoDiffActivado	vimrc	/^let s:modoDiffActivado = 0$/;"	v
+s:noCommentTrunk	vim/other_scripts/jcommenter.vim	/^let s:noCommentTrunk     = '^\\s*\\\/\\*\\*\\s*\\n\\%(\\s*\\*\\s*\\n\\)*\\%(\\s*\\*\\s*@\\|\\s*\\/;"	v
+s:noParamTagComment	vim/other_scripts/jcommenter.vim	/^let s:noParamTagComment  = '^\\s*\\*\\s*@\\%(param\\|throws\\|exception\\)\\%(\\s\\+\\h\\w*\\)\\/;"	v
+s:noTagComment	vim/other_scripts/jcommenter.vim	/^let s:noTagComment       = '^\\s*\\*\\s*@\\%(return\\|see\\|version\\|since\\)\\s*$'$/;"	v
+s:path_manejador_plugins	vimrc	/^    let s:path_manejador_plugins = expand('~\/.vim\/autoload\/plug.vim')$/;"	v
+s:posicion_actual	vimrc	/^    let s:posicion_actual = index(s:lista_colores, 'tender')$/;"	v
+s:rangeEnd	vim/other_scripts/jcommenter.vim	/^let s:rangeEnd = 1   " line on which the range ended$/;"	v
+s:rangeStart	vim/other_scripts/jcommenter.vim	/^let s:rangeStart = 1 " line on which the range started$/;"	v
+s:revision_otrografica_en_espaniol	vimrc	/^    let s:revision_otrografica_en_espaniol = 0$/;"	v
+s:save_cpo	vim/snips/emmet.vim	/^let s:save_cpo = &cpoptions$/;"	v
+s:usar_plugins	vimrc	/^            let s:usar_plugins = 0$/;"	v
+s:usar_plugins	vimrc	/^let s:usar_plugins = 0$/;"	v
+s:usar_portapapeles_del_sistema	vimrc	/^let s:usar_portapapeles_del_sistema = 1$/;"	v
+s:usar_respaldo_local	vimrc	/^let s:usar_respaldo_local = 0$/;"	v
+siguiente	vim/other_scripts/quitar_espacios.c	/^int siguiente(void)$/;"	f	typeref:typename:int
+v	vimrc	/^xnoremap <expr> v$/;"	m
+w!!	vimrc	/^cnoremap w!! w !sudo tee % > \/dev\/null<Return>$/;"	m
+ysiw	vimrc	/^    nnoremap ysiw   :call RodearPalabra()<Return>$/;"	m
+zh	vimrc	/^    noremap zh zH$/;"	m
+zl	vimrc	/^    noremap zl zL$/;"	m
+ñ	vimrc	/^nnoremap ñ "$/;"	m
+ñ	vimrc	/^xnoremap ñ "$/;"	m
