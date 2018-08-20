@@ -29,7 +29,7 @@ A folder with all vim-related configs and a script to install all.
 Una carpeta con todas las configuraciones relacionadas con vim y un script para
 instalar todo.
 
-[vim_look](./screenshots/vim.gif)
+![vim_look](./screenshots/vim.gif)
 
 <a name="emacs"></a>
 ## Emacs
@@ -38,7 +38,7 @@ A folder with all emacs-related configs.
 ********************************************************************************
 Una carpeta con todas las configuraciones relacionadas con emacs.
 
-[emacs_look](./screenshots/emacs.gif)
+![emacs_look](./screenshots/emacs.gif)
 
 <a name="bash"></a>
 ## Bash
@@ -47,7 +47,7 @@ The file "nanorc" which contains a small config of nano.
 ********************************************************************************
 El archivo "nanorc" el cual contiene una pequeña configuración de nano.
 
-[nano_look](./screenshots/nano.gif)
+![nano_look](./screenshots/nano.gif)
 
 <a name="others"></a>
 ## Others / Otros
@@ -56,3 +56,8 @@ The file "bashrc" with some aliases for bash/zsh, the script
 "install_my_apps.sh" to install programs I use and two configuartions files for
 clang-tidy with my preferred styles for C-based languages named "clang-format1"
 and "clang-format2"
+********************************************************************************
+El archivo "bashrc" con algunos alias para bash/zsh, el script
+"install_my_apps.sh" para instalar programas que uso y dos archivos de
+configuración para clang-tidy con mis estilos preferidos para lenguajes basados
+en C llamados "clang-format1" y "clang-format2"
