@@ -42,7 +42,7 @@ function install_git_console {
 }
 
 if [ $# -ne 1 ]; then
-    echo "Debe proporcionar un argumento:"
+    echo "What system are you in?"
     echo -e "\\t a) debian" >&2
     echo -e "\\t b) ubuntu" >&2
     echo -e "\\t b) arch" >&2
@@ -65,38 +65,12 @@ elif [ "$1" == "windows" ]; then
     install_git_console
     shell="$HOME/.bashrc"
 else
-    echo -e "Argumento inválido" >&2
+    echo -e "Invalid argument" >&2
     exit 1
 fi
-
-# Starts real set-up
-if [ ! -d ~/.vim/bundle ] || [ ! -d ~/.vim/colors ]; then
-    mkdir -p ~/.vim/bundle
-    mkdir ~/.vim/colors
-fi
-
-cp ./vimrc ~/.vimrc
-
-if [ ! -d ~/.config/nvim ]; then
-    mkdir -p ~/.config/nvim
-fi
-ln -n ~/.vimrc ~/.config/nvim/init.vim
 
 if [ "$(grep "BASH_CONFIG_INCLUDED" < "$shell")" == "" ]; then
     cat bashrc >> "$shell"
 fi
 
-cp ./nanorc ~/.nanorc
-
-nvim +qall # Just run config to install plugins and exit
-
-cp ./vim/snips/emmet.vim ~/.vim/plugged/emmet-vim/autoload
-cp ./vim/snips/*.snip ~/.vim/plugged/neosnippet-snippets/neosnippets
-cp ./vim/colors/tender.vim ~/.vim/plugged/awesome-vim-colorschemes/colors
-cp ./vim/other_scripts/c_conceal.vim ~/.vim/plugged/c-conceal/after/syntax/c.vim
-cp ./vim/other_scripts/clang_tidy_sangria_correcta.sh ~/.vim
-cp ./clang-format1 ~/.clang-format
-gcc ./vim/other_scripts/quitar_espacios.c -o ~/.vim/cortar
-gcc ./vim/other_scripts/aniadir_espacios.c -o ~/.vim/pegar
-
-echo "La preparación del ambiente está lista"
+echo "The applications are ready"

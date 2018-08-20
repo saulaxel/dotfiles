@@ -20,6 +20,27 @@
 "                           Mi configuración de vim
 "
 
+" ##### Variables de configuración #### {{{
+" Define si se usan plugins o no
+let s:usar_plugins = 0
+
+" Indica si las líneas largas salen de la pantalla o se envuelven de manera que
+" parezcan varias lineas separadas
+let s:envolver_lineas_largas = 1
+
+" Indica si las operaciones de copiar/pegar/eliminar interactúan con el
+" portapapeles del sistema o vim las internaliza
+let s:usar_portapapeles_del_sistema = 1
+
+" Define si vim conserva archivos de respaldo y swapfiles
+let s:usar_respaldo_local = 0
+
+" Activar o no la revisión ortográfica y hacerlo por defecto en inglés o en
+" español
+let s:activar_revision_ortorgrafica = 0
+let s:revision_otrografica_en_espaniol = 0
+" ### }}}
+
 " ##### General ##### {{{
 set encoding=utf-8     " Codificación para usarse en los archivos
 scriptencoding utf-8   " utf-8 para para usar comandos con ñ
@@ -36,8 +57,7 @@ set matchpairs+=<:>   " Saltar también entre paréntesis angulares hermanos
 
 let g:mapleader = ','  " La tecla líder es , porque está a la mano
 
-" Si se quiere usar un manejador de plugins establecer la siguiente variable a 1
-let s:usar_plugins = 0
+" Descarga automática del manejador de plugins
 if s:usar_plugins
     let s:path_manejador_plugins = expand('~/.vim/autoload/plug.vim')
 
@@ -440,9 +460,6 @@ function! AlternarEdicionVirtual()
 endfunction
 
 " Configuración de las líneas largas
-" Si quiere que las líneas largas se envuelvan en la pantalla deje la
-" siguiente variable con el valor 1. En caso contrario dele el valor 0
-let s:envolver_lineas_largas = 1
 if s:envolver_lineas_largas
     set wrap              " Envolver líneas largas
     set linebreak         " Rompe la línea cuando se llega a la longitud máxima
@@ -738,8 +755,7 @@ set nopaste           " 'paste' estará desactivada por defecto
 set pastetoggle=<F2>  " Botón para activar/desactivar 'paste'
 nnoremap <Leader>tps :setlocal paste!<Return>
 
-" Copiar y pegar por medio de la papelera del sistema si se puede
-let s:usar_portapapeles_del_sistema = 1
+" Definir el comportamiento del registro sin nombre
 if s:usar_portapapeles_del_sistema && has('clipboard')
     if has('unnamedplus') " Cuando se pueda usar el registro + para copiar-pegar
         set clipboard=unnamed,unnamedplus
@@ -1112,8 +1128,6 @@ set autowrite         " Guardado automático al cambiar de archivo
 set autoread          " Recargar el archivo si hay cambios
 
 " +++ Respaldos y recuperación en caso de fallos +++ {{{
-" Si se quiere respaldos, definir la siguiente variable a 1
-let s:usar_respaldo_local = 0
 if s:usar_respaldo_local
     set backupcopy=yes
     set backup            " Hacer el respaldo
@@ -1567,12 +1581,8 @@ if !s:usar_plugins
     iabbrev pl   System.out.println();<esc>hi
 endif
 
-" Establecer la siguiente variable a 1 para activar revisión ortográfica
-let s:activar_revision_ortorgrafica = 0
+" Configuración de la revisión ortográfica
 if s:activar_revision_ortorgrafica
-    " Si se quiere revisión ortográfica en español establecer la siguiente
-    " variable a 1
-    let s:revision_otrografica_en_espaniol = 0
     set spell             " Activa la revisión ortográfica
     " Alternar entre revisión activa e inactiva con ,tsp
     nnoremap <Leader>tsp :setlocal spell!<Return>
