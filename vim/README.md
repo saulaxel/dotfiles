@@ -25,53 +25,66 @@ Hay varios plugins en el vimrc (si se habilitan) de los que no te hablaré puest
 que puedes revisarlos tu mismo. Algunas de las características que no depende de
 plugins son:
 
-    - System clipboard by default | Portapapeles del sistema por defecto
+    System clipboard by default | Portapapeles del sistema por defecto
 
-    - Current line/column highlighted | Resaltado de la línea/columna actual
 
-![Example line/column highlighted](../screenshots/vim_show_current.gif)
+    Current line/column highlighted | Resaltado de la línea/columna actual
 
-    - Incremental search/replace | Busqueda/reemplazo incremental
+>   ![Example line/column highlighted](../screenshots/vim_show_current.gif)
 
-![Example incremental search/replace](../screenshots/vim_incremental_search_replace.gif)
 
-    - # and * don't move cursor | # y * no mueven el cursor
+    Incremental search/replace | Busqueda/reemplazo incremental
 
-![Example # and * don't move](../screenshots/vim_dont_move_search.gif)
+>   ![Example incremental search/replace](../screenshots/vim_incremental_search_replace.gif)
 
-    - # and * can be used with selection | # y * se pueden usar en una selección
 
-![Example # * selection](../screenshots/vim_search_selection.gif)
+    # and * don't move cursor | # y * no mueven el cursor
 
-    - Mouse enabled by default | Mouse habilitado por defecto
+>   ![Example # and * don't move](../screenshots/vim_dont_move_search.gif)
 
-![Example mouse enabled](../screenshots/vim_show_mouse.gif)
 
-    - <F3> to toggle relativenumber | <F3> para alternar relativenumber
+    # and * can be used with selection | # y * se pueden usar en una selección
 
-![Example toggle relativenumber](../screenshots/vim_toggle_relative_number.gif)
+>   ![Example # * selection](../screenshots/vim_search_selection.gif)
 
-    - Move past end of line | Moverse pasado el final de la línea
 
-![Example move past line](../screenshots/vim_move_past_end.gif)
+    Mouse enabled by default | Mouse habilitado por defecto
 
-    - h and l wrap line | h y l le dan la vuelta a la línea
+>   ![Example mouse enabled](../screenshots/vim_show_mouse.gif)
 
-![Example h l](../screenshots/vim_wrap_line.gif)
 
-    - Move text around | Mover texto alrededor
+    <F3> to toggle relativenumber | <F3> para alternar relativenumber
 
-![Example moving text](../screenshots/vim_move_around.gif)
+>   ![Example toggle relativenumber](../screenshots/vim_toggle_relative_number.gif)
 
-    - "buffer" and "line" text object | Objetos de texto "buffer" y "línea"
 
-    - Surround words and text | Rodear palabras y texto
+    Move past end of line | Moverse pasado el final de la línea
+
+>   ![Example move past line](../screenshots/vim_move_past_end.gif)
+
+
+    h and l wrap line | h y l le dan la vuelta a la línea
+
+>   ![Example h l](../screenshots/vim_wrap_line.gif)
+
+
+    Move text around | Mover texto alrededor
+
+>   ![Example moving text](../screenshots/vim_move_around.gif)
+
+
+    "buffer" and "line" text object | Objetos de texto "buffer" y "línea"
+
+
+    Surround words and text | Rodear palabras y texto
+
 
 ![Example surround](../screenshots/vim_surround.gif)
 
-    - Automatic file reading | Recarga automática de archivos
+    Automatic file reading | Recarga automática de archivos
 
-    - Command "Alinear" to align text | Comando "Alinear" para alinear texto
+
+    Command "Alinear" to align text | Comando "Alinear" para alinear texto
 
 ![Example align](../screenshots/vim_align_code.gif)
 
