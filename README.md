@@ -1,6 +1,6 @@
 # dotfiles
 
-My personal configuration files for bash, nano, [neo]vim and emacs and also a
+My personal <>asdf<>configuration files for bash, nano, [neo]vim and emacs and also a
 script to install my work/leisure programs. All the contents here used to be a
 bunch of messy and inefficient configurations only suited for my personal needs
 but with the time they have become into a messy and inefficient configurations
