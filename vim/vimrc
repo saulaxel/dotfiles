@@ -24,18 +24,17 @@
 " Define si se usan plugins o no
 let s:usar_plugins = 0
 
-" Indica si las líneas largas salen de la pantalla o se envuelven de manera que
-" parezcan varias lineas separadas
+" Indica si las líneas largas salen de la pantalla o la envuelven
 let s:envolver_lineas_largas = 1
 
 " Indica si las operaciones de copiar/pegar/eliminar interactúan con el
-" portapapeles del sistema o vim las internaliza
+" portapapeles del sistema o solo con los registros de vim
 let s:usar_portapapeles_del_sistema = 1
 
 " Define si vim conserva archivos de respaldo y swapfiles
 let s:usar_respaldo_local = 0
 
-" Activar o no la revisión ortográfica y hacerlo por defecto en inglés o en
+" Activar o no la revisión ortográfica / usar inglés o español
 " español
 let s:activar_revision_ortorgrafica = 0
 let s:revision_otrografica_en_espaniol = 0
@@ -45,8 +44,6 @@ let s:revision_otrografica_en_espaniol = 0
 set encoding=utf-8     " Codificación para usarse en los archivos
 scriptencoding utf-8   " utf-8 para para usar comandos con ñ
 set mouse=a            " Usar el ratón para mover/seleccionar/etc...
-set noerrorbells       " Sin beeps cuando hay error
-set visualbell         " Los alarmas visuales en lugar de sonoras
 set exrc               " Usar .vimrc y .exrc locales
 set secure             " Suprimir comandos inseguros en .exrc locales
 
@@ -55,7 +52,7 @@ set showmatch         " Resaltar los paréntesis/corchetes correspondientes
 set matchpairs+=<:>   " Saltar también entre paréntesis angulares hermanos
 " % - Alternar entre inicio y final de (){}[], etc..
 
-let g:mapleader = ','  " La tecla líder es , porque está a la mano
+let g:mapleader = ','  " La tecla líder es ',' porque '\' no está a la mano
 
 " Descarga automática del manejador de plugins
 if s:usar_plugins
@@ -76,12 +73,8 @@ if s:usar_plugins
         if v:shell_error
             echomsg 'No se pudo instalar el manejador de plugins'
             let s:usar_plugins = 0
-            call getchar()
         endif
 
-        " Como se acaba de descargar el manejador de plugins lo cargamos
-        " manualmente con la siguiente línea (De otro modo se requeriría
-        " reiniciar vim)
         let s:manejador_plugins_recien_instalado = 1
     endif
     execute 'source ' . fnameescape(s:path_manejador_plugins)
@@ -101,22 +94,19 @@ if s:usar_plugins
     " Todos los plugins tienen que ir entre plug#begin() y plug#end()
     call plug#begin('~/.vim/plugged')
 
-    " Manejo de versiones y cambios
-    Plug 'tpope/vim-fugitive'     " Manejo de git dentro de vim
-    Plug 'airblade/vim-gitgutter' " Mostrar diferencias del archivo al editar
-    Plug 'mbbill/undotree'        " Arbol de cambios gráfico
+    " +++ Manejo de versiones y cambios {{{
+    Plug 'tpope/vim-fugitive', { 'on': ['Git', 'Gstatus'] }     " Manejo de git dentro de vim
+    Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }  " Mostrar diferencias del archivo al editar
+    Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }          " Árbol de cambios gráfico
     nnoremap <F7>         :UndotreeToggle<Return>
     nnoremap <Leader>tgut :UndotreeToggle<Return>
-
     " :GitGutterToggle - Activar y desactivar gitgutter
     let g:gitgutter_map_keys = 0
     nmap ]h <Plug>GitGutterNextHunk
     nmap [h <Plug>GitGutterPrevHunk
-    omap ih <Plug>GitGutterTextObjectInnerPending
-    omap ah <Plug>GitGutterTextObjectOuterPending
-    omap ih <Plug>GitGutterTextObjectInnerVisual omap ah <Plug>GitGutterTextObjectOuterVisual
+    " +++ }}}
 
-    " Completado y revisión de código
+    " +++ Completado y revisión de código {{{
     if has('nvim') || (v:version >= 800 && has('python3'))
         if has('nvim')
             if !has('python3')
@@ -135,9 +125,9 @@ if s:usar_plugins
             Plug 'roxma/vim-hug-neovim-rpc'
         endif
         let g:deoplete#enable_at_startup = 1
-        Plug 'w0rp/ale'                   " Revisión de sintaxis
-        " Véase ":help ale-support" para ver que programas se pueden usar
-        " para revisar código en el lenguaje que uses
+        Plug 'w0rp/ale'                   " Revisión de código (con herramientas externas)
+        " Véase ":help ale-support" para ver que programas se pueden usar para
+        " revisar código en el lenguaje que uses
         nnoremap <leader>tsr :call AlternarRevisionEstatica()<return>
         let s:linters_restringidos = {
                     \   'c': ['gcc'],
@@ -158,7 +148,7 @@ if s:usar_plugins
             Plug 'Shougo/neocomplete'     " Completado de código
             let g:neocomplete#enable_at_startup = 1
         endif
-        Plug 'Syntastic'                  " Revisión de sintaxis
+        Plug 'vim-syntastic/Syntastic'    " Revisión de sintaxis
     endif
 
     Plug 'Shougo/neosnippet'              " Gestor de plantillas de código
@@ -168,30 +158,32 @@ if s:usar_plugins
     smap <C-e> <Plug>(neosnippet_expand_or_jump)
     xmap <C-e> <Plug>(neosnippet_expand_target)
 
-    Plug 'Shougo/neoinclude.vim'          " Completado de cabeceras
-    Plug 'mattn/emmet-vim', { 'for': ['html', 'xml', 'css', 'sass'] }
+    "Plug 'vim-scripts/SearchComplete'     " Completado de búsqueda
+    Plug 'Shougo/neoinclude.vim', { 'for': ['c', 'cpp', 'python'] }   " Completado de cabeceras
+    Plug 'mattn/emmet-vim', { 'for': ['html', 'xml', 'css', 'sass'] } " Generación de etiquetas
     let g:user_emmet_leader_key = '<C-b>'
-      " Ctrl-b + , (coma) - Completar abreviación emmet
-      " Ctrl-b + n - Saltar al siguiente punto de edición de emmet
-    Plug 'Shougo/neco-vim', { 'for': 'vim'}
-    Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }
-    Plug 'saulaxel/jcommenter.vim', { 'for': 'java' }
+      " emmet_leader + , (coma) - Completar abreviación emmet
+      " emmet_leader + n - Saltar al siguiente punto de edición de emmet
+    Plug 'Shougo/neco-vim', { 'for': 'vim' }                          " Completado de VimL
+    Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java' }           " Completado de Java
+    Plug 'saulaxel/jcommenter.vim', { 'for': 'java' }                 " Generar JavaDoc
     nnoremap <Leader>jd :call JCommentWriter()<Return>
 
-    Plug 'Rip-Rip/clang_complete' , { 'for': ['c', 'cpp'] }
+    Plug 'Rip-Rip/clang_complete' , { 'for': ['c', 'cpp'] }           " Completado de C/C++
+    let g:clang_make_default_keymappings = 0
     if !executable('clang')
         echomsg 'Se debe instalar clang para el completado de c y c++'
     endif
-    let g:clang_library_path = '/usr/lib/llvm-3.8/lib/libclang.so.1'
-    let g:clang_make_default_keymappings = 0
 
-    Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+    let g:clang_library_path = '/usr/lib/llvm-3.8/lib/libclang.so.1'
+
+    Plug 'davidhalter/jedi-vim', { 'for': 'python' }                  " Completado de python
     let g:jedi#completions_enabled    = 1
     let g:jedi#auto_vim_configuration = 0
     let g:jedi#smart_auto_mappings    = 0
     let g:jedi#force_py_version       = 3
 
-    Plug 'tkhren/vim-fake'          " Texto muestra:faketext, lorems, etc...
+    Plug 'tkhren/vim-fake'          " Texto muestra: faketext, lorems, etc...
     let g:fake_bootstrap = 1        " Cargar definiciones extra de vim-fake
 
     " Omnifunciones para completado de código
@@ -205,13 +197,15 @@ if s:usar_plugins
         autocmd FileType sql,html,css,javascript,php setlocal omnifunc=syntaxcomplete#Complete
         autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
     augroup END
+    " +++ }}}
 
-    " Navegación y edición de texto
-    Plug 'scrooloose/nerdtree'            " Árbol de directorios
+    " +++ Navegación y edición de texto {{{
+    Plug 'farmergreg/vim-lastplace'
+    Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'}             " Árbol de directorios
     nnoremap <Leader>tgnt :NERDTreeToggle<Return>
     nnoremap <F5>         :NERDTreeToggle<Return>
 
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " Buscador de archivos
 
     Plug 'majutsushi/tagbar'              " Árbol de navegación (Requiere ctags)
     nnoremap <Leader>tgtb :TagbarToggle<Return>
@@ -219,11 +213,12 @@ if s:usar_plugins
 
     Plug 'xolox/vim-misc'                 " Requerimiento para el siguiente
     Plug 'xolox/vim-easytags'             " Generación y manejo de etiquetas
+    let g:easytags_auto_update = 0
 
     Plug 'kshenoy/vim-signature'          " Marcas visuales
     Plug 'tpope/vim-repeat'               " Repetir plugins con .
     Plug 'terryma/vim-multiple-cursors'   " Cursores múltiples tipo sublime
-    Plug 'godlygeek/Tabular'              " Funciones para alinear texto
+    Plug 'godlygeek/Tabular', { 'on': 'Tabularize' }                  " Funciones para alinear texto
     nnoremap <Leader>tb   :Tabularize /
     xnoremap <Leader>tb   :Tabularize /
     nnoremap <Leader>tbox :Tabularize /*<Return>vip<Esc>:substitute/ /=/g<Return>r A/<Esc>vipo<Esc>0r/:substitute/ /=/g<Return>:nohlsearch<Return>
@@ -236,33 +231,46 @@ if s:usar_plugins
                 \}
     Plug 'tpope/vim-endwise'              " Completar pares de palabras
 
-    Plug 'KabbAmine/vCoolor.vim'          " Inserción de valores RGB
+    Plug 'KabbAmine/vCoolor.vim', { 'on': 'VCoolor' }                 " Inserción de valores RGB
     " !gpick - Programa para capturar colores
     nnoremap <Leader>vc :VCoolor<Return>
-    Plug 'sedm0784/vim-you-autocorrect'   " Corrección de errores sintácticos
+    Plug 'sedm0784/vim-you-autocorrect', { 'on': ['EnableAutoCorrect', 'DisableAutoCorrect']} " Ortografía
     " :EnableAutoCorrect - Activar autocorrección ortográfica
     " :DisableAutoCorrect - Desactivar autocorrección ortográfica
     Plug 'scrooloose/nerdcommenter'       " Utilidades para comentar código
     Plug 'iamcco/markdown-preview.vim'    " Visualizar markdown
+    " +++ }}}
 
-    " Objetos de texto y operadores
+    " +++ Objetos de texto y operadores {{{
     Plug 't9md/vim-textmanip'
     xmap <Leader>tgtm <Plug>(textmanip-toggle-mode)
     nmap <Leader>tgtm <Plug>(textmanip-toggle-mode)
+    "let g:textmanip_hooks = {}
+    "function! g:textmanip_hooks.finish(tm)
+        "let l:helper = textmanip#helper#get()
+        "if a:tm.linewise
+            "call l:helper.indent(a:tm)
+        "else
+            "" En operaciones de bloque se borran los espacios sobrantes
+            "call l:helper.remove_trailing_WS(a:tm)
+        "endif
+    "endfunction
 
-    Plug 'easymotion/vim-easymotion'      " Movimiento rápida caracteres
+    Plug 'easymotion/vim-easymotion'       " Movimiento rápida caracteres
     map <Leader>em <Plug>(easymotion-prefix)
     Plug 'michaeljsmith/vim-indent-object' " Objeto de texto 'indentado'
-    Plug 'PeterRincker/vim-argumentative' " Objeto de texto 'argumento'
-    Plug 'kana/vim-textobj-user'          " Requerimiento de los próximos
-    Plug 'kana/vim-textobj-function'      " Objeto de texto 'función'
-    Plug 'glts/vim-textobj-comment'       " Objeto de texto 'comentario'
-    Plug 'saulaxel/vim-next-object'       " Objeto de texto 'siguiente elemento'
+    Plug 'PeterRincker/vim-argumentative'  " Objeto de texto 'argumento'
+    Plug 'kana/vim-textobj-user'           " Requerimiento de los próximos
+    Plug 'kana/vim-textobj-function'       " Objeto de texto 'función'
+    Plug 'kana/vim-textobj-line'           " Objeto de texto 'línea'
+    Plug 'kana/vim-textobj-entire'         " Objeto de texto 'buffer'
+    Plug 'glts/vim-textobj-comment'        " Objeto de texto 'comentario'
+    Plug 'saulaxel/vim-next-object'        " Objeto de texto 'siguiente elemento'
     let g:next_object_prev_letter = 'v'
     let g:next_object_wrap_file = 1
 
-    Plug 'tpope/vim-surround'             " Encerrar/liberar secciones
-    Plug 'tpope/vim-commentary'           " Operador comentar/des-comentar
+    Plug 'tpope/vim-surround'              " Encerrar/liberar secciones
+    Plug 'tpope/vim-commentary'            " Operador comentar/des-comentar
     Plug 'vim-scripts/ReplaceWithRegister' " Operador para manejo de registros
 
     " Estilo visual y reconocimiento de sintaxis
@@ -270,26 +278,27 @@ if s:usar_plugins
     Plug 'vim-airline/vim-airline'        " Línea de estado ligera
     let g:airline_powerline_fonts = 1
     let g:airline#extensions#tabline#enabled = 1
-    Plug 'vim-airline/vim-airline-themes' " Temas de color para el plugin anterior
-    Plug 'ryanoasis/vim-devicons'         " Iconos para los archivos
+    Plug 'vim-airline/vim-airline-themes'  " Temas de color para el plugin anterior
+    Plug 'ryanoasis/vim-devicons'          " Iconos para los archivos
     if has('mac') || has('win32')
         set guifont=DroidSansMono\ Nerd\ Fond:11
     else
-        set guifont=DroidSansMono\ Nerd\ Fond\ 11
+        set guifont=DroidSansMono\ Nerd\ Fond\ 8
     endif
-    Plug 'Yggdroot/indentLine'            " Marcas de sangría visuales
-    Plug 'gregsexton/MatchTag'            " Iluminar etiqueta hermana (html/xml)
-    Plug 'ap/vim-css-color'               " Colorear valores RGB
-    Plug 'sheerun/vim-polyglot'           " Paquete de archivos de sintaxis
-    "Plug 'boeckmann/vim-freepascal'       " Sintaxis de freepascal
-    "Plug 'dag/vim-fish'                   " Sintaxis de fish
-    "Plug 'Beerstorm/vim-brainfuck'        " Sintaxis de brainfuck
-    "Plug 'khzaw/vim-conceal'              " <-+
-    "Plug 'KeitaNakamura/tex-conceal.vim'  " <-+-Enmascaramiento de
-    "Plug 'sethwoodworth/vim-cute-python'  " <-+-palabras clave con
-    "Plug 'discoloda/c-conceal'            " <-+-sImbolos unicode
-    "Plug 'dkinzer/vim-schemer'            " <-+-
-    "Plug 'calebsmith/vim-lambdify'        " <-+
+    Plug 'Yggdroot/indentLine'             " Marcas de sangría visuales
+    Plug 'gregsexton/MatchTag', {'for': ['html', 'xml']}              " Iluminar etiqueta hermana
+    Plug 'ap/vim-css-color', {'for': ['css', 'sass']}                 " Colorear valores RGB
+    Plug 'sheerun/vim-polyglot'            " Paquete de archivos de sintaxis
+    "Plug 'boeckmann/vim-freepascal'        " Sintaxis de freepascal
+    "Plug 'dag/vim-fish'                    " Sintaxis de fish
+    "Plug 'Beerstorm/vim-brainfuck'         " Sintaxis de brainfuck
+    "Plug 'khzaw/vim-conceal'               " <-+
+    "Plug 'KeitaNakamura/tex-conceal.vim'   " <-+-Enmascaramiento de
+    "Plug 'sethwoodworth/vim-cute-python'   " <-+-palabras clave con
+    "Plug 'discoloda/c-conceal'             " <-+-sImbolos unicode
+    "Plug 'dkinzer/vim-schemer'             " <-+-
+    "Plug 'calebsmith/vim-lambdify'         " <-+
+    " +++ }}}
 
     call plug#end()
 
@@ -306,7 +315,7 @@ set title             " El título de la consola no será el argumento a vim
 set showcmd           " Mostrar comandos incompletos
 set showmode          " Mostrar el modo actual
 set laststatus=2      " Siempre mostrar la barra de estado
-" Línea de estado (cuando los plugins estan desactivados)
+" Línea de estado (cuando los plugins están desactivados)
 set statusline=%f\                          " Nombre de archivo
 set statusline+=[%Y]\                       " Tipo de archivo
 set statusline+=\ %{getcwd()}               " Directorio actual
@@ -325,13 +334,11 @@ set relativenumber    " Mostrar numeración relativa
 nnoremap <Leader>trn :setlocal relativenumber!<Return>
 nnoremap <F3>        :setlocal relativenumber!<Return>
 set numberwidth=3     " Longitud de la sección de números
-
-" Mostrar la posición del cursor en la línea de estado
-set ruler
+set ruler             " Mostrar número de fila y columna
 
 " Formato y longitud del texto
-set textwidth=80      " La longitud del texto es 80 columnas
-set colorcolumn=+1    " Resaltar la columna después de &textwidth (81)
+set textwidth=80      " La longitud del texto (para formateo y otras cosas)
+set colorcolumn=+1    " Resaltar la columna después de &textwidth
 augroup LongitudesArchivosEspeciales
     autocmd!
     " Los mensajes de un commit de git solo deben medir 72 caracteres
@@ -344,15 +351,15 @@ augroup END
 syntax on         " Activar sintaxis
 set synmaxcol=200 " Solo resaltar primeros 200 caracteres
 
-" Tema de color
-set background=dark
 " Usar 256 colores cuando sea posible
 if (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256') || has('nvim')
     set t_Co=256
 endif
-" Para ver los temas de color presionar :colorscheme + <Tab>
 if s:usar_plugins
-    colorscheme tender
+    if has('vim_starting')
+        " colorscheme + <Tab> para ver los temas de color disponibles
+        colorscheme tender
+    endif
     let s:lista_colores = [ '256_noir', 'PaperColor',
         \ 'abstract', 'alduin', 'angr', 'apprentice', 'challenger_deep',
         \ 'deus', 'gruvbox', 'gotham256', 'hybrid', 'hybrid_material',
@@ -360,8 +367,6 @@ if s:usar_plugins
         \ 'meta5', 'minimalist', 'molokai', 'molokayo', 'nord', 'one',
         \ 'onedark', 'paramount', 'rdark-terminal2', 'scheakur',
         \ 'seoul256-light', 'sierra', 'tender', 'two-firewatch' ]
-
-    let s:lista_colores += [ 'NeoSolarized', 'gruvbox', 'nova', 'dracula' ]
 
     let s:posicion_actual = index(s:lista_colores, 'tender')
 
@@ -383,6 +388,9 @@ if s:usar_plugins
             endfor
         endfor
     endfunction
+else
+    " Fondo
+    set background=dark
 endif
 
 " Cuando y como mostrar caracteres invisibles
@@ -405,25 +413,22 @@ set cursorcolumn
 
 " Crear una clasificación de color llamada EspaciosEnBlancoExtra
 highlight EspaciosEnBlancoExtra ctermbg=172 guifg=#D78700
-" Resaltar todos los espacios (seleccionados mediante la expresión regular
-" "\s\+$") sobrantes con el color de la línea anterior
+" Resalta la expresión regular "\s\+$" como "EspaciosEnBlancoExtra"
 match EspaciosEnBlancoExtra /\s\+$/
 
-" Resaltar señales de conflicto en un merge de git (mismo método que la línea
-" anterior)
+" Resaltar señales de conflicto en un merge de git
 highlight Conflicto ctermbg=1 guifg=#FF2233
 2match Conflicto /\v^(\<|\=|\>){7}([^=].+)?$/
 "   +++ }}}
 
 " +++ Tabulado y sangría +++ {{{
-" Cantidad de espacios para sangría
 function! CambiarIndentacion(espacios, ...)
     " Cambia tres opciones por el precio de una llamada a función
     " Ejemplo de uso:
-    "    :call Cambi<tab>
-    "    (La tecla <tab> completa el nombre de la función)
     "    :call CambiarIndentacion(8)<Return>
-    " Ahora todo el código tendrá una sangría de ocho espacios
+    " Si se quiere una re-indentación automática de todo el texto ya existente
+    " pasar un argumento extra sin importar su valor. Ejemplo:
+    "    :call CambiarIndentacion(8, 'reindenta')<Return>
     let &tabstop     = a:espacios
     let &shiftwidth  = a:espacios
     let &softtabstop = a:espacios
@@ -433,7 +438,7 @@ function! CambiarIndentacion(espacios, ...)
         execute "normal! gg=G\<C-o>\<C-o>"
     endif
 endfunction
-call CambiarIndentacion(4)
+call CambiarIndentacion(4)  " Cantidad de espacios por Tab
 
 " Otras configuraciones con respecto a la sangría
 set expandtab     " Se sangra el código con espacios
@@ -446,18 +451,10 @@ set smarttab      " Usar tabs de acuerdo a 'shiftwidth'
 
 " ##### Ventanas, buffers y navegación ##### {{{
 " +++ General +++ {{{
-set scrolloff=2         " Mínimas líneas por encima/debajo del cursor
-set sidescrolloff=5     " Mínimas columas por la izquierda/derecha"
-"set scrolljump=3        " Líneas que recorrer al salir de la pantalla
-set virtualedit=onemore " Poder alcanzar la última posición de la pantalla
-nnoremap <Leader>tve :call AlternarEdicionVirtual()<Return>
-function! AlternarEdicionVirtual()
-    if &virtualedit ==# 'onemore'
-        let &virtualedit = 'all'
-    else
-        let &virtualedit = 'onemore'
-    endif
-endfunction
+set scrolloff=2               " Mínimas líneas por encima/debajo del cursor
+set sidescrolloff=5           " Mínimas columnas por la izquierda/derecha
+"set scrolljump=3              " Líneas que recorrer al salir de la pantalla
+set virtualedit=block,onemore " Mover cursor más allá del fin de línea
 
 " Configuración de las líneas largas
 if s:envolver_lineas_largas
@@ -465,7 +462,9 @@ if s:envolver_lineas_largas
     set linebreak         " Rompe la línea cuando se llega a la longitud máxima
     set display+=lastline " No mostrar símbolos @ cuando la línea no cabe
     set showbreak=...\    " En lineas largas, se muestran ... de continuación
-    set breakindent       " Aplica sangría en los tres puntos de continuación
+    if exists('+breakindent')
+        set breakindent   " Aplica sangría a la continuación de línea
+    endif
 else
     set nowrap            " No envolver líneas largas
 
@@ -482,7 +481,7 @@ set whichwrap=b,s,h,l,<,>,[,]
 " Dirección para abrir nuevas ventanas (splits)
 set splitright  " Las separaciones verticales se abren a la derecha
 set splitbelow  " Las separaciones horizontales se abren hacia abajo
-set diffopt+=vertical " Diffsplit prefiere orientación vertical
+set diffopt+=vertical " :diffsplit prefiere orientación vertical
 " :wincmd - Realizar un comando de ventanas
 
 " Comandos para abrir y cerrar nuevas ventanas (splits)
@@ -506,7 +505,7 @@ nnoremap __   :<C-u>split<Return>
 " <C-w>w - Ir a la siguiente ventana
 " <C-w>W - Ir a la ventana anterior
 
-" Comandos para cambiar la disposición (layout) de las ventanas
+" Comandos para cambiar la disposición de las ventanas
 nnoremap <Leader><C-h> <C-w>H
 nnoremap <Leader><C-l> <C-w>L
 nnoremap <Leader><C-k> <C-w>K
@@ -530,7 +529,7 @@ function! RepetirRedimensionadoVentana(inicial, cuenta)
         if l:tecla =~# '\d'
             let l:cuenta = l:cuenta * 10 + l:tecla
         else
-            execute 'normal! ' . (l:cuenta ? l:cuenta : 1) . "\<C-w>" . l:tecla
+            execute l:cuenta . 'wincmd ' . l:tecla
             let l:cuenta = 0
             redraw
         endif
@@ -626,7 +625,8 @@ endfunction
 "   +++ }}}
 
 " +++ Buffers +++ {{{
-set hidden          " Permitir buffers ocultos
+set hidden                       " Permitir buffers ocultos
+set switchbuf=useopen,usetab     " Preferencia a tabs/ventanas al cambiar buffer
 " bufdo - Ejecutar un comando a través de todos los buffers
 
 " Abrir y moverse entre buffers
@@ -691,9 +691,11 @@ cnoremap <Down> <C-n>
 "   +++ }}}
 
 " +++ Dobleces (folds) +++ {{{
-set foldenable    " Habilitar dobleces
-set foldcolumn=1  " Una columna para mostrar la extensión de un dobles
-"set foldmethod=indent   " Crear dobleces según el nivel de sangría
+set foldenable           " Habilitar dobleces
+set foldcolumn=1         " Una columna para mostrar la extensión de un dobles
+set foldopen-=block      " No abrir dobleces al presionar }, ), etc...
+set foldnestmax=3        " Máxima profundidad de los dobleces
+"set foldmethod=indent    " Crear dobleces según el nivel de sangría
 " Crear y eliminar dobleces
 " :fold o zf -  sirven para crear dobleces
 " zd - elimina el doblez más cercano
@@ -807,14 +809,14 @@ else
     nmap <A-Y> <Plug>(textmanip-duplicate-down)
     xmap <A-Y> <Plug>(textmanip-duplicate-down)
 
-    nmap <A-j> V<A-j>
+    nmap <A-j> V<A-j><Esc>
     xmap <A-j> <Plug>(textmanip-move-down)
-    nmap <A-k> V<A-k>
+    nmap <A-k> V<A-k><Esc>
     xmap <A-k> <Plug>(textmanip-move-up)
 
-    nmap <A-h> v<A-h>
+    nmap <A-h> v<A-h><Esc>
     xmap <A-h> <Plug>(textmanip-move-left)
-    nmap <A-l> v<A-l>
+    nmap <A-l> v<A-l><Esc>
     xmap <A-l> <Plug>(textmanip-move-right)
 
     xmap <Up>     <Plug>(textmanip-move-up-r)
@@ -829,13 +831,13 @@ xnoremap > >gv
 "   +++ }}}
 
 " +++ Operaciones comunes de modificación de texto +++ {{{
-if v:version > 703 || v:version == 703 && has('patch541')
+if exists('+formatoptions')
     set formatoptions+=j " Eliminar caracter de comentario al unir líneas
+    set formatoptions+=
 endif
 
 " Regresar rápido a modo normal
 inoremap kj <Esc>
-inoremap jk <Esc>
 
 " Seleccionando texto significativo
 " Texto previamente insertado
@@ -850,7 +852,7 @@ inoremap <expr> <A-d> '<Esc>' . (col('.') == 1 ? "" : "l") . 'dwi'
 inoremap <expr> <A-D> '<Esc>' . (col('.') == 1 ? "" : "l") . 'C'
 
 " Regresar a modo normal eliminando la línea actual
-inoremap <A-k><A-j> <Esc>ddk
+inoremap <A-k><A-j> <Esc>ddkk
 inoremap <A-j><A-k> <Esc>ddj
 
 " Añadir línea vacía por arriba y por debajo
@@ -992,12 +994,8 @@ endfunction
 " autopairs esté activo
 inoremap <Leader>} <Space><Esc>r}==
 nnoremap <Leader>} A<Space><Esc>r}==
-imap     <Leader>B <Leader>}
-nmap     <Leader>B <Leader>}
 inoremap <Leader>) <Space><Esc>r)a
 nnoremap <Leader>) i<Space><Esc>r)
-imap     <Leader>b <Leader>)
-nmap     <Leader>b <Leader>)
 
 " Borrar todo de la línea de comandos excepto el propio comando
 cnoremap <A-w> <C-\>esplit(getcmdline(), " ")[0]<return><space>
@@ -1009,26 +1007,18 @@ inoremap <Return> <C-g>u<Return>
 "   +++ }}}
 
 " +++ Objetos de texto +++ {{{
-" Objeto de texto "línea"
-xnoremap il g_o^
-onoremap il :<C-u>normal vil<Return>
-xnoremap al $o0
-onoremap al :<C-u>normal val<Return>
-
-" Objecto de texto "buffer completo"
-xnoremap i% GoggV
-onoremap i% :<C-u>normal vi%<Return>
-xnoremap a% GoggV
-onoremap a% :<C-u>normal vi%<Return>
-
-" Objeto de texto "comentario de bloque"
 if !s:usar_plugins
-    xnoremap ic ?<C-r>=escape(split(&commentstring, "%s")[0], '/*')<Return><Return>+0o
-                \ /<C-r>=escape(split(&commentstring, "%s")[1], '/*')<Return><Return>-$
-    onoremap ic :<C-u>normal vic<Return>
-    xnoremap ac ?<C-r>=escape(split(&commentstring, "%s")[0], '/*')<Return><Return>o
-                \ /<C-r>=escape(split(&commentstring, "%s")[1], '/*')<Return><Return>l
-    onoremap ac :<C-u>normal vac<Return>
+    " Objeto de texto "línea"
+    xnoremap il g_o^
+    onoremap il :<C-u>normal vil<Return>
+    xnoremap al $o0
+    onoremap al :<C-u>normal val<Return>
+
+    " Objecto de texto "buffer completo"
+    xnoremap i% GoggV
+    onoremap i% :<C-u>normal vi%<Return>
+    xnoremap a% GoggV
+    onoremap a% :<C-u>normal vi%<Return>
 endif
 "   +++ }}}
 " ### }}}
@@ -1037,7 +1027,9 @@ endif
 " +++ General +++ {{{
 set wrapscan           " Las búsquedas dan la vuelta al archivo
 set incsearch          " Hacer las búsquedas incrementales
-set inccommand=nosplit " Hacer los remplazos incrementales
+if exists('+inccommand')
+    set inccommand=nosplit " Hacer los remplazos incrementales
+endif
 set ignorecase         " No diferenciar mayúsculas/minúsculas
 set smartcase          " Ignorecase si la palabra empieza por minúscula
 set hlsearch           " Al buscar texto se resaltan las coincidencias
@@ -1056,6 +1048,10 @@ xnoremap . :normal .<Return>
 " Repitiendo sustituciones con todo y sus banderas
 nnoremap & :&&<Return>
 xnoremap & :&&<Return>
+
+" Repitiendo el último comando de consola
+nnoremap Q @:
+xnoremap Q @:
 
 " No moverse cuando se busca con * y #
 nnoremap * *N
@@ -1107,14 +1103,16 @@ endfunction
 nnoremap <Leader>gsr :lopen<Return>
 
 " Reemplazar texto (replace [local | global | current-global])
-" Recordar que 'gdefault' está activo, una g extra al final lo desactiva
-nnoremap <Leader>rl :s/
-nnoremap <Leader>rg :%s/
-nnoremap <Leader>rw :%s/\<<C-r><C-w>\>\C/
-nnoremap <Leader>rW :%s/\<<C-r>=expand("<cWORD>")<Return>\>\C/
-xnoremap <Leader>rl :s/
-xmap     <Leader>rg <Esc><Leader>rg
-xnoremap <Leader>rs :<C-u>call SeleccionVisual()<Return>:%s/<C-r>=@/<Return>/
+if !s:usar_plugins
+    " Recordar que 'gdefault' está activo, una g extra al final lo desactiva
+    nnoremap <Leader>ss :s/
+    xnoremap <Leader>ss :s/
+    nnoremap <Leader>se :%s/
+    xnoremap <Leader>se :<C-u>call SeleccionVisual()<Return>:%s/<C-r>=@/<Return>/
+    nnoremap <Leader>sw :%s/\<<C-r><C-w>\>\C/
+    nnoremap <Leader>sW :%s/\<<C-r>=expand("<cWORD>")<Return>\>\C/
+    xnoremap <Leader>sx :<C-u>call SeleccionVisual()<Return>:s/<C-r>=@/<Return>/
+endif
 
 " Saltar entre conflictos merge
 nnoremap <silent> <Leader>ml /\v^(\<\|\=\|\>){7}([^=].+)?$<Return>
@@ -1124,7 +1122,7 @@ nnoremap <silent> <Leader>mh ?\v^(\<\|\=\|\>){7}([^=].+)\?$<Return>
 
 " ##### Guardando, saliendo y regresando a vim ##### {{{
 set fileformats=unix,dos,mac " Formato para los saltos de línea
-set autowrite         " Guardado automático al cambiar de archivo
+set autowrite         " Guardado automático en ciertas ocasiones
 set autoread          " Recargar el archivo si hay cambios
 
 " +++ Respaldos y recuperación en caso de fallos +++ {{{
@@ -1154,7 +1152,7 @@ endif
 
 " +++ Comandos y acciones automáticas para abrir, guardar y salir +++ {{{
 " Comandos para salir de vim desde modo normal
-nnoremap ZG :exit all<Return>
+nnoremap ZG :xa<Return>
 nnoremap ZA :quitall!<Return>
 " ZQ - Eliminar la ventana actual sin guardar
 " ZZ - Eliminar la ventana actual guardando
@@ -1178,9 +1176,6 @@ command! -bang XA xa<bang>
 " Usar Ctrl-s para guardar como en cualquier otro programa
 nnoremap <C-s> :update<Return>
 inoremap <C-s> <Esc>:update<Return>a
-" Es preferible guardar desde modo normal. En modo inserción no se puede
-" garantizar (al menos no sin usar instrucciones más complejas) que el
-" cursor se quede en la posición inicial
 
 " Guardar con sudo (cuando entraste a vim sin sudo, se pedirá contraseña)
 cnoremap w!! w !sudo tee % > /dev/null<Return>
@@ -1192,26 +1187,27 @@ augroup ComandosAutomaticosGuardarLeer
     autocmd BufWritePre * :%s/\s\+$//e
 
     " Abrir vim en la última posición editada del archivo
-    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$")
-                \ |           execute "normal! g`\""
-                \ |       endif
+    if !s:usar_plugins
+        autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$")
+                    \ |           execute "normal! g`\""
+                    \ |       endif
+    endif
 
-    " Cargar la configuración cuando se guarde
+    " Re-Cargar la configuración cuando se guarde
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
     autocmd QuitPre .exrc call AplicarConfiguracion()
 
-    " Si se edita un archivo en un directorio inexistente se intenta
-    " crear el mismo
+    " Si se intenta editar un archivo en un directorio inexistente
     autocmd BufNewFile * call CrearDirectorioSiNoExiste()
 augroup END
 
-function! CrearDirectorioSiNoExiste() abort
+function! CrearDirectorioSiNoExiste()
     let l:dir_requerido = expand('%:h')
     if !isdirectory(l:dir_requerido)
         let l:respuesta = confirm('El directorio ' . l:dir_requerido
                     \ . ' no existe. ¿Quieres crearlo?',
-                    \ "&Si\n&No", 1)
+                    \   "&Si\n&No", 1)
 
         if l:respuesta != 1
             return
@@ -1228,10 +1224,10 @@ endfunction
 
 " +++ Configuración para archivos grandes +++ {{{
 augroup ArchivoGrande
-    let s:DIES_MEGAS = 10 * 1024 * 1024
+    let s:TAMANIO_GRANDE = 10 * 1024 * 1024
     autocmd!
     autocmd BufReadPre * let s:tamanio = getfsize(expand("<afile>"))
-                \ | if s:tamanio > s:DIES_MEGAS || s:tamanio == -2
+                \ | if s:tamanio > s:TAMANIO_GRANDE || s:tamanio == -2
                 \ |     call ArchivoGrande()
                 \ | endif
 augroup END
@@ -1282,13 +1278,7 @@ let g:op_compilacion['haskell'] = {
             \ 'banderas': '-dynamic',
             \ 'salida': ''
             \}
-" Compilar html no tiene sentido pero al menos se puede abrir la página
-let g:op_compilacion['html'] = {
-            \ 'compilador': 'xdg-open',
-            \ 'banderas': '',
-            \ 'salida': ''
-            \}
-" En python/bash/ruby y otros interpretados se puede al menos revisar el código
+" En python/bash/ruby y otros interpretados se revisa el código
 let g:op_compilacion['python'] = {
             \ 'compilador': 'flake8',
             \ 'banderas': '',
@@ -1386,7 +1376,6 @@ augroup makecomnads " Definiendo :make según el tipo de archivo
     autocmd Filetype cpp     let &l:makeprg = g:comando_compilacion['cpp']
     autocmd Filetype fortran let &l:makeprg = g:comando_compilacion['fortran']
     autocmd Filetype java    let &l:makeprg = g:comando_compilacion['java']
-    autocmd Filetype html    let &l:makeprg = g:comando_compilacion['html']
     autocmd Filetype python  let &l:makeprg = g:comando_compilacion['python']
     autocmd Filetype cs      let &l:makeprg = g:comando_compilacion['cs']
     autocmd Filetype sh      let &l:makeprg = g:comando_compilacion['sh']
@@ -1394,9 +1383,13 @@ augroup makecomnads " Definiendo :make según el tipo de archivo
 augroup END
 
 " F9 para compilar y ejecutar
-nnoremap <F9> :make<bar>call EjecutarSiNoHayErrores()<Return>
+nnoremap <F9> :call EjecutarSiNoHayErrores()<Return>
 
 function! EjecutarSiNoHayErrores()
+    if g:usar_make_personalizado || &makeprg !=# 'make'
+        make
+    endif
+
     if len(getqflist()) ==# 0
         " Si no hay errores se intenta ejecutar el programa
         if ( &filetype ==# 'c' ||
@@ -1411,6 +1404,8 @@ function! EjecutarSiNoHayErrores()
             !python3 %
         elseif (&filetype ==# 'sh')
             !bash %
+        elseif (&filetype ==# 'html')
+            !xdg-open %
         endif
     else
         " Si hay errores se abren en una lista interna
@@ -1458,20 +1453,16 @@ augroup ConfiguracionesEspecificasLenguaje
     autocmd Filetype html,css,scss,sass,pug     setlocal iskeyword+=-
 augroup END
 
-" Configuración de la ayuda
-nnoremap <leader>tth :call ToggleTextAndHelpFiles()<Return>
-function! ToggleTextAndHelpFiles() abort
-    if &filetype ==# 'help'
-        let &filetype = 'text'
-    else
-        let &filetype = 'help'
-    endif
+" Alternar entre archivo de ayuda y de texto (toggle text and help)
+nnoremap <leader>tth :call AlternarAyudaYTexto()<Return>
+function! AlternarAyudaYTexto()
+    let &filetype = (&filetype ==# 'help' ? 'text' : 'help')
 endfunction
 
 augroup ConfiguracionComandoK
     autocmd!
     " Por defecto se usa el comando :Man a su vez llama al man del sistema
-    autocmd FileType vim setlocal keywordprg=:help
+    autocmd FileType vim,help setlocal keywordprg=:help
     " Se requiere tener instalado cppman para usar ayuda en c++
     autocmd FileType cpp nnoremap <buffer> K yiw:sp<CR>:terminal<CR>Acppman <C-\><C-n>pA<CR>
 augroup end
@@ -1480,16 +1471,16 @@ augroup end
 
 " ##### Edición y evaluación de la configuración y comandos ##### {{{
 " Modificar y evaluar el archivo de configuración principal y el de plugins
-nnoremap <Leader>av :tabnew $MYVIMRC<Return>
+nnoremap <Leader>av :edit $MYVIMRC<Return>
 nnoremap <Leader>sv :source $MYVIMRC<Return>
 
-" Evaluar por medio de la consola externa por medio de Q
-nnoremap Q !!$SHELL<Return>
-xnoremap Q !$SHELL<Return>
+" Evaluar por medio de la consola externa por medio (EValuate Shell)
+nnoremap <Leader>evs !!$SHELL<Return>
+xnoremap <Leader>evs !$SHELL<Return>
 
 " Configuraciones para el emulador de terminal
 if has('nvim')
-    " Abrir emulador de terminal y (sin revisión ortográfica)
+    " Abrir emulador de terminal (open terminal)
     nnoremap <Leader>ot :5sp<bar>te<CR>:setlocal nospell nonu<Return>A
     " Salir a modo normal en la terminal emulada
     tnoremap <Esc> <C-\><C-n>
@@ -1505,14 +1496,14 @@ xnoremap <Leader>evn y@"
 " Evaluación de un comando de VimL (modo comando) por medio de <Leader>evv
 nnoremap <silent> <Leader>evv :execute getline(".")<Return>
 xnoremap <silent> <Leader>evv :<C-u>
-            \       for linea in getline("'<", "'>")
-            \ <bar>     execute linea
+            \       for l:linea in getline("'<", "'>")
+            \ <bar>     execute l:linea
             \ <bar> endfor
             \ <Return>
 
 " Pegar la salida de un comando de vim en un buffer nuevo
-" Modo de uso: SalBuffer {comando-normal}
-command! -nargs=* -complete=command SalBuffer call SalidaBuffer(<q-args>)
+" Modo de uso: SalidaBuffer {comando-normal}
+command! -nargs=* -complete=command SalidaBuffer call SalidaBuffer(<q-args>)
 function! SalidaBuffer(comando)
     redir => l:salida
     silent exe a:comando
@@ -1557,12 +1548,11 @@ endif
 
 " Generar etiquetas de definiciones y comando "go to definition"
 set tags=./tags;/,~/.vimtags
-if !executable('ctags')
-    echoerr 'Se requiere alguna implementación de ctags para generar etiquetas'
-    echoerr 'del lenguaje para usar algunos comandos (y posiblemente plugins).'
-    echoerr 'Se recomienda instalar universal-ctags'
-endif
 if s:usar_plugins
+    if !executable('ctags')
+        echoerr 'Se requiere alguna implementación de ctags para generar etiquetas'
+        echoerr 'del lenguaje para usar algunos comandos (y posiblemente plugins).'
+    endif
     nnoremap <Leader>ut :UpdateTags<Return>
 else
     nnoremap <Leader>ut :!ctags -R .&<Return>
@@ -1602,13 +1592,10 @@ if s:activar_revision_ortorgrafica
     nnoremap <Leader>sh [szzzv
 
     " Modificar lista de palabras aceptadas
-    nnoremap <Leader>sa zg
+    " zg - Añadir palabra a la lista blanca
     " zw - Quitar palabra de la lista blanca (marcarla como incorrecta)
-
-    " Mostrar opciones de corrección para una palabra mal escrita
-    nnoremap <Leader>ss  z=
-    nnoremap <Leader>scc 1z=
-    nnoremap <Leader>scp [s1z=<C-o>
+    " z= - Mostrar opciones de corrección para una palabra mal escrita
+    " 1z= - Elegir la primera opción de la lista
 endif
 " ### }}}
 

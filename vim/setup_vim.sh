@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Apply config to vim
+# VIM_LIKE_APP is the binary to be used. It is vim by default but can also
+# be nvim or nvim-qt
 VIM_LIKE_APP=vim
 
 if [ $# -eq 1 ]; then
