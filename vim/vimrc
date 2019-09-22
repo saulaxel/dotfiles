@@ -727,6 +727,12 @@ endfunction
 set backspace=2       " La tecla de borrar funciona como en otros programas
 set undolevels=10000  " Poder deshacer cambios hasta el infinito y más allá
 set undofile          " Guardar historial de cambios tras salir
+if !has('nvim')
+    if !isdirectory(expand('~/.vim/undo/'))
+        call mkdir(expand('~/.vim/undo/'), 'p')
+    endif
+    set undodir=~/.vim/undo
+endif
 set undoreload=10000  " Cantidad de cambios que se preservan
 set history=1000      " Un historial de comandos bastante largo
 set nrformats-=octal  " Fuck you octal, nadie te quiere en este siglo
