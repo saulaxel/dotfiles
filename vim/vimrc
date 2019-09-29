@@ -1581,7 +1581,7 @@ endif
 if s:activar_revision_ortorgrafica
     set spell             " Activa la revisión ortográfica
     " Alternar entre revisión activa e inactiva con ,tsp
-    nnoremap <Leader>tsp :setlocal spell!<Return>
+    nnoremap <Leader>spt :setlocal spell!<Return>
     if s:revision_otrografica_en_espaniol
         set spelllang=es      " El idioma de revisión es español
         " Generalmente los sistemas operativos no cuentan con un diccionario
@@ -1603,6 +1603,16 @@ if s:activar_revision_ortorgrafica
     " z= - Mostrar opciones de corrección para una palabra mal escrita
     " 1z= - Elegir la primera opción de la lista
 endif
+
+let s:lenguajes = ['en', 'es']
+
+function CambiarLenguaje()
+    let l:index = index(s:lenguajes, &spelllang)
+    let l:index = (l:index + 1) % len(s:lenguajes)
+    let &spelllang = s:lenguajes[l:index]
+endfunction
+
+nnoremap <leader>spr :call CambiarLenguaje()<CR>
 " ### }}}
 
 " vim: fdm=marker
