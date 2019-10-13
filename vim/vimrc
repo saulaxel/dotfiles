@@ -21,7 +21,10 @@
 "
 
 " ##### Variables de configuración #### {{{
-" Define si se usan plugins o no
+" Define que plugins usar.
+"   0 = Ninguno
+"   1 = Plugins sin dependencias
+"   2 = Todos los plugins
 let s:usar_plugins = 0
 
 " Indica si las líneas largas salen de la pantalla o la envuelven
@@ -93,8 +96,10 @@ endif
 if s:usar_plugins
     " Todos los plugins tienen que ir entre plug#begin() y plug#end()
     call plug#begin('~/.vim/plugged')
+endif
 
-    " +++ Manejo de versiones y cambios {{{
+" +++ Manejo de versiones y cambios {{{
+if s:usar_plugins >= 1
     Plug 'tpope/vim-fugitive', { 'on': ['Git', 'Gstatus'] }     " Manejo de git dentro de vim
     Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }  " Mostrar diferencias del archivo al editar
     Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }          " Árbol de cambios gráfico
@@ -104,9 +109,11 @@ if s:usar_plugins
     let g:gitgutter_map_keys = 0
     nmap ]h <Plug>GitGutterNextHunk
     nmap [h <Plug>GitGutterPrevHunk
-    " +++ }}}
+endif
+" +++ }}}
 
-    " +++ Completado y revisión de código {{{
+" +++ Completado y revisión de código {{{
+if s:usar_plugins >= 2
     if has('nvim') || (v:version >= 800 && has('python3'))
         if has('nvim')
             if !has('python3')
@@ -197,23 +204,15 @@ if s:usar_plugins
         autocmd FileType sql,html,css,javascript,php setlocal omnifunc=syntaxcomplete#Complete
         autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
     augroup END
-    " +++ }}}
+endif
+" +++ }}}
 
     " +++ Navegación y edición de texto {{{
+if s:usar_plugins >= 1
     Plug 'farmergreg/vim-lastplace'
     Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle'}             " Árbol de directorios
     nnoremap <Leader>tgnt :NERDTreeToggle<Return>
     nnoremap <F5>         :NERDTreeToggle<Return>
-
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " Buscador de archivos
-
-    Plug 'majutsushi/tagbar'              " Árbol de navegación (Requiere ctags)
-    nnoremap <Leader>tgtb :TagbarToggle<Return>
-    nnoremap <F6>         :TagbarToggle<Return>
-
-    Plug 'xolox/vim-misc'                 " Requerimiento para el siguiente
-    Plug 'xolox/vim-easytags'             " Generación y manejo de etiquetas
-    let g:easytags_auto_update = 0
 
     Plug 'kshenoy/vim-signature'          " Marcas visuales
     Plug 'tpope/vim-repeat'               " Repetir plugins con .
@@ -239,9 +238,23 @@ if s:usar_plugins
     " :DisableAutoCorrect - Desactivar autocorrección ortográfica
     Plug 'scrooloose/nerdcommenter'       " Utilidades para comentar código
     Plug 'iamcco/markdown-preview.vim'    " Visualizar markdown
+endif
+
+if s:usar_plugins >= 2
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " Buscador de archivos
+
+    Plug 'majutsushi/tagbar'              " Árbol de navegación (Requiere ctags)
+    nnoremap <Leader>tgtb :TagbarToggle<Return>
+    nnoremap <F6>         :TagbarToggle<Return>
+
+    Plug 'xolox/vim-misc'                 " Requerimiento para el siguiente
+    Plug 'xolox/vim-easytags'             " Generación y manejo de etiquetas
+    let g:easytags_auto_update = 0
+endif
     " +++ }}}
 
     " +++ Objetos de texto y operadores {{{
+if s:usar_plugins >= 1
     Plug 't9md/vim-textmanip'
     xmap <Leader>tgtm <Plug>(textmanip-toggle-mode)
     nmap <Leader>tgtm <Plug>(textmanip-toggle-mode)
@@ -256,7 +269,7 @@ if s:usar_plugins
         "endif
     "endfunction
 
-    Plug 'easymotion/vim-easymotion'       " Movimiento rápida caracteres
+    Plug 'easymotion/vim-easymotion'       " Movimiento rápido caracteres
     map <Leader>em <Plug>(easymotion-prefix)
     Plug 'michaeljsmith/vim-indent-object' " Objeto de texto 'indentado'
     Plug 'PeterRincker/vim-argumentative'  " Objeto de texto 'argumento'
@@ -276,15 +289,12 @@ if s:usar_plugins
     " Estilo visual y reconocimiento de sintaxis
     Plug 'rafi/awesome-vim-colorschemes'  " Paquete de temas de color
     Plug 'vim-airline/vim-airline'        " Línea de estado ligera
-    let g:airline_powerline_fonts = 1
+    if s:usar_plugins >= 2
+        let g:airline_powerline_fonts = 1
+    endif
     let g:airline#extensions#tabline#enabled = 1
     Plug 'vim-airline/vim-airline-themes'  " Temas de color para el plugin anterior
-    Plug 'ryanoasis/vim-devicons'          " Iconos para los archivos
-    if has('mac') || has('win32')
-        set guifont=DroidSansMono\ Nerd\ Fond:11
-    else
-        set guifont=DroidSansMono\ Nerd\ Fond\ 8
-    endif
+
     Plug 'Yggdroot/indentLine'             " Marcas de sangría visuales
     Plug 'gregsexton/MatchTag', {'for': ['html', 'xml']}              " Iluminar etiqueta hermana
     Plug 'ap/vim-css-color', {'for': ['css', 'sass']}                 " Colorear valores RGB
@@ -298,8 +308,19 @@ if s:usar_plugins
     "Plug 'discoloda/c-conceal'             " <-+-sImbolos unicode
     "Plug 'dkinzer/vim-schemer'             " <-+-
     "Plug 'calebsmith/vim-lambdify'         " <-+
+endif
+
+if s:usar_plugins >= 2
+    Plug 'ryanoasis/vim-devicons'          " Iconos para los archivos
+    if has('mac') || has('win32')
+        set guifont=DroidSansMono\ Nerd\ Fond:11
+    else
+        set guifont=DroidSansMono\ Nerd\ Fond\ 8
+    endif
+endif
     " +++ }}}
 
+if s:usar_plugins
     call plug#end()
 
     if exists('s:manejador_plugins_recien_instalado')
@@ -375,23 +396,32 @@ if s:usar_plugins
         let s:posicion_actual = (s:posicion_actual + 1) % len(s:lista_colores)
         execute 'colorscheme ' . s:lista_colores[s:posicion_actual]
 
-        for l:i in range(len(s:lista_colores))
-            for l:color in ['two-firewatch', 'lucid', 'paramount']
-                if l:color ==# s:lista_colores[l:i]
-                    set background=dark
-                endif
-            endfor
-            for l:color in ['256_noir']
-                if l:color ==# s:lista_colores[l:i]
-                    set background=light
-                endif
-            endfor
+        for l:color in ['two-firewatch', 'lucid', 'paramount']
+            if l:color ==# s:lista_colores[s:posicion_actual]
+                set background=dark
+            endif
         endfor
+        for l:color in ['256_noir']
+            if l:color ==# s:lista_colores[s:posicion_actual]
+                set background=light
+            endif
+        endfor
+        call ColoresOrtografia()
     endfunction
 else
     " Fondo
-    set background=dark
+    "set background=dark
+
+    colorscheme desert
 endif
+
+function! ColoresOrtografia()
+    highlight SpellBad ctermbg=NONE ctermfg=1
+    highlight SpellCap ctermbg=NONE ctermfg=4
+    highlight SpellRare ctermbg=NONE ctermfg=5
+    highlight SpellLocal ctermbg=NONE ctermfg=6
+endfunction
+call ColoresOrtografia()
 
 " Cuando y como mostrar caracteres invisibles
 set list " Mostrar caracteres invisibles según las reglas de 'listchars'
@@ -411,7 +441,7 @@ endif
 set cursorline
 set cursorcolumn
 
-" Crear una clasificación de color llamada EspaciosEnBlancoExtra
+" Crear una clasificación de color llamada "EspaciosEnBlancoExtra"
 highlight EspaciosEnBlancoExtra ctermbg=172 guifg=#D78700
 " Resalta la expresión regular "\s\+$" como "EspaciosEnBlancoExtra"
 match EspaciosEnBlancoExtra /\s\+$/
@@ -1453,10 +1483,12 @@ augroup END
 
 augroup ConfiguracionesEspecificasLenguaje
     autocmd!
-    autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <buffer> <expr> <Tab> emmet#expandAbbrIntelligent("\<Tab>")
     autocmd Filetype html,css,scss,sass,pug,php setlocal ts=2 sw=2 sts=2
     " Los guiones normales forman parte del identificador en css
     autocmd Filetype html,css,scss,sass,pug     setlocal iskeyword+=-
+    if s:usar_plugins >= 2
+        autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <buffer> <expr> <Tab> emmet#expandAbbrIntelligent("\<Tab>")
+    endif
 augroup END
 
 " Alternar entre archivo de ayuda y de texto (toggle text and help)
@@ -1554,7 +1586,7 @@ endif
 
 " Generar etiquetas de definiciones y comando "go to definition"
 set tags=./tags;/,~/.vimtags
-if s:usar_plugins
+if s:usar_plugins >= 2
     if !executable('ctags')
         echoerr 'Se requiere alguna implementación de ctags para generar etiquetas'
         echoerr 'del lenguaje para usar algunos comandos (y posiblemente plugins).'
