@@ -103,6 +103,7 @@ if s:usar_plugins >= 1
     Plug 'tpope/vim-fugitive', { 'on': ['Git', 'Gstatus'] }     " Manejo de git dentro de vim
     Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }  " Mostrar diferencias del archivo al editar
     Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }          " Árbol de cambios gráfico
+    Plug 'vim-scripts/DirDiff.vim'                              " Ver diferencias entre directorios completos
     nnoremap <F7>         :UndotreeToggle<Return>
     nnoremap <Leader>tgut :UndotreeToggle<Return>
     " :GitGutterToggle - Activar y desactivar gitgutter
@@ -1483,7 +1484,7 @@ augroup END
 
 augroup ConfiguracionesEspecificasLenguaje
     autocmd!
-    autocmd Filetype html,css,scss,sass,pug,php setlocal ts=2 sw=2 sts=2
+    " autocmd Filetype html,css,scss,sass,pug,php setlocal ts=2 sw=2 sts=2
     " Los guiones normales forman parte del identificador en css
     autocmd Filetype html,css,scss,sass,pug     setlocal iskeyword+=-
     if s:usar_plugins >= 2
