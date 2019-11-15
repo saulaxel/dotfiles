@@ -104,6 +104,7 @@ if s:usar_plugins >= 1
     Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }  " Mostrar diferencias del archivo al editar
     Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }          " Árbol de cambios gráfico
     Plug 'vim-scripts/DirDiff.vim'                              " Ver diferencias entre directorios completos
+    let g:DirDiffExcludes = "*.git,node_modules,package.json"
     nnoremap <F7>         :UndotreeToggle<Return>
     nnoremap <Leader>tgut :UndotreeToggle<Return>
     " :GitGutterToggle - Activar y desactivar gitgutter
