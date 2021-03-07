@@ -768,6 +768,7 @@ endif
 set undoreload=10000  " Cantidad de cambios que se preservan
 set history=1000      " Un historial de comandos bastante largo
 set nrformats-=octal  " Fuck you octal, nadie te quiere en este siglo
+
 " Alternar formato alfanumérico (toggle alpha format)
 nnoremap <Leader>taf :call AlternarFormatoAlfanumerico()<Return>
 function! AlternarFormatoAlfanumerico()
