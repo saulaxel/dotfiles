@@ -43,16 +43,24 @@ function install_git_console {
 
 if [ $# -ne 1 ]; then
     echo "What system are you in?"
-    echo -e "\\t a) debian" >&2
-    echo -e "\\t b) ubuntu" >&2
-    echo -e "\\t b) arch" >&2
-    echo -e "\\t b) fedora" >&2
-    echo -e "\\t b) git_console" >&2
+    echo -e "\\t - debian" >&2
+    echo -e "\\t - ubuntu" >&2
+    echo -e "\\t - arch" >&2
+    echo -e "\\t - fedora" >&2
+    echo -e "\\t - git_console" >&2
 
     exit 1
 fi
 
-shell="$HOME/.zshrc"
+echo ¿Instalar zsh?
+read -n 1 -p "¿Instalar zsh? (S/n)" zsh
+
+if [[ "$zsh" -ne 'n' ]] && [[ "$zsh" -ne 'N' ]]; then
+    shell="$HOME/.zshrc"
+else
+    shell="$HOME/.bashrc"
+fi
+
 if [ "$1" == "debian" ]; then
     install_debian
 elif [ "$1" == "ubuntu" ]; then
