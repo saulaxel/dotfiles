@@ -768,6 +768,7 @@ endif
 set undoreload=10000  " Cantidad de cambios que se preservan
 set history=1000      " Un historial de comandos bastante largo
 set nrformats-=octal  " Fuck you octal, nadie te quiere en este siglo
+
 " Alternar formato alfanumérico (toggle alpha format)
 nnoremap <Leader>taf :call AlternarFormatoAlfanumerico()<Return>
 function! AlternarFormatoAlfanumerico()
@@ -1165,9 +1166,11 @@ set autoread          " Recargar el archivo si hay cambios
 
 " +++ Respaldos y recuperación en caso de fallos +++ {{{
 if s:usar_respaldo_local
-    set backupcopy=yes
     set backup            " Hacer el respaldo
+    set backupcopy=yes
+    set backupdir= ~/.vim/backup,~/tmp/,/var/tmp,/tmp
     set swapfile          " Archivo swap para el buffer
+    set directory=~/tmp,/var/tmp,/tmp
 else
     set nobackup          " Sin respaldo
     set nowritebackup     " No guardar respaldo (no tiene sentido)
