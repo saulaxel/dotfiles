@@ -35,7 +35,7 @@ let s:envolver_lineas_largas = 1
 let s:usar_portapapeles_del_sistema = 1
 
 " Define si vim conserva archivos de respaldo y swapfiles
-let s:usar_respaldo_local = 0
+let s:usar_respaldo_local = 1
 
 " Activar o no la revisión ortográfica / usar inglés o español
 " español
@@ -767,7 +767,7 @@ if !has('nvim')
 endif
 set undoreload=10000  " Cantidad de cambios que se preservan
 set history=1000      " Un historial de comandos bastante largo
-set nrformats-=octal  " Fuck you octal, nadie te quiere en este siglo
+set nrformats-=octal  " El octal es confundible con decimal, así qeu paso
 
 " Alternar formato alfanumérico (toggle alpha format)
 nnoremap <Leader>taf :call AlternarFormatoAlfanumerico()<Return>
@@ -1607,7 +1607,7 @@ if !s:usar_plugins
     " Estas abreviaciones solo son auxiliares para quien tenga desactivados los
     " plugins. En caso de activar plugins, estos son mejores para manejar
     " plantillas de código
-    iabbrev for  for (int i = 0; i <; i++) {<return>}<esc>kf<a
+    iabbrev fori  for (int i = 0; i <; i++) {<return>}<esc>kf<a
     iabbrev forr for (int i =; i >= 0; --i) {<return>}<esc>kf;i
     iabbrev pf   printf("");<esc>2hi
     iabbrev cl   cout << << endl;<esc>8hi
@@ -1643,7 +1643,7 @@ endif
 
 let s:lenguajes = ['en', 'es']
 
-function CambiarLenguaje()
+function! CambiarLenguaje()
     let l:index = index(s:lenguajes, &spelllang)
     let l:index = (l:index + 1) % len(s:lenguajes)
     let &spelllang = s:lenguajes[l:index]
