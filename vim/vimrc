@@ -104,7 +104,7 @@ if s:usar_plugins >= 1
     Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }  " Mostrar diferencias del archivo al editar
     Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }          " Árbol de cambios gráfico
     Plug 'vim-scripts/DirDiff.vim'                              " Ver diferencias entre directorios completos
-    let g:DirDiffExcludes = "*.git,node_modules,package.json"
+    let g:DirDiffExcludes = '*.git,node_modules,package.json'
     nnoremap <F7>         :UndotreeToggle<Return>
     nnoremap <Leader>tgut :UndotreeToggle<Return>
     " :GitGutterToggle - Activar y desactivar gitgutter
@@ -1168,7 +1168,10 @@ set autoread          " Recargar el archivo si hay cambios
 if s:usar_respaldo_local
     set backup            " Hacer el respaldo
     set backupcopy=yes
-    set backupdir= ~/.vim/backup,~/tmp/,/var/tmp,/tmp
+    set backupdir=~/.vim/backup,~/tmp/,/var/tmp,/tmp
+    if !isdirectory(expand('~/.vim/backup/'))
+        call mkdir(expand('~/.vim/backup/'), 'p')
+    endif
     set swapfile          " Archivo swap para el buffer
     set directory=~/tmp,/var/tmp,/tmp
 else
@@ -1457,7 +1460,7 @@ endfunction
 "   +++ }}}
 
 " +++ Revisión de código +++ {{{
-if s:usar_plugins && (has('nvim') || (v:version >= 800))
+if s:usar_plugins >= 2 && (has('nvim') || (v:version >= 800))
     let g:ale_set_quickfix = 1
     let g:ale_cpp_clangcheck_options = "-extra-arg='" . g:op_compilacion['cpp'].banderas
     let g:ale_cpp_gcc_options = g:op_compilacion['cpp'].banderas
@@ -1481,9 +1484,9 @@ endif
 " +++ Detección de tipos de archivo, y configuraciones locales +++ {{{
 augroup DeteccionLenguajes
     autocmd!
-    autocmd BufEnter *.nasm setlocal filetype=nasm
-    autocmd BufEnter *.jade setlocal filetype=pug
-    autocmd BufEnter *.h    setlocal filetype=c
+    autocmd BufNewFile,BufRead *.nasm setlocal filetype=nasm
+    autocmd BufNewFile,BufRead *.jade setlocal filetype=pug
+    autocmd BufNewFile,BufRead *.h    setlocal filetype=c
 augroup END
 
 augroup ConfiguracionesEspecificasLenguaje
