@@ -168,6 +168,5 @@ alias ll='ls -lh'
 alias ls='ls --color=auto'
 alias lsa='ls -lah'
 alias md='mkdir -p'
-alias nshell='nvim term://szh +"setlocal nonu nospell"'
 alias rd=rmdir
 alias which-command=whence
