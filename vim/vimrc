@@ -538,10 +538,10 @@ nnoremap __   :<C-u>split<Return>
 " <C-w>W - Ir a la ventana anterior
 
 " Comandos para cambiar la disposición de las ventanas
-nnoremap <Leader><C-h> <C-w>H
-nnoremap <Leader><C-l> <C-w>L
-nnoremap <Leader><C-k> <C-w>K
-nnoremap <Leader><C-j> <C-w>J
+" <C-w>H - Mover la ventana actual a la derecha
+" <C-w>L - Mover la ventana actual a la izquierda
+" <C-w>K - Mover la ventana actual hacia arriba
+" <C-w>J - Mover la ventana actual hacia abajo
 " <C-w>r - Rotar las ventanas en sentido normal
 " <C-w>R - Rotar las ventanas en sentido inverso
 " <C-w>x - Intercambiar ventana actual con la siguiente
@@ -608,8 +608,7 @@ nnoremap <Leader>to :tabonly<Return>
 " :tab all - Convertir buffers en tabs
 " :tabfind - Intentar abrir archivo en 'path'
 " <C-w>gf  - Abrir tab y editar archivo bajo el cursor
-" Convertir ventana actual en tabulación
-nnoremap <Leader>tw <C-w>T
+" <C-w>T - Convertir ventana actual en tabulación
 
 " Moverse entre tabulaciones
 nnoremap <Leader>th :tabfirst<Return>
@@ -736,13 +735,10 @@ set foldnestmax=3        " Máxima profundidad de los dobleces
 
 " Abrir y cerrar dobleces
 nnoremap <Space>    za
-nnoremap <Leader>tf za
 " zO - Abrir dobleces sobre la posición actual recursivamente
 " zC - Cerrar dobleces sobre la posición actual recursivamente
 " zR - Abrir todos los dobleces del archivo
 " zM - Cerrar todos los dobleces del archivo
-nnoremap <Leader>fo zR
-nnoremap <Leader>fc zM
 
 " Función para doblar funciones automáticamente
 nmap <Leader>ff zfaf
@@ -794,7 +790,6 @@ xnoremap <expr> v
 " +++ Copiando, pegando y moviendo texto +++ {{{
 set nopaste           " 'paste' estará desactivada por defecto
 set pastetoggle=<F2>  " Botón para activar/desactivar 'paste'
-nnoremap <Leader>tps :setlocal paste!<Return>
 
 " Definir el comportamiento del registro sin nombre
 if s:usar_portapapeles_del_sistema && has('clipboard')
@@ -872,7 +867,7 @@ xnoremap > >gv
 " +++ Operaciones comunes de modificación de texto +++ {{{
 if exists('+formatoptions')
     set formatoptions+=j " Eliminar caracter de comentario al unir líneas
-    set formatoptions+=
+    set formatoptions+=l " Partir líneas cuando se hagan muy largas
 endif
 
 " Regresar rápido a modo normal
@@ -884,6 +879,40 @@ nnoremap gV `[v`]
 " Texto previamente pegado
 nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
 " gv - Reseleccionar texto previamente seleccionado
+
+" Seleccionar una columna de texto no vacío hacia arriba o hacia abajo en modo
+" de selección de columna
+xnoremap <leader><C-v>k :<C-u>call <SID>seleccionarColumna('arriba')<CR>
+xnoremap <leader><C-v>j :<C-u>call <SID>seleccionarColumna('abajo')<CR>
+xnoremap <leader><C-v>a :<C-u>call <SID>seleccionarColumna('ambas-direcciones')<CR>
+
+function! s:seleccionarColumna(direccion)
+    normal! gv
+
+    let [l:_, l:num, l:col, l:_, l:_] = getcurpos()
+    let l:suapped_position = 0
+    if line("'>") == l:num && col("'>") == l:col
+        normal! o
+        let l:suapped_position = 1
+    endif
+
+    if a:direccion ==# 'arriba' || a:direccion ==# 'ambas-direcciones'
+        while match(getline(line('.') - 1)[l:col - 1], '\_S') != -1
+            normal! k
+        endwhile
+    endif
+
+    normal! o
+    if a:direccion ==# 'abajo' || a:direccion ==# 'ambas-direcciones'
+        while match(getline(line('.') + 1)[l:col - 1], '\_S') != -1
+            normal! j
+        endwhile
+    endif
+
+    if !l:suapped_position
+        normal! o
+    endif
+endfunction
 
 " Eliminar texto hacia enfrente con comandos basados en la D
 inoremap <C-d> <Del>
