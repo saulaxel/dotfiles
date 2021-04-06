@@ -478,6 +478,9 @@ set autoindent    " Añade la sangría de la línea anterior automáticamente
 set smartindent   " Aplicar sangría cuando sea necesario
 set shiftround    " Redondear el nivel de sangría
 set smarttab      " Usar tabs de acuerdo a 'shiftwidth'
+if has('patch-8.1.1564') || has('nvim-0.4.0')
+    set signcolumn=number
+endif
 "   +++ }}}
 " ### }}}
 
