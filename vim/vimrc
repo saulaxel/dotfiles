@@ -169,7 +169,7 @@ if s:usar_plugins >= 2
 
     "Plug 'vim-scripts/SearchComplete'     " Completado de búsqueda
     Plug 'Shougo/neoinclude.vim', { 'for': ['c', 'cpp', 'python'] }   " Completado de cabeceras
-    Plug 'mattn/emmet-vim', { 'for': ['html', 'xml', 'css', 'sass'] } " Generación de etiquetas
+    Plug 'mattn/emmet-vim'
     let g:user_emmet_leader_key = '<C-b>'
       " emmet_leader + , (coma) - Completar abreviación emmet
       " emmet_leader + n - Saltar al siguiente punto de edición de emmet
