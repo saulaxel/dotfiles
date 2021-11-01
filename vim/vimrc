@@ -39,7 +39,7 @@ let s:usar_respaldo_local = 1
 
 " Activar o no la revisión ortográfica / usar inglés o español
 " español
-let s:activar_revision_ortorgrafica = 0
+let s:activar_revision_ortorgrafica = 1
 let s:revision_otrografica_en_espaniol = 0
 " ### }}}
 
@@ -111,10 +111,26 @@ if s:usar_plugins >= 1
     let g:gitgutter_map_keys = 0
     nmap ]h <Plug>GitGutterNextHunk
     nmap [h <Plug>GitGutterPrevHunk
+
+
+    Plug 'MarcWeber/vim-addon-mw-utils'
+    Plug 'tomtom/tlib_vim'
+    Plug 'garbas/vim-snipmate'
+    imap <C-e> <Plug>snipMateNextOrTrigger
+
+    " Optional:
+    Plug 'honza/vim-snippets'
+    let g:snipMate = { 'snippet_version' : 1 }
 endif
 " +++ }}}
 
 " +++ Completado y revisión de código {{{
+if s:usar_plugins >= 1
+    Plug 'mattn/emmet-vim'
+    Plug 'tkhren/vim-fake'          " Texto muestra: faketext, lorems, etc...
+    let g:fake_bootstrap = 1        " Cargar definiciones extra de vim-fake
+endif
+
 if s:usar_plugins >= 2
     if has('nvim') || (v:version >= 800 && has('python3'))
         if has('nvim')
@@ -169,8 +185,6 @@ if s:usar_plugins >= 2
 
     "Plug 'vim-scripts/SearchComplete'     " Completado de búsqueda
     Plug 'Shougo/neoinclude.vim', { 'for': ['c', 'cpp', 'python'] }   " Completado de cabeceras
-    Plug 'mattn/emmet-vim'
-    let g:user_emmet_leader_key = '<C-b>'
       " emmet_leader + , (coma) - Completar abreviación emmet
       " emmet_leader + n - Saltar al siguiente punto de edición de emmet
     Plug 'Shougo/neco-vim', { 'for': 'vim' }                          " Completado de VimL
@@ -378,8 +392,9 @@ set synmaxcol=200 " Solo resaltar primeros 200 caracteres
 if (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256') || has('nvim')
     set t_Co=256
 endif
+
+let g:tema_actual = 'tender'
 if s:usar_plugins
-    let s:tema_por_defecto = 'tender'
     if has('vim_starting')
         " colorscheme + <Tab> para ver los temas de color disponibles
         colorscheme tender
@@ -392,12 +407,13 @@ if s:usar_plugins
         \ 'onedark', 'paramount', 'rdark-terminal2', 'scheakur',
         \ 'seoul256-light', 'sierra', 'tender', 'two-firewatch' ]
 
-    let s:posicion_actual = index(s:lista_colores, s:tema_por_defecto)
+    let s:posicion_actual = index(s:lista_colores, g:tema_actual)
 
     nnoremap <leader>cr :call RotarColor()<Return>
     function! RotarColor()
         let s:posicion_actual = (s:posicion_actual + 1) % len(s:lista_colores)
-        execute 'colorscheme ' . s:lista_colores[s:posicion_actual]
+        let g:tema_actual = s:lista_colores[s:posicion_actual]
+        execute 'colorscheme ' . g:tema_actual
 
         for l:color in ['two-firewatch', 'lucid', 'paramount']
             if l:color ==# s:lista_colores[s:posicion_actual]
@@ -409,13 +425,12 @@ if s:usar_plugins
                 set background=light
             endif
         endfor
-        call ColoresPersonalizados('tender')
+        call ColoresPersonalizados(g:tema_actual)
     endfunction
 else
     " Fondo
     "set background=dark
 
-    let s:tema_por_defecto = 'desert'
     colorscheme desert
 endif
 
@@ -432,11 +447,12 @@ function! ColoresPersonalizados(tema)
         highlight ColorColumn guifg=NONE ctermfg=NONE guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
         highlight CursorColumn guifg=NONE ctermfg=NONE guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
         highlight CursorLine guifg=NONE ctermfg=NONE guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
-        highlight CursorLineNr guifg=#73cef4 ctermfg=81 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+        highlight LineNr guifg=#b3deef ctermfg=153 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
         highlight Comment guifg=#c9d05c ctermfg=185 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+        highlight FoldColumn guifg=#ffffff ctermfg=15 guibg=#202020 ctermbg=234 gui=NONE cterm=NONE
     endif
 endfunction
-call ColoresPersonalizados(s:tema_por_defecto)
+call ColoresPersonalizados(g:tema_actual)
 
 " Cuando y como mostrar caracteres invisibles
 set list " Mostrar caracteres invisibles según las reglas de 'listchars'
@@ -1228,6 +1244,7 @@ endif
 " Crear sesión (con un nombre específico o con el nombre por defecto)
 set sessionoptions-=options
 set sessionoptions+=localoptions
+set sessionoptions+=unix,slash
 nnoremap <Leader>ms  :mksession! ~/.vim/session/
 nnoremap <Leader>mds :mksession! ~/.vim/session/default<Return>
 nnoremap <Leader>cs  :source ~/.vim/session/
