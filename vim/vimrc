@@ -379,6 +379,7 @@ if (&term =~? 'mlterm\|xterm\|xterm-256\|screen-256') || has('nvim')
     set t_Co=256
 endif
 if s:usar_plugins
+    let s:tema_por_defecto = 'tender'
     if has('vim_starting')
         " colorscheme + <Tab> para ver los temas de color disponibles
         colorscheme tender
@@ -391,7 +392,7 @@ if s:usar_plugins
         \ 'onedark', 'paramount', 'rdark-terminal2', 'scheakur',
         \ 'seoul256-light', 'sierra', 'tender', 'two-firewatch' ]
 
-    let s:posicion_actual = index(s:lista_colores, 'tender')
+    let s:posicion_actual = index(s:lista_colores, s:tema_por_defecto)
 
     nnoremap <leader>cr :call RotarColor()<Return>
     function! RotarColor()
@@ -408,22 +409,34 @@ if s:usar_plugins
                 set background=light
             endif
         endfor
-        call ColoresOrtografia()
+        call ColoresPersonalizados('tender')
     endfunction
 else
     " Fondo
     "set background=dark
 
+    let s:tema_por_defecto = 'desert'
     colorscheme desert
 endif
 
-function! ColoresOrtografia()
-    highlight SpellBad ctermbg=NONE ctermfg=1
-    highlight SpellCap ctermbg=NONE ctermfg=4
-    highlight SpellRare ctermbg=NONE ctermfg=5
-    highlight SpellLocal ctermbg=NONE ctermfg=6
+" Cuando cambias de tema se resetean los colores aunque vuelvas al original
+" Aquí se definen algunos colores personalizados y se define una función que
+" permita establecerlos nuevamente si cambias de tema asdf
+function! ColoresPersonalizados(tema)
+    if a:tema ==# 'tender'
+        highlight SpellBad guibg=NONE guifg=#f43753 ctermbg=NONE ctermfg=203
+        highlight SpellCap guibg=NONE guifg=#9faa00 ctermbg=NONE ctermfg=142
+        highlight SpellRare guibg=NONE guifg=#d3b987 ctermbg=NONE ctermfg=180
+        highlight SpellLocal guibg=NONE guifg=#ffc24b ctermbg=NONE ctermfg=215
+
+        highlight ColorColumn guifg=NONE ctermfg=NONE guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
+        highlight CursorColumn guifg=NONE ctermfg=NONE guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
+        highlight CursorLine guifg=NONE ctermfg=NONE guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
+        highlight CursorLineNr guifg=#73cef4 ctermfg=81 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+        highlight Comment guifg=#c9d05c ctermfg=185 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
+    endif
 endfunction
-call ColoresOrtografia()
+call ColoresPersonalizados(s:tema_por_defecto)
 
 " Cuando y como mostrar caracteres invisibles
 set list " Mostrar caracteres invisibles según las reglas de 'listchars'
@@ -1526,7 +1539,7 @@ augroup ConfiguracionesEspecificasLenguaje
     " autocmd Filetype html,css,scss,sass,pug,php setlocal ts=2 sw=2 sts=2
     " Los guiones normales forman parte del identificador en css
     autocmd Filetype html,css,scss,sass,pug     setlocal iskeyword+=-
-    if s:usar_plugins >= 2
+    if s:usar_plugins >= 1
         autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <buffer> <expr> <Tab> emmet#expandAbbrIntelligent("\<Tab>")
     endif
 augroup END
@@ -1661,7 +1674,7 @@ if s:activar_revision_ortorgrafica
         " para descargar el diccionario necesario. Basta con aceptar
         " para que vim haga el trabajo automáticamente
     else
-        set spelllang=en
+        set spelllang=en,es
         set dictionary=/usr/share/dict/words " Usa el diccionario del sistema
     endif
 
