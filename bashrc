@@ -30,6 +30,9 @@ cht() {
 xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 xmodmap -e 'clear Lock' -e 'keycode 0x09 = Caps_Lock'
 
-figlet -f lean "Bonjourn"
-
-fortune -c | cowsay -f "$(find /usr/share/cowsay/cows/ -type f | shuf -n 1)"
+# zsh specific
+alias -s txt=vim
+alias -s {c,cpp,python}=vim
+alias -g cflg='-g -std=c11 -Wall -Wextra -fsanitize=address,undefined'
+alias ec="$EDITOR $HOME/.zshrc"
+alias sc="source $HOME/.zshrc"
