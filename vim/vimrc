@@ -1559,7 +1559,7 @@ augroup DeteccionLenguajes
     autocmd!
     autocmd BufNewFile,BufRead *.nasm setlocal filetype=nasm
     autocmd BufNewFile,BufRead *.jade setlocal filetype=pug
-    autocmd BufNewFile,BufRead *.h    setlocal filetype=c
+    autocmd BufNewFile,BufRead,BufEnter *.h    setlocal filetype=c
 augroup END
 
 augroup ConfiguracionesEspecificasLenguaje
