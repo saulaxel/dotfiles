@@ -1,4 +1,4 @@
-function keymap(mode, lhs, rhs, --[[Optional]] opts)
+local function keymap(mode, lhs, rhs, --[[Optional]] opts)
     local options = { noremap = true }
     if opts then
         options = vim.tbl_extend('force', options, opts)
@@ -6,7 +6,7 @@ function keymap(mode, lhs, rhs, --[[Optional]] opts)
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
-has = vim.fn.has
+local has = vim.fn.has
 
 -- Configuración del administrador de plugins {{{
 
@@ -18,7 +18,24 @@ require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     use 'rafi/awesome-vim-colorschemes' --- Temas de color
-    use {'rhysd/vim-grammarous', opt = true, cmd = {'GrammarousCheck'}}
+
+    -- Utilidades generales
+    use 't9md/vim-textmanip'
+    -- xmap <Leader>tgtm <Plug>(textmanip-toggle-mode)
+    -- nmap <Leader>tgtm <Plug>(textmanip-toggle-mode)
+    use 'inkarkat/vim-ReplaceWithRegister'-- Operador para remplazar texto
+    use 'michaeljsmith/vim-indent-object' -- Objeto de texto 'indentado'
+    use 'PeterRincker/vim-argumentative'  -- Objeto de texto 'argumento'
+    use 'kana/vim-textobj-user'           -- Requerimiento de los próximos
+    use 'kana/vim-textobj-function'       -- Objeto de texto 'función'
+    use 'kana/vim-textobj-line'           -- Objeto de texto 'línea'
+    use 'kana/vim-textobj-entire'         -- Objeto de texto 'buffer'
+    use 'glts/vim-textobj-comment'        -- Objeto de texto 'comentario'
+    use 'saulaxel/vim-next-object'        -- Objeto de texto 'siguiente elemento'
+    use 'tpope/vim-surround'              -- Encerrar/liberar secciones
+    use 'jiangmiao/auto-pairs'            -- Completar pares de símbolos
+
+    -- Servidores de revisión de código
     use {
         'gelguy/wilder.nvim',
         config = function()
