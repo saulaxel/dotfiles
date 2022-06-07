@@ -1,5 +1,12 @@
-local keymap = vim.api.nvim_set_keymap
-local keymap_normal_opts = { noremap = true }
+local function keymap(mode, lhs, rhs, --[[Optional]] opts)
+    local options = { noremap = true }
+    if opts then
+        options = vim.tbl_extend('force', options, opts)
+    end
+    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+end
+
+local has = vim.fn.has
 
 -- Configuración del administrador de plugins {{{
 
@@ -10,8 +17,35 @@ require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
-    use 'rafi/awesome-vim-colorschemes'
+    use 'rafi/awesome-vim-colorschemes' --- Temas de color
+
+    -- Utilidades generales
+    use 't9md/vim-textmanip'
+    -- xmap <Leader>tgtm <Plug>(textmanip-toggle-mode)
+    -- nmap <Leader>tgtm <Plug>(textmanip-toggle-mode)
+    use 'inkarkat/vim-ReplaceWithRegister'-- Operador para remplazar texto
+    use 'michaeljsmith/vim-indent-object' -- Objeto de texto 'indentado'
+    use 'PeterRincker/vim-argumentative'  -- Objeto de texto 'argumento'
+    use 'kana/vim-textobj-user'           -- Requerimiento de los próximos
+    use 'kana/vim-textobj-function'       -- Objeto de texto 'función'
+    use 'kana/vim-textobj-line'           -- Objeto de texto 'línea'
+    use 'kana/vim-textobj-entire'         -- Objeto de texto 'buffer'
+    use 'glts/vim-textobj-comment'        -- Objeto de texto 'comentario'
+    use 'saulaxel/vim-next-object'        -- Objeto de texto 'siguiente elemento'
+    use 'tpope/vim-surround'              -- Encerrar/liberar secciones
+    use 'jiangmiao/auto-pairs'            -- Completar pares de símbolos
+
+    -- Servidores de revisión de código
+    use {
+        'gelguy/wilder.nvim',
+        config = function()
+                local wilder = require('wilder')
+                wilder.setup({modes = {':', '/', '?'}})
+        end
+    }
 end)
+--vim.cmd [[ call wilder#setup({'modes': [':', '/', '?']}) ]]
+
 
 -- }}}
 
@@ -72,63 +106,41 @@ augroup END
 vim.cmd [[syntax on]]       -- Activamos la sintaxis
 vim.o.synmaxcol = 200       -- Solo se resaltan los primeros 200 caracteres
 
-vim.g.tema_actual = 'PaperColor'
-
-local comando = 'colorscheme ' .. vim.g.tema_actual
-vim.cmd(comando)
-
 -- Lista de colores para recorrerlos mediante un
---local lista_colores = {
---    '256_noir', 'PaperColor', 'abstract', 'alduin', 'angr', 'apprentice',
---    'challenger_deep', 'deus', 'gruvbox', 'gotham256', 'hybrid',
---    'hybrid_material', 'jellybeans', 'lightning', 'lucid', 'lucius',
---    'materialbox', 'meta5', 'minimalist', 'molokai', 'molokayo', 'nord', 'one',
---    'onedark', 'paramount', 'rdark-terminal2', 'scheakur', 'seoul256-light',
---    'sierra', 'tender', 'two-firewatch'
---}
---
---local posicion_actual_colorscheme = -1
---for k, v in pairs(lista_colores) do
---    if v == vim.g.tema_actual then
---        posicion_actual_colorscheme = k
---    end
---end
-vim.cmd [[
-let s:lista_colores = [ '256_noir', 'PaperColor',
-    \ 'abstract', 'alduin', 'angr', 'apprentice', 'challenger_deep',
-    \ 'deus', 'gruvbox', 'gotham256', 'hybrid', 'hybrid_material',
-    \ 'jellybeans', 'lightning', 'lucid', 'lucius', 'materialbox',
-    \ 'meta5', 'minimalist', 'molokai', 'molokayo', 'nord', 'one',
-    \ 'onedark', 'paramount', 'rdark-terminal2', 'scheakur',
-    \ 'seoul256-light', 'sierra', 'tender', 'two-firewatch' ]
+local lista_colores = {
+    '256_noir', 'PaperColor', 'abstract', 'alduin', 'angr', 'apprentice',
+    'challenger_deep', 'deus', 'gruvbox', 'gotham256', 'hybrid',
+    'hybrid_material', 'jellybeans', 'lightning', 'lucid', 'lucius',
+    'materialbox', 'meta5', 'minimalist', 'molokai', 'molokayo', 'nord', 'one',
+    'onedark', 'paramount', 'rdark-terminal2', 'scheakur', 'seoul256-light',
+    'sierra', 'tender', 'two-firewatch'
+}
 
-let s:posicion_actual = index(s:lista_colores, g:tema_actual)
+function indexof(list, value)
+    index = -1
+    for k, v in pairs(list) do
+        if v == value then
+            index = k
+        end
+    end
 
-function! RotarColor()
-    let s:posicion_actual = (s:posicion_actual + 1) % len(s:lista_colores)
-    let g:tema_actual = s:lista_colores[s:posicion_actual]
-    execute 'colorscheme ' . g:tema_actual
+    return index
+end
 
-    for l:color in ['two-firewatch', 'lucid', 'paramount']
-        if l:color ==# s:lista_colores[s:posicion_actual]
-            set background=dark
-        endif
-    endfor
-    for l:color in ['256_noir']
-        if l:color ==# s:lista_colores[s:posicion_actual]
-            set background=light
-        endif
-    endfor
-    call ColoresPersonalizados(g:tema_actual)
-endfunction
-]]
+local posicion_actual_colorscheme = indexof(lista_colores, 'tender')
 
-keymap('n', '<leader>cr', ':call RotarColor()<Return>', keymap_normal_opts)
+function setColorschemeToIndex()
+    local tema = lista_colores[posicion_actual_colorscheme]
+    local comando = 'colorscheme ' .. tema
+    vim.cmd(comando)
 
--- Se define que un par de cosas sean más visibles
-vim.cmd [[
-function! ColoresPersonalizados(tema)
-    if a:tema ==# 'tender'
+    if tema == 'two-firewatch' or tema == 'lucid' or tema == 'paramount' then
+        vim.cmd('set background=dark')
+    end
+
+    -- Se hacen más visibles un par de elementos
+    if tema == 'tender' then
+        vim.cmd [[
         highlight SpellBad guibg=NONE guifg=#f43753 ctermbg=NONE ctermfg=203
         highlight SpellCap guibg=NONE guifg=#9faa00 ctermbg=NONE ctermfg=142
         highlight SpellRare guibg=NONE guifg=#d3b987 ctermbg=NONE ctermfg=180
@@ -140,10 +152,20 @@ function! ColoresPersonalizados(tema)
         highlight LineNr guifg=#b3deef ctermfg=153 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
         highlight Comment guifg=#c9d05c ctermfg=185 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
         highlight FoldColumn guifg=#ffffff ctermfg=15 guibg=#202020 ctermbg=234 gui=NONE cterm=NONE
-    endif
-endfunction
-call ColoresPersonalizados(g:tema_actual)
-]]
+        ]]
+    end
+end
+
+setColorschemeToIndex()
+
+function RotarColor()
+    posicion_actual_colorscheme = posicion_actual_colorscheme + 1
+    if posicion_actual_colorscheme > #lista_colores then
+        posicion_actual_colorscheme = 1
+    end
+
+    setColorschemeToIndex()
+end
 
 -- Caracteres invisibles
 vim.o.list = true       -- Mostrar caracteres invisibles según las reglas de 'listchars'
@@ -172,22 +194,25 @@ vim.cmd [[2match Conflicto /\v^(\<|\=|\>){7}([^=].+)?$/]]
 --- Tabulado y sangría {{{
 -- Cambia tres opciones por el precio de una llamada a función
 -- Ejemplo de uso:
---    :call CambiarIndentacion(8)<Return>
+--    :lua CambiarIndentacion(8)<Return>
 -- Si se quiere una re-indentación automática de todo el texto ya existente
--- pasar un argumento extra sin importar su valor. Ejemplo:
---    :call CambiarIndentacion(8, 'reindenta')<Return>
-vim.cmd [[
-function! CambiarIndentacion(espacios, ...)
-    let &tabstop     = a:espacios
-    let &shiftwidth  = a:espacios
-    let &softtabstop = a:espacios
+-- pasar un valor verdadero como segundo argumento
+--    :lua CambiarIndentacion(8, true)<Return>
 
-    if len(a:000)
-        execute "normal! gg=G\<C-o>\<C-o>"
-    endif
-endfunction
-call CambiarIndentacion(4)
-]]
+function CambiarIndentacion(espacios, --[[Optional]] reindentar)
+    reindentar = reindentar or false
+
+    vim.bo.tabstop = espacios
+    vim.bo.shiftwidth = espacios
+    vim.bo.softtabstop = espacios
+
+    if reindentar then
+        vim.cmd [[execute "normal! gg=G\<C-o>\<C-o>"]]
+    end
+end
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
 
 -- Otras configuraciones con respecto a la sangría
 vim.o.expandtab   = true    -- Se sangra el código con espacios
@@ -236,17 +261,13 @@ vim.o.splitbelow = true  -- Las separaciones horizontales se abren hacia abajo
 -- diffsplit prefiere orientación vertical
 vim.o.diffopt = vim.o.diffopt .. ',vertical'
 
--- Comandos para abrir y cerrar nuevas ventanas (splits)
-keymap('n', '|', ':<C-u>vsplit<Space>', keymap_normal_opts)
-keymap('n', '_', ':<C-u>split<Space>', keymap_normal_opts)
-
 -- Redimensionar las ventanas
-vim.cmd [[
-nnoremap <C-w>- :<C-u>call RepetirRedimensionadoVentana('-', v:count)<Return>
-nnoremap <C-w>+ :<C-u>call RepetirRedimensionadoVentana('+', v:count)<Return>
-nnoremap <C-w>< :<C-u>call RepetirRedimensionadoVentana('<', v:count)<Return>
-nnoremap <C-w>> :<C-u>call RepetirRedimensionadoVentana('>', v:count)<Return>
+keymap('n', '<C-w>-', ":<C-u>call RepetirRedimensionadoVentana('-', v:count)<Return>")
+keymap('n', '<C-w>+', ":<C-u>call RepetirRedimensionadoVentana('+', v:count)<Return>")
+keymap('n', '<C-w><', ":<C-u>call RepetirRedimensionadoVentana('<', v:count)<Return>")
+keymap('n', '<C-w>>', ":<C-u>call RepetirRedimensionadoVentana('>', v:count)<Return>")
 
+vim.cmd [[
 function! RepetirRedimensionadoVentana(inicial, cuenta)
     let l:tecla = a:inicial
     let l:cuenta = a:cuenta ? a:cuenta : 0
@@ -276,20 +297,20 @@ augroup end
 vim.o.tabpagemax = 15   -- Solo mostrar 15 tabs
 
 -- Comandos para abrir y cerrar tabulaciones
-keymap('n', '<Leader>tn', ':tabnew<Space>', keymap_normal_opts)
-keymap('n', '<Leader>to', ':tabonly<Return>', keymap_normal_opts)
+keymap('n', '<Leader>tn', ':tabnew<Space>')
+keymap('n', '<Leader>to', ':tabonly<Return>')
 
 -- Moverse entre tabulaciones
-keymap('n', '<Leader>th', ':tabfirst<Return>', keymap_normal_opts)
-keymap('n', '<Leader>tl', ':tablast<Return>', keymap_normal_opts)
-keymap('n', '<Leader>tj', ':tabprevious<Return>', keymap_normal_opts)
-keymap('n', '<Leader>tk', ':tabnext<Return>', keymap_normal_opts)
+keymap('n', '<Leader>th', ':tabfirst<Return>')
+keymap('n', '<Leader>tl', ':tablast<Return>')
+keymap('n', '<Leader>tj', ':tabprevious<Return>')
+keymap('n', '<Leader>tk', ':tabnext<Return>')
 
 -- Mover la tabulación actual
-keymap('n', '<Leader>t-', ':tabmove -<Return>', keymap_normal_opts)
-keymap('n', '<Leader>t+', ':tabmove +<Return>', keymap_normal_opts)
-keymap('n', '<Leader>t<', ':tabmove 0<Return>', keymap_normal_opts)
-keymap('n', '<Leader>t>', ':tabmove $<Return>', keymap_normal_opts)
+keymap('n', '<Leader>t-', ':tabmove -<Return>')
+keymap('n', '<Leader>t+', ':tabmove +<Return>')
+keymap('n', '<Leader>t<', ':tabmove 0<Return>')
+keymap('n', '<Leader>t>', ':tabmove $<Return>')
 
 -- Un "modo" especial que abrevia las operaciones con tabulaciones
 vim.cmd [[
@@ -330,26 +351,26 @@ vim.o.hidden = true                 -- Permitir buffers ocultos
 vim.o.switchbuf = 'useopen,usetab'  -- Preferir tabs/ventanas al cambiar buffer
 
 -- Abrir y moverse entre buffers
-keymap('n', '<Leader>bn', ':edit<Space>', keymap_normal_opts)
-keymap('n', '<Leader>bg', ':ls<Return>:buffer<Space>', keymap_normal_opts)
-keymap('n', '<Leader>bh', ':bfirst<Return>', keymap_normal_opts)
-keymap('n', '<Leader>bk', ':bnext<Return>', keymap_normal_opts)
-keymap('n', '<Leader>bj', ':bprevious<Return>', keymap_normal_opts)
-keymap('n', '<Leader>bl', ':last<Return>', keymap_normal_opts)
+keymap('n', '<Leader>bn', ':edit<Space>')
+keymap('n', '<Leader>bg', ':ls<Return>:buffer<Space>')
+keymap('n', '<Leader>bh', ':bfirst<Return>')
+keymap('n', '<Leader>bk', ':bnext<Return>')
+keymap('n', '<Leader>bj', ':bprevious<Return>')
+keymap('n', '<Leader>bl', ':last<Return>')
 
 -- Cerrar ventana, buffer o tabulaciones
-keymap('n', '<Leader>bd', ':bdelete!<Return>', keymap_normal_opts)
+keymap('n', '<Leader>bd', ':bdelete!<Return>')
 
 -- Cambiar el directorio de trabajo al directorio del buffer actual
-keymap('n', '<Leader>cd', ':cd %:p:h<Return>:pwd<Return>', keymap_normal_opts)
+keymap('n', '<Leader>cd', ':cd %:p:h<Return>:pwd<Return>')
 -- }}}
 
 -- Movimiento en modo normal {{{
 -- Moverse por líneas visuales en lugar de lineas lógicas
-keymap('n', 'j',  'gj', keymap_normal_opts)
-keymap('n', 'k',  'gk', keymap_normal_opts)
-keymap('n', 'gj', 'j', keymap_normal_opts)
-keymap('n', 'gk', 'k', keymap_normal_opts)
+keymap('n', 'j',  'gj')
+keymap('n', 'k',  'gk')
+keymap('n', 'gj', 'j')
+keymap('n', 'gk', 'k')
 
 -- Moverse entre inicio/medio/final de la pantalla
 vim.cmd [[
@@ -374,20 +395,20 @@ endfunction
 -- }}}
 
 -- Movimiento en modo comando {{{
-keymap('c', '<C-a>', '<Home>', keymap_normal_opts)
-keymap('c', '<C-b>', '<Left>', keymap_normal_opts)
-keymap('c', '<C-f>', '<Right>', keymap_normal_opts)
-keymap('c', '<A-b>', '<S-Left>', keymap_normal_opts)
-keymap('c', '<A-f>', '<S-Right>', keymap_normal_opts)
-keymap('c', '<C-d>', '<Del>', keymap_normal_opts)
-keymap('c', '<A-d>', '<S-Right><C-w>', keymap_normal_opts)
-keymap('c', '<A-D>', '<C-e><C-u>', keymap_normal_opts)
+keymap('c', '<C-a>', '<Home>')
+keymap('c', '<C-b>', '<Left>')
+keymap('c', '<C-f>', '<Right>')
+keymap('c', '<A-b>', '<S-Left>')
+keymap('c', '<A-f>', '<S-Right>')
+keymap('c', '<C-d>', '<Del>')
+keymap('c', '<A-d>', '<S-Right><C-w>')
+keymap('c', '<A-D>', '<C-e><C-u>')
 
-keymap('c', '<C-p>', '<Up>', keymap_normal_opts)
-keymap('c', '<C-n>', '<Down>', keymap_normal_opts)
+keymap('c', '<C-p>', '<Up>')
+keymap('c', '<C-n>', '<Down>')
 
-keymap('c', '<Up>',   '<C-p>', keymap_normal_opts)
-keymap('c', '<Down>', '<C-n>', keymap_normal_opts)
+keymap('c', '<Up>',   '<C-p>')
+keymap('c', '<Down>', '<C-n>')
 -- }}}
 
 -- Dobleces (folds) {{{
@@ -452,11 +473,11 @@ if usar_portapapeles_del_sistema and vim.fn['has']('clipboard') then
 end
 
 -- Manejo de registros por medio de la letra ñ
-keymap('n', 'ñ', '"', keymap_normal_opts)
-keymap('x', 'ñ', '"', keymap_normal_opts)
+keymap('n', 'ñ', '"')
+keymap('x', 'ñ', '"')
 
 -- Hacer que Y actúe como C y D
-keymap('n', 'Y', 'y$', keymap_normal_opts)
+keymap('n', 'Y', 'y$')
 
 -- Mover lineas visuales hacia arriba y hacia abajo
 vim.cmd [[
@@ -482,8 +503,8 @@ xmap <Right>  <Plug>(textmanip-move-right-r)
 ]]
 
 -- Mantener el modo visual después de > y <
-keymap('x', '<', '<gv', keymap_normal_opts)
-keymap('x', '>', '>gv', keymap_normal_opts)
+keymap('x', '<', '<gv')
+keymap('x', '>', '>gv')
 -- }}}
 
 --- Operaciones comunes de modificación de texto {{{
@@ -492,10 +513,10 @@ keymap('x', '>', '>gv', keymap_normal_opts)
 vim.o.formatoptions = vim.o.formatoptions .. ',j,l'
 
 -- Regresar rápido a modo normal
-keymap('i', 'kj', '<Esc>', keymap_normal_opts)
+keymap('i', 'kj', '<Esc>')
 
 -- Seleccionando texto significativo
-keymap('n', 'gV', '`[v`]', keymap_normal_opts) -- Texto previamente insertado
+keymap('n', 'gV', '`[v`]') -- Texto previamente insertado
 
 -- Texto previamente pegado
 vim.cmd [[
@@ -546,19 +567,19 @@ inoremap <expr> <A-D> '<Esc>' . (col('.') == 1 ? "" : "l") . 'C'
 ]]
 
 -- Regresar a modo normal eliminando la línea actual
-keymap('i', '<A-k><A-j>', '<Esc>ddkk', keymap_normal_opts)
-keymap('i', '<A-j><A-k>', '<Esc>ddj', keymap_normal_opts)
+keymap('i', '<A-k><A-j>', '<Esc>ddkk')
+keymap('i', '<A-j><A-k>', '<Esc>ddj')
 
 -- Añadir línea vacía por arriba y por debajo
-keymap('n', '<A-o>', ":call append(line('.'), '')<Return>", keymap_normal_opts)
-keymap('n', '<A-O>', ":call append(line('.')-1, '')<Return>", keymap_normal_opts)
+keymap('n', '<A-o>', ":call append(line('.'), '')<Return>")
+keymap('n', '<A-O>', ":call append(line('.')-1, '')<Return>")
 
 -- Borrar todo de la línea de comandos excepto el propio comando
 vim.cmd [[ cnoremap <A-w> <C-\>esplit(getcmdline(), " ")[0]<return><space> ]]
 
 -- Aumentar la granularidad del undo
-keymap('i', '<C-u>',    '<C-g>u<C-u>', keymap_normal_opts)
-keymap('i', '<Return>', '<C-g>u<Return>', keymap_normal_opts)
+keymap('i', '<C-u>',    '<C-g>u<C-u>')
+keymap('i', '<Return>', '<C-g>u<Return>')
 -- }}}
 
 --- ##### }}}
@@ -923,7 +944,7 @@ call ActualizarComandosCompilacion()
 --                    \ &filetype ==# 'cpp' ||
 --                    \ &filetype ==# 'haskell' ||
 --                    \ &filetype ==# 'fortran')
---
+--                      ---- Aquí seguramente falta shellescape(nombre_ejecutable)
 --            execute '!./' . g:op_compilacion['nombre_ejecutable']
 --        elseif (&filetype ==# 'java')
 --            execute '!./' . g:op_compilacion['nombre_ejecutable']
@@ -963,8 +984,8 @@ call ActualizarComandosCompilacion()
 --    let g:syntastic_fotran_compiler_options = g:op_compilacion['fortran'].banderas
 --endif
 --"   +++ }}}
---
---" +++ Detección de tipos de archivo, y configuraciones locales +++ {{{
+
+--- +++ Detección de tipos de archivo, y configuraciones locales +++ {{{
 --augroup DeteccionLenguajes
 --    autocmd!
 --    autocmd BufNewFile,BufRead *.nasm setlocal filetype=nasm
@@ -987,15 +1008,133 @@ call ActualizarComandosCompilacion()
 --function! AlternarAyudaYTexto()
 --    let &filetype = (&filetype ==# 'help' ? 'text' : 'help')
 --endfunction
---
---augroup ConfiguracionComandoK
---    autocmd!
---    " Por defecto se usa el comando :Man a su vez llama al man del sistema
---    autocmd FileType vim,help setlocal keywordprg=:help
---    " Se requiere tener instalado cppman para usar ayuda en c++
---    autocmd FileType cpp nnoremap <buffer> K yiw:sp<CR>:terminal<CR>Acppman <C-\><C-n>pA<CR>
---augroup end
---"   +++ }}}
---" ### }}}
 
+vim.cmd [[
+augroup ConfiguracionComando
+    autocmd!
+    " Por defecto se usa el comando :Man a su vez llama al man del sistema
+    autocmd FileType vim,help setlocal keywordprg=:help
+    " Se requiere tener instalado cppman para usar ayuda en c++
+    autocmd FileType cpp setlocal keywordprg=:!cppman
+    " autocmd FileType cpp nnoremap <buffer> K yiw:sp<CR>:terminal<CR>Acppman <C-\><C-n>pA<CR>
+augroup end
+]]
+---   +++ }}}
+--- ### }}}
+
+--- ##### Edición y evaluación de la configuración y comandos ##### {{{
+--- Modificar y evaluar el archivo de configuración principal y el de plugins
+keymap('n', '<Leader>av', ':edit $MYVIMRC<Return>')
+keymap('n', '<Leader>sv', ':source $MYVIMRC<Return>')
+
+--- Evaluar por medio de la consola externa por medio (EValuate Shell)
+local shell = 'bash'
+
+if has('windows') then
+    shell = 'cmd'
+end
+
+keymap('n', '<Leader>evs', '!!' .. shell .. ' <Return>')
+keymap('x', '<Leader>evs', '!' .. shell .. ' <Return>')
+
+--- Abrir emulador de terminal (open terminal)
+keymap('n', '<Leader>ot', ':5sp<bar>te<CR>:setlocal nospell nonu<Return>A')
+
+--- Mandar un comando a la terminal abierta
+local terminal_new_line = "\n"
+if has('windows') then
+    terminal_new_line = "\r\n"
+end
+
+function trim(s)
+    return (string.gsub(s, "^%s*(.-)%s*$", "%1"))
+end
+
+function send_to_terminal(v)
+    local term_buf_id = -1
+    for _, buf_id in ipairs(vim.fn.tabpagebuflist()) do
+        local buf_type = vim.api.nvim_buf_get_option(buf_id, "buftype")
+        if buf_type == "terminal" then
+            term_buf_id = buf_id
+            local text = ""
+            if v then
+                -- Get selected lines
+                local buf = vim.api.nvim_get_current_buf()
+                local line1 = vim.api.nvim_buf_get_mark(0, "<")[1]
+                local line2 = vim.api.nvim_buf_get_mark(0, ">")[1]
+                text = vim.api.nvim_buf_get_lines(buf, line1 - 1, line2, false)
+                text = trim(table.concat(text, terminal_new_line))
+            else
+                -- Get current line
+                text = trim(vim.api.nvim_get_current_line())
+            end
+            local chan_id = vim.api.nvim_buf_get_var(term_buf_id, "terminal_job_id")
+            vim.api.nvim_chan_send(chan_id, text .. terminal_new_line)
+        end
+    end
+end
+keymap('n', '<Leader>evt', '<cmd>lua send_to_terminal()<CR>')
+keymap('x', '<Leader>evt', '<cmd>lua send_to_terminal(true)<CR>')
+
+--- Salir a modo normal en la terminal emulada
+---tnoremap <Esc> <C-\><C-n>
+
+--- Evaluación de un comando de modo normal por medio de <Leader>evn
+keymap('n', '<Leader>evn', '^vg_y@"')
+keymap('x', '<Leader>evn', 'y@"')
+
+--- Evaluación de un comando de VimL (modo comando) por medio de <Leader>evv
+keymap('n', '<Leader>evv', ':execute getline(".")<Return>',
+       {silent = true})
+keymap('x', '<Leader>evv', ':<C-u>' ..
+             '      for linea in getline("\'<", "\'>")' ..
+             '<bar>     execute linea' ..
+             '<bar> endfor' ..
+             '<Return>')
+
+--- Pegar la salida de un comando de vim en un buffer nuevo
+--- Modo de uso: SalidaBuffer {comando-normal}
+vim.cmd [[
+command! -nargs=* -complete=command SalidaBuffer call SalidaBuffer(<q-args>)
+function! SalidaBuffer(comando)
+    redir => l:salida
+    silent exe a:comando
+    redir END
+
+    new
+    setlocal nonumber
+    call setline(1, split(l:salida, "\n"))
+    setlocal nomodified
+endfunction
+]]
+--- ### }}}
+
+--- ##### Completado, etiquetas, diccionarios y revisión ortográfica ##### {{{
+vim.o.complete = vim.o.complete .. ',i,t'
+
+--- Generar etiquetas de definiciones y comando "go to definition"
+--set tags=./tags;/,~/.vimtags
+
+if not vim.fn.executable('ctags') then
+    print('Se requiere alguna implementación de ctags para generar etiquetas')
+    print('del lenguaje para usar algunos comandos (y posiblemente plugins).')
+end
+keymap('n', '<Leader>ut', ':!ctags -R .&<Return>')
+--<C-]> - Ir a la definición del objeto (solo si ya se generaron las etiquetas)
+
+vim.o.spell = true
+vim.o.spelllang = 'es,en'
+
+
+--- Recorrer las palabras mal escritas y corregirlas
+--Siguiente error ortográfico: ]s
+--Anterior error ortográfico: [s
+
+--- Modificar lista de palabras aceptadas
+--zg - Añadir palabra a la lista blanca
+--zw - Quitar palabra de la lista blanca (marcarla como incorrecta)
+--z= - Mostrar opciones de corrección para una palabra mal escrita
+--1z= - Elegir la primera opción de la lista
+
+--- ### }}}
 -- vim: foldmethod=marker
