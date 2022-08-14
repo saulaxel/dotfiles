@@ -34,18 +34,135 @@ require('packer').startup(function(use)
     use 'saulaxel/vim-next-object'        -- Objeto de texto 'siguiente elemento'
     use 'tpope/vim-surround'              -- Encerrar/liberar secciones
     use 'jiangmiao/auto-pairs'            -- Completar pares de símbolos
+    use 'tpope/vim-commentary'            -- Operador para comentar código
 
     -- Servidores de revisión de código
     use {
-        'gelguy/wilder.nvim',
-        config = function()
-                local wilder = require('wilder')
-                wilder.setup({modes = {':', '/', '?'}})
-        end
+        'williamboman/nvim-lsp-installer',
+        {
+            'neovim/nvim-lspconfig',
+            config = function()
+            end
+        }
     }
-end)
---vim.cmd [[ call wilder#setup({'modes': [':', '/', '?']}) ]]
 
+    -- Autocompletado
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-cmdline'
+    use 'hrsh7th/nvim-cmp'
+    use 'L3MON4D3/LuaSnip'
+    use 'saadparwaiz1/cmp_luasnip'
+
+    -- Soporte de lenguajes
+    use 'lervag/vimtex'
+    use 'Konfekt/FastFold'
+    use 'matze/vim-tex-fold'
+    use 'mattn/emmet-vim'
+
+    -- Revisión ortográfica y gramatical
+    use {'rhysd/vim-grammarous', opt = true, cmd = {'GrammarousCheck'}}
+
+    -- Estilo visual
+    use 'Yggdroot/indentLine'
+    use 'gregsexton/MatchTag'
+    use 'ap/vim-css-color'
+end)
+
+
+vim.g.tex_flavor  = 'latex'
+vim.g.tex_conceal = ''
+vim.g.vimtex_fold_manual = 1
+vim.g.vimtex_compiler_progname = 'nvr'
+-- let g:vimtex_view_method = 'skim'
+
+require('nvim-lsp-installer').setup {}
+local lspconfig = require('lspconfig')
+
+local servers = { 'sumneko_lua', 'clangd', 'jedi_language_server' }
+
+for _, lsp in pairs(servers) do
+    lspconfig[lsp].setup {}
+end
+
+-- lspconfig.ltex.setup {
+--     settings = {
+--         ltex = {
+--             language = 'es'
+--         }
+--     }
+-- }
+
+lspconfig.sumneko_lua.setup{
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { 'vim' }
+            }
+        }
+    }
+}
+
+-- Setup nvim-cmp.
+local cmp = require'cmp'
+
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            -- Se usa luasnip como motor de snippets
+            require('luasnip').lsp_expand(args.body)
+        end,
+    },
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-q>'] = cmp.mapping.abort(),
+        ['<C-y>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    }),
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
+    }, {
+        { name = 'buffer' },
+    })
+})
+
+-- Set configuration for specific filetype.
+cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+        { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+    }, {
+        { name = 'buffer' },
+    })
+})
+
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+        { name = 'buffer' }
+    }
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+        { name = 'path' }
+    }, {
+        { name = 'cmdline' }
+    })
+})
+
+keymap('n', '<Leader>tb', ':Tabularize /')
+keymap('x', '<Leader>tb', ':Tabularize /')
+-- nnoremap <Leader>tbox :Tabularize /*<Return>vip<Esc>:substitute/ /=/g<Return>r A/<Esc>vipo<Esc>0r/:substitute/ /=/g<Return>:nohlsearch<Return>
 
 -- }}}
 
@@ -116,8 +233,8 @@ local lista_colores = {
     'sierra', 'tender', 'two-firewatch'
 }
 
-function indexof(list, value)
-    index = -1
+local function indexof(list, value)
+    local index = -1
     for k, v in pairs(list) do
         if v == value then
             index = k
@@ -129,7 +246,7 @@ end
 
 local posicion_actual_colorscheme = indexof(lista_colores, 'tender')
 
-function setColorschemeToIndex()
+local function setColorschemeToIndex()
     local tema = lista_colores[posicion_actual_colorscheme]
     local comando = 'colorscheme ' .. tema
     vim.cmd(comando)
@@ -171,7 +288,7 @@ end
 vim.o.list = true       -- Mostrar caracteres invisibles según las reglas de 'listchars'
 vim.o.listchars = 'tab:»·,trail:·,extends:❯,precedes:❮'
 
-vim.o.conceallevel = 2      -- Permite texto "camuflajeado"
+vim.o.conceallevel = 0      -- Permite texto "camuflajeado"
 vim.o.concealcursor = ''    -- Desactiva el "camuflaje" para la líena actual
 
 -- }}}
@@ -418,10 +535,10 @@ vim.cmd [[set foldopen-=block]] -- No abrir dobleces al presionar }, ), etc...
 vim.o.foldnestmax = 3           -- Máxima profundidad de los dobleces
 
 -- Abrir y cerrar dobleces
-keymap('n', '<Space>', 'za', keymap_normal_opts)
+keymap('n', '<Space>', 'za')
 
 -- Función para doblar funciones automáticamente
-keymap('n', '<Leader>faf', ':call DoblarFunciones()<Return>', keymap_normal_opts)
+keymap('n', '<Leader>faf', ':call DoblarFunciones()<Return>')
 vim.cmd [[
 function! DoblarFunciones()
     set foldmethod=syntax
@@ -480,27 +597,27 @@ keymap('x', 'ñ', '"')
 keymap('n', 'Y', 'y$')
 
 -- Mover lineas visuales hacia arriba y hacia abajo
-vim.cmd [[
-nmap <A-y> <Plug>(textmanip-duplicate-up)
-xmap <A-y> <Plug>(textmanip-duplicate-up)
-nmap <A-Y> <Plug>(textmanip-duplicate-down)
-xmap <A-Y> <Plug>(textmanip-duplicate-down)
+local yes_remap = { noremap = false }
+keymap('n', '<A-y>', '<Plug>(textmanip-duplicate-up)', yes_remap)
+keymap('x', '<A-y>', '<Plug>(textmanip-duplicate-up)', yes_remap)
+keymap('n', '<A-Y>', '<Plug>(textmanip-duplicate-down)', yes_remap)
+keymap('x', '<A-Y>', '<Plug>(textmanip-duplicate-down)', yes_remap)
 
-nmap <A-j> V<A-j><Esc>
-xmap <A-j> <Plug>(textmanip-move-down)
-nmap <A-k> V<A-k><Esc>
-xmap <A-k> <Plug>(textmanip-move-up)
+keymap('x', '<A-j>', '<Plug>(textmanip-move-down)', yes_remap)
+keymap('n', '<A-j>', '<Plug>(textmanip-move-down)', yes_remap)
+keymap('n', '<A-k>', '<Plug>(textmanip-move-up)', yes_remap)
+keymap('x', '<A-k>', '<Plug>(textmanip-move-up)', yes_remap)
 
-nmap <A-h> v<A-h><Esc>
-xmap <A-h> <Plug>(textmanip-move-left)
-nmap <A-l> v<A-l><Esc>
-xmap <A-l> <Plug>(textmanip-move-right)
+local expr_and_remap = { expr = true, noremap = false }
+keymap('n', '<A-h>', [['<Esc>v' . (v:count ? v:count : 1) . '<A-h><Esc>']], expr_and_remap)
+keymap('x', '<A-h>', '<Plug>(textmanip-move-left)', yes_remap)
+keymap('n', '<A-l>', [['<Esc>v' . (v:count ? v:count : 1) . '<A-l><Esc>']], expr_and_remap)
+keymap('x', '<A-l>', '<Plug>(textmanip-move-right)', yes_remap)
 
-xmap <Up>     <Plug>(textmanip-move-up-r)
-xmap <Down>   <Plug>(textmanip-move-down-r)
-xmap <Left>   <Plug>(textmanip-move-left-r)
-xmap <Right>  <Plug>(textmanip-move-right-r)
-]]
+keymap('x', '<Up>'   , '<Plug>(textmanip-move-up-r)', yes_remap)
+keymap('x', '<Down>' , '<Plug>(textmanip-move-down-r)', yes_remap)
+keymap('x', '<Left>' , '<Plug>(textmanip-move-left-r)', yes_remap)
+keymap('x', '<Right>', '<Plug>(textmanip-move-right-r)', yes_remap)
 
 -- Mantener el modo visual después de > y <
 keymap('x', '<', '<gv')
@@ -596,24 +713,24 @@ vim.o.smartcase  = true -- Ignorecase si la palabra empieza por minúscula
 vim.o.gdefault   = true -- Usar bandera 'g' por defecto en las sustituciones
 
 -- Desactivar el resaltado de búsqueda
-keymap('n', '//', ':nohlsearch<Return>', keymap_normal_opts)
+keymap('n', '//', ':nohlsearch<Return>')
 --- }}}
 
 --- Hacks para la búsqueda y remplazo {{{
 -- Hacer que el comando . (repetir edición) funcione en modo visual
-keymap('x', '.', ':normal .<Return>', keymap_normal_opts)
+keymap('x', '.', ':normal .<Return>')
 
 -- Repitiendo sustituciones con todo y sus banderas
-keymap('n', '&', ':&&<Return>', keymap_normal_opts)
-keymap('x', '&', ':&&<Return>', keymap_normal_opts)
+keymap('n', '&', ':&&<Return>')
+keymap('x', '&', ':&&<Return>')
 
 -- Repitiendo el último comando de consola
-keymap('n', 'Q', '@:', keymap_normal_opts)
-keymap('x', 'Q', '@:', keymap_normal_opts)
+keymap('n', 'Q', '@:')
+keymap('x', 'Q', '@:')
 
 -- No moverse cuando se busca con * y #
-keymap('n', '*', '*N', keymap_normal_opts)
-keymap('n', '#', '#N', keymap_normal_opts)
+keymap('n', '*', '*N')
+keymap('n', '#', '#N')
 
 -- Usar * y # en modo visual busca texto seleccionado y no la palabra actual
 vim.cmd [[
@@ -633,8 +750,8 @@ endfunction
 ]]
 
 -- Ver la línea de la palabra buscada en el centro
-keymap('n', 'n', 'nzzzv', keymap_normal_opts)
-keymap('n', 'N', 'Nzzzv', keymap_normal_opts)
+keymap('n', 'n', 'nzzzv')
+keymap('n', 'N', 'Nzzzv')
 
 --- }}}
 
@@ -656,12 +773,12 @@ endfunction
 ]]
 
 -- Reemplazar texto -- TODO, poner mi plugin en su lugar
-keymap('n', '<Leader>ss', ':s/', keymap_normal_opts)
-keymap('x', '<Leader>ss', ':s/', keymap_normal_opts)
-keymap('n', '<Leader>se', ':%s/', keymap_normal_opts)
-keymap('x', '<Leader>se', ':<C-u>call SeleccionVisual()<Return>:%s/<C-r>=@/<Return>/', keymap_normal_opts)
-keymap('n', '<Leader>sw', ':%s/\\<<C-r><C-w>\\>\\C/', keymap_normal_opts)
-keymap('n', '<Leader>sW', ':%s/<C-r>=expand("<cWORD>")<Return>\\C/', keymap_normal_opts)
+keymap('n', '<Leader>ss', ':s/')
+keymap('x', '<Leader>ss', ':s/')
+keymap('n', '<Leader>se', ':%s/')
+keymap('x', '<Leader>se', ':<C-u>call SeleccionVisual()<Return>:%s/<C-r>=@/<Return>/')
+keymap('n', '<Leader>sw', ':%s/\\<<C-r><C-w>\\>\\C/')
+keymap('n', '<Leader>sW', ':%s/<C-r>=expand("<cWORD>")<Return>\\C/')
 
 -- }}}
 --- ##### }}}
@@ -670,6 +787,8 @@ keymap('n', '<Leader>sW', ':%s/<C-r>=expand("<cWORD>")<Return>\\C/', keymap_norm
 vim.o.fileformats = 'unix,dos,mac'  -- Formato para los saltos de línea
 vim.o.autowrite   = true            -- Guardado automático en ciertas ocasiones
 vim.o.autoread    = true            -- Recargar el archivo si hay cambios
+vim.opt.backupdir:remove({'.'})     -- No guardar respaldos en el directorio actual,
+                                    -- usa cualquier otra ubicación de la lista
 
 -- Respaldos y recuperación en caso de fallos {{{
 
@@ -691,8 +810,8 @@ vim.o.sessionoptions = vim.o.sessionoptions .. ',localoptions,unix,slash'
 
 --- Comandos y acciones automáticas para abrir, guardar y salir {{{
 -- Comandos para salir de vim desde modo normal
-keymap('n', 'ZG', ':xa<Return>', keymap_normal_opts)
-keymap('n', 'ZA', ':quitall!<Return>', keymap_normal_opts)
+keymap('n', 'ZG', ':xa<Return>')
+keymap('n', 'ZA', ':quitall!<Return>')
 
 -- Para que shift en modo comando no moleste
 vim.cmd [[
@@ -713,8 +832,8 @@ command! -bang XA xa<bang>
 ]]
 
 -- Usar Ctrl-s para guardar como en cualquier otro programa
-keymap('n', '<C-s>', ':update<Return>', keymap_normal_opts)
-keymap('i', '<C-s>', '<Esc>:update<Return>a', keymap_normal_opts)
+keymap('n', '<C-s>', ':update<Return>')
+keymap('i', '<C-s>', '<Esc>:update<Return>a')
 
 vim.cmd [[
 augroup ComandosAutomaticosGuardarLeer
@@ -1046,11 +1165,11 @@ if has('windows') then
     terminal_new_line = "\r\n"
 end
 
-function trim(s)
+local function trim(s)
     return (string.gsub(s, "^%s*(.-)%s*$", "%1"))
 end
 
-function send_to_terminal(v)
+function Send_to_terminal(v)
     local term_buf_id = -1
     for _, buf_id in ipairs(vim.fn.tabpagebuflist()) do
         local buf_type = vim.api.nvim_buf_get_option(buf_id, "buftype")
@@ -1073,8 +1192,8 @@ function send_to_terminal(v)
         end
     end
 end
-keymap('n', '<Leader>evt', '<cmd>lua send_to_terminal()<CR>')
-keymap('x', '<Leader>evt', '<cmd>lua send_to_terminal(true)<CR>')
+keymap('n', '<Leader>evt', '<cmd>lua Send_to_terminal()<CR>')
+keymap('x', '<Leader>evt', '<cmd>lua Send_to_terminal(true)<CR>')
 
 --- Salir a modo normal en la terminal emulada
 ---tnoremap <Esc> <C-\><C-n>
