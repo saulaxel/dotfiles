@@ -1,6 +1,6 @@
 # VIM
 
-A large and somewhat ineficient configuration of vim that is now
+A large and somewhat inefficient configuration of vim that is now
 configurable through the variables.
 Being [neo]vim my main working tool and its configuration one of the things
 I edit the most according to my personal preferences, the main config file
