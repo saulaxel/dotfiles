@@ -8,6 +8,25 @@ end
 
 local has = vim.fn.has
 
+-- ##### Configuración general ##### {{{
+vim.o.mouse = 'a'	-- Usar el ratón para mover/seleccionar/etc...
+
+-- Caracteres de apertura y cierre
+vim.o.showmatch = true	    -- Resaltar los paréntesis/corchetes correspondientes
+-- Saltar también entre paréntesis angulares hermanos
+vim.o.matchpairs = vim.bo.matchpairs .. ',<:>'
+-- % - Alternar entre inicio y final de (){}[], etc..
+
+-- Tecla prefijo
+vim.g.mapleader = ','  -- Se usa como prefijo para comandos al mapear <leader>{algo}
+
+vim.o.exrc = true      -- Usar .vimrc y .exrc locales
+vim.o.secure = true    -- Suprimir comandos inseguros en .exrc locales
+
+-- Activar detección del tipo de archivo
+vim.cmd [[filetype plugin indent on]]
+-- ##### }}}
+
 -- Configuración del administrador de plugins {{{
 
 -- Only required if you have packer configured as `opt`
@@ -18,6 +37,7 @@ require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     use 'rafi/awesome-vim-colorschemes' --- Temas de color
+    use 'godlygeek/Tabular'
 
     -- Utilidades generales
     use 't9md/vim-textmanip'
@@ -164,6 +184,7 @@ keymap('n', '<Leader>tb', ':Tabularize /')
 keymap('x', '<Leader>tb', ':Tabularize /')
 -- nnoremap <Leader>tbox :Tabularize /*<Return>vip<Esc>:substitute/ /=/g<Return>r A/<Esc>vipo<Esc>0r/:substitute/ /=/g<Return>:nohlsearch<Return>
 
+vim.g.next_object_prev_letter = 'v'
 -- }}}
 
 -- Variables definidas por mi {{{
@@ -171,22 +192,6 @@ local envolver_lineas_largas = true
 local usar_portapapeles_del_sistema = false
 local usar_respaldo_local = true
 -- }}}
-
--- ##### Configuración general ##### {{{
-vim.o.mouse = 'a'	-- Usar el ratón para mover/seleccionar/etc...
-
--- Caracteres de apertura y cierre
-vim.o.showmatch = true	    -- Resaltar los paréntesis/corchetes correspondientes
--- Saltar también entre paréntesis angulares hermanos
-vim.o.matchpairs = vim.bo.matchpairs .. ',<:>'
--- % - Alternar entre inicio y final de (){}[], etc..
-
--- Tecla prefijo
-vim.g.mapleader = ','  -- Se usa como prefijo para comandos al mapear <leader>{algo}
-
--- Activar detección del tipo de archivo
-vim.cmd [[filetype plugin indent on]]
--- ##### }}}
 
 --- ##### Información visible en pantalla ##### {{{
 vim.o.title = true	-- Nombre de archivo en barra de título
