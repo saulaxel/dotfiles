@@ -6,6 +6,7 @@ alias vim='nvim'
 alias cls='clear'
 alias tmux="TERM=screen-256color-bce tmux"
 alias rm=trash
+alias cd=z
 export VTE_VERSION="100"
 
 editors=($(whereis nvim))
