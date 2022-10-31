@@ -7,6 +7,13 @@ alias cls='clear'
 alias tmux="TERM=screen-256color-bce tmux"
 alias rm=trash
 alias cd=z
+alias ec="$EDITOR $HOME/.${SHELL##*/}rc"
+alias src="source $HOME/.${SHELL##*/}rc"
+# zsh specific
+alias -s txt=vim
+alias -s {c,cpp,python}=vim
+alias -g cflg='-g -std=c11 -Wall -Wextra -fsanitize=address,undefined'
+
 export VTE_VERSION="100"
 
 editors=($(whereis nvim))
@@ -18,7 +25,6 @@ if [[ ${editors[2]} = "" ]]; then
 fi
 editor=${editors[2]}
 export EDITOR=${editor}
-
 
 # Alias for cheat.sh curl-based tldr pages
 cheat() {
@@ -53,10 +59,5 @@ resize_jpg() {
     done
 }
 
-
-# zsh specific
-alias -s txt=vim
-alias -s {c,cpp,python}=vim
-alias -g cflg='-g -std=c11 -Wall -Wextra -fsanitize=address,undefined'
-alias ec="$EDITOR $HOME/.zshrc"
-alias sc="source $HOME/.zshrc"
+# export PATH=
+# export PYTHONPATH=
