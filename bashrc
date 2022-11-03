@@ -22,14 +22,18 @@ alias -g cflg='-g -std=c11 -Wall -Wextra -fsanitize=address,undefined'
 alias tmux="TERM=screen-256color-bce tmux"
 export VTE_VERSION="100"
 
+index=1
+if [[ "${SHELL##*/}" = "zsh"  ]]; then
+    index=2
+fi
 editors=($(whereis nvim))
-if [[ "${editors[1]}" = "" ]]; then
+if [[ "${editors[$index]}" = "" ]]; then
     editors=($(whereis vim))
 fi
-if [[ ${editors[1]} = "" ]]; then
+if [[ ${editors[$index]} = "" ]]; then
     editors=($(whereis vi))
 fi
-editor=${editors[1]}
+editor=${editors[$index]}
 export EDITOR=${editor}
 
 # Alias for cheat.sh curl-based tldr pages
