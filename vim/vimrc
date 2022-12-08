@@ -766,7 +766,7 @@ set foldnestmax=3        " Máxima profundidad de los dobleces
 " zE - elimina todos los dobleces de la ventana
 
 " Abrir y cerrar dobleces
-nnoremap <Space>    za
+nnoremap <Leader>z za
 " zO - Abrir dobleces sobre la posición actual recursivamente
 " zC - Cerrar dobleces sobre la posición actual recursivamente
 " zR - Abrir todos los dobleces del archivo
@@ -1138,7 +1138,7 @@ set gdefault           " Usar bandera 'g' por defecto en las sustituciones
 
 " Desactivar el resaltado de búsqueda
 nnoremap // :nohlsearch<Return>
-nnoremap <Leader>hsc :nohlsearch<bar>let @/ = ''<Return>
+"nnoremap <Leader>hsc :nohlsearch<bar>let @/ = ''<Return>
 "   +++ }}}
 
 " +++ Hacks para la búsqueda y remplazo +++ {{{
@@ -1306,6 +1306,16 @@ augroup ComandosAutomaticosGuardarLeer
 
     " Si se intenta editar un archivo en un directorio inexistente
     autocmd BufNewFile * call CrearDirectorioSiNoExiste()
+
+    " Configuración para editar archivos binarios con xxd
+    " vim -b : edit binary using xxd-format!
+    autocmd BufReadPre  *.bin let &l:bin = 1 | set nospell
+    autocmd BufReadPost *.bin if &l:bin | %!xxd -u
+    autocmd BufReadPost *.bin set ft=xxd | endif
+    autocmd BufWritePre *.bin if &l:bin | %!xxd -r
+    autocmd BufWritePre *.bin endif
+    autocmd BufWritePost *.bin if &l:bin | %!xxd -u
+    autocmd BufWritePost *.bin set nomod | endif
 augroup END
 
 function! CrearDirectorioSiNoExiste()
@@ -1523,18 +1533,19 @@ endfunction
 
 " +++ Revisión de código +++ {{{
 if s:usar_plugins >= 2 && (has('nvim') || (v:version >= 800))
-    let g:ale_set_quickfix = 1
-    let g:ale_cpp_clangcheck_options = "-extra-arg='" . g:op_compilacion['cpp'].banderas
-    let g:ale_cpp_gcc_options = g:op_compilacion['cpp'].banderas
-    let g:ale_cpp_clang_options = g:op_compilacion['cpp'].banderas
-    let g:ale_cpp_clangtidy_options = g:op_compilacion['cpp'].banderas
-    let g:ale_c_gcc_options = g:op_compilacion['c'].banderas
-    let g:ale_c_clang_options = g:op_compilacion['c'].banderas
-    let g:ale_c_clangtidy_options = g:op_compilacion['c'].banderas
-    let g:ale_c_clangtidy_checks = ['*', '-readability-braces-around-statements',
-                \'-google-readability-braces-around-statements', '-llvm-header-guard']
-    let g:ale_haskell_ghc_options = g:op_compilacion['haskell'].banderas
-    let g:ale_fortran_gcc_options = g:op_compilacion['fortran'].banderas
+    function! BanderasALE()
+        let g:ale_set_quickfix = 1
+        let g:ale_cpp_clangcheck_options = "-extra-arg='" . g:op_compilacion['cpp'].banderas
+        let g:ale_cpp_cc_options = g:op_compilacion['cpp'].banderas
+        let g:ale_cpp_clangtidy_options = g:op_compilacion['cpp'].banderas
+        let g:ale_c_cc_options = g:op_compilacion['c'].banderas
+        let g:ale_c_clangtidy_options = g:op_compilacion['c'].banderas
+        let g:ale_c_clangtidy_checks = ['*', '-readability-braces-around-statements',
+                    \'-google-readability-braces-around-statements', '-llvm-header-guard']
+        let g:ale_haskell_ghc_options = g:op_compilacion['haskell'].banderas
+        let g:ale_fortran_gcc_options = g:op_compilacion['fortran'].banderas
+    endfunction
+    call BanderasALE()
 elseif s:usar_plugins
     let g:syntastic_cpp_compiler_options = g:op_compilacion['cpp'].banderas
     let g:syntastic_c_compiler_options = g:op_compilacion['c'].banderas
@@ -1548,7 +1559,7 @@ augroup DeteccionLenguajes
     autocmd!
     autocmd BufNewFile,BufRead *.nasm setlocal filetype=nasm
     autocmd BufNewFile,BufRead *.jade setlocal filetype=pug
-    autocmd BufNewFile,BufRead *.h    setlocal filetype=c
+    autocmd BufNewFile,BufRead,BufEnter *.h    setlocal filetype=c
 augroup END
 
 augroup ConfiguracionesEspecificasLenguaje
@@ -1556,6 +1567,7 @@ augroup ConfiguracionesEspecificasLenguaje
     " autocmd Filetype html,css,scss,sass,pug,php setlocal ts=2 sw=2 sts=2
     " Los guiones normales forman parte del identificador en css
     autocmd Filetype html,css,scss,sass,pug     setlocal iskeyword+=-
+    autocmd Filetype javascript     call CambiarIndentacion(2)
     if s:usar_plugins >= 1
         autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <buffer> <expr> <Tab> emmet#expandAbbrIntelligent("\<Tab>")
     endif
@@ -1591,7 +1603,7 @@ if has('nvim')
     " Abrir emulador de terminal (open terminal)
     nnoremap <Leader>ot :5sp<bar>te<CR>:setlocal nospell nonu<Return>A
     " Salir a modo normal en la terminal emulada
-    tnoremap <Esc> <C-\><C-n>
+    "tnoremap <Esc> <C-\><C-n>
 elseif has('terminal')
     nnoremap <Leader>ot :terminal<Return>
     tnoremap <Esc> <C-\><C-n>
