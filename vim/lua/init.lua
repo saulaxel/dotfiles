@@ -43,7 +43,7 @@ require('packer').startup(function(use)
     use 't9md/vim-textmanip'
     -- xmap <Leader>tgtm <Plug>(textmanip-toggle-mode)
     -- nmap <Leader>tgtm <Plug>(textmanip-toggle-mode)
-    use 'inkarkat/vim-ReplaceWithRegister'-- Operador para remplazar texto
+    use 'inkarkat/vim-ReplaceWithRegister'  -- Operador para remplazar texto
     use 'michaeljsmith/vim-indent-object' -- Objeto de texto 'indentado'
     use 'PeterRincker/vim-argumentative'  -- Objeto de texto 'argumento'
     use 'kana/vim-textobj-user'           -- Requerimiento de los próximos
@@ -55,8 +55,12 @@ require('packer').startup(function(use)
     use 'tpope/vim-surround'              -- Encerrar/liberar secciones
     use 'jiangmiao/auto-pairs'            -- Completar pares de símbolos
     use 'tpope/vim-commentary'            -- Operador para comentar código
+    use 'jceb/vim-orgmode'                -- Organizar notas
 
     -- Servidores de revisión de código
+    use 'vim-syntastic/syntastic'
+    vim.g.syntastic_mode_map = {mode = 'passive'}
+
     use {
         'williamboman/nvim-lsp-installer',
         {
@@ -80,6 +84,7 @@ require('packer').startup(function(use)
     use 'Konfekt/FastFold'
     use 'matze/vim-tex-fold'
     use 'mattn/emmet-vim'
+    use 'sheerun/vim-polyglot'
 
     -- Revisión ortográfica y gramatical
     use {'rhysd/vim-grammarous', opt = true, cmd = {'GrammarousCheck'}}
@@ -90,6 +95,7 @@ require('packer').startup(function(use)
     use 'ap/vim-css-color'
 end)
 
+-- Language protocol
 
 vim.g.tex_flavor  = 'latex'
 vim.g.tex_conceal = ''
@@ -102,8 +108,112 @@ local lspconfig = require('lspconfig')
 
 local servers = { 'sumneko_lua', 'clangd', 'jedi_language_server' }
 
+local on_attach = function(client, bufnr)
+    print(client)
+    -- Permitir completar con <C-x><C-o>
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+    -- Mapeos
+    -- Buscar ayuda para las siguientes funciones con `:help vim.lsp.*`
+    local bufopts = { noremap = true, silent = true, buffer = bufnr }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set('n', '<Leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+    vim.keymap.set('n', '<Leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+    vim.keymap.set('n', '<Leader>wl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, bufopts)
+    vim.keymap.set('n', '<Leader>D', vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, bufopts)
+    vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+    vim.keymap.set('n', '<Leader>f', function()
+        vim.lsp.buf.formatting { async = true }
+    end, bufopts)
+
+    keymap('n', '<Leader>lr', ':LspRestart<CR>')
+end
+
+local opts = { noremap = true, silent = true }
+vim.keymap.set('n', '<Leader>h', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<Leader>q', vim.diagnostic.setloclist, opts)
+
+-- nvim-cmp (Completion)
+local cmp = require'cmp'
+
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            -- Se usa luasnip como motor de snippets
+            require('luasnip').lsp_expand(args.body)
+        end,
+    },
+    window = {
+        --completion = cmp.config.window.bordered(),
+        --documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-q>'] = cmp.mapping.abort(),
+        ['<C-e>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    }),
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+        { name = 'luasnip' },
+    }, {
+        { name = 'buffer' },
+    })
+})
+
+---- Set configuration for specific filetype.
+--cmp.setup.filetype('gitcommit', {
+--    sources = cmp.config.sources({
+--        { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+--    }, {
+--        { name = 'buffer' },
+--    })
+--})
+--
+---- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+--cmp.setup.cmdline('/', {
+--    mapping = cmp.mapping.preset.cmdline(),
+--    sources = {
+--        { name = 'buffer' }
+--    }
+--})
+--
+---- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+--cmp.setup.cmdline(':', {
+--    mapping = cmp.mapping.preset.cmdline(),
+--    sources = cmp.config.sources({
+--        { name = 'path' }
+--    }, {
+--        { name = 'cmdline' }
+--    })
+--})
+
+-- Lua snip
+-- press <Tab> to expand or jump in a snippet
+keymap('i', '<Tab>', "luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>'", { expr = true, silent = true, noremap = false })
+-- Jump backwards
+keymap('i', '<s-Tab>', "<cmd>lua require'luasnip'.jump(-1)<Cr>", { silent = true })
+
+
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 for _, lsp in pairs(servers) do
-    lspconfig[lsp].setup {}
+    lspconfig[lsp].setup {
+        on_attach = on_attach,
+        capabilities = capabilities
+    }
 end
 
 -- lspconfig.ltex.setup {
@@ -124,67 +234,23 @@ lspconfig.sumneko_lua.setup{
     }
 }
 
--- Setup nvim-cmp.
-local cmp = require'cmp'
-
-cmp.setup({
-    snippet = {
-        expand = function(args)
-            -- Se usa luasnip como motor de snippets
-            require('luasnip').lsp_expand(args.body)
-        end,
-    },
-    window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
-    },
-    mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-q>'] = cmp.mapping.abort(),
-        ['<C-y>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    }),
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-    }, {
-        { name = 'buffer' },
-    })
-})
-
--- Set configuration for specific filetype.
-cmp.setup.filetype('gitcommit', {
-    sources = cmp.config.sources({
-        { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-    }, {
-        { name = 'buffer' },
-    })
-})
-
--- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline('/', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-        { name = 'buffer' }
-    }
-})
-
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-        { name = 'path' }
-    }, {
-        { name = 'cmdline' }
-    })
-})
-
 keymap('n', '<Leader>tb', ':Tabularize /')
 keymap('x', '<Leader>tb', ':Tabularize /')
 -- nnoremap <Leader>tbox :Tabularize /*<Return>vip<Esc>:substitute/ /=/g<Return>r A/<Esc>vipo<Esc>0r/:substitute/ /=/g<Return>:nohlsearch<Return>
 
 vim.g.next_object_prev_letter = 'v'
+
+-- Replace with register
+keymap('n', 'gh', '<Plug>ReplaceWithRegisterOperator', {noremap = false})
+keymap('n', 'ghh', '<Plug>ReplaceWithRegisterLine', {noremap = false})
+keymap('x', 'gh', '<Plug>ReplaceWithRegisterVisual', {noremap = false})
+
+-- Auto pairs
+vim.g.AutoPairs = {
+    ['('] = ')', ['['] = ']', ['{'] = '}',
+    ['"'] = '"', ["'"] = "'", ['`'] = '`',
+    ['¿'] = '?', ['¡'] = '!'
+}
 -- }}}
 
 -- Variables definidas por mi {{{
@@ -268,9 +334,9 @@ local function setColorschemeToIndex()
         highlight SpellRare guibg=NONE guifg=#d3b987 ctermbg=NONE ctermfg=180
         highlight SpellLocal guibg=NONE guifg=#ffc24b ctermbg=NONE ctermfg=215
 
-        highlight ColorColumn guifg=NONE ctermfg=NONE guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
-        highlight CursorColumn guifg=NONE ctermfg=NONE guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
-        highlight CursorLine guifg=NONE ctermfg=NONE guibg=#000000 ctermbg=0 gui=NONE cterm=NONE
+        " highlight ColorColumn guifg=NONE ctermfg=NONE guibg=#000000 ctermbg=12 gui=NONE cterm=NONE
+        " highlight CursorColumn guifg=NONE ctermfg=NONE guibg=#000000 ctermbg=3 gui=NONE cterm=NONE
+        " highlight CursorLine guifg=NONE ctermfg=NONE guibg=#000000 ctermbg=3 gui=NONE cterm=NONE
         highlight LineNr guifg=#b3deef ctermfg=153 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
         highlight Comment guifg=#c9d05c ctermfg=185 guibg=NONE ctermbg=NONE gui=NONE cterm=NONE
         highlight FoldColumn guifg=#ffffff ctermfg=15 guibg=#202020 ctermbg=234 gui=NONE cterm=NONE
@@ -373,6 +439,11 @@ end
 
 -- Las flechas y el backspace dan la vuelta a través de las líneas
 vim.o.whichwrap='b,s,h,l,<,>,[,]'
+
+vim.cmd[[
+command! DiffOrigen vert new | set buftype=nofile | read ++edit # | 0d_
+            \ | diffthis | wincmd p | diffthis
+]]
 --- }}}
 
 --- Ventanas {{{
@@ -541,15 +612,6 @@ vim.o.foldnestmax = 3           -- Máxima profundidad de los dobleces
 
 -- Abrir y cerrar dobleces
 keymap('n', '<Space>', 'za')
-
--- Función para doblar funciones automáticamente
-keymap('n', '<Leader>faf', ':call DoblarFunciones()<Return>')
-vim.cmd [[
-function! DoblarFunciones()
-    set foldmethod=syntax
-    set foldnestmax=1
-endfunction
-]]
 -- }}}
 -- ##### }}}
 
@@ -1110,12 +1172,20 @@ call ActualizarComandosCompilacion()
 --"   +++ }}}
 
 --- +++ Detección de tipos de archivo, y configuraciones locales +++ {{{
---augroup DeteccionLenguajes
---    autocmd!
---    autocmd BufNewFile,BufRead *.nasm setlocal filetype=nasm
---    autocmd BufNewFile,BufRead *.jade setlocal filetype=pug
---    autocmd BufNewFile,BufRead *.h    setlocal filetype=c
---augroup END
+vim.cmd [[
+augroup DeteccionLenguajes
+    autocmd!
+    autocmd BufNewFile,BufRead *.nasm setlocal filetype=nasm
+    autocmd BufNewFile,BufRead *.jade setlocal filetype=pug
+    autocmd BufNewFile,BufRead *.h    setlocal filetype=c
+    autocmd BufNewFile,BufRead *.clp  setlocal filetype=clips nospell
+    autocmd BufNewFile,BufRead *.pl  setlocal filetype=prolog nospell
+
+    autocmd BufReadPre /home/saul/Documentos/grassmann/*.tex
+        \ let b:vimtex_main = '/home/saul/Documentos/grassmann/main.tex'
+
+augroup END
+]]
 --
 --augroup ConfiguracionesEspecificasLenguaje
 --    autocmd!
