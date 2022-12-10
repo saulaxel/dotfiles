@@ -20,6 +20,9 @@ vim.o.matchpairs = vim.bo.matchpairs .. ',<:>'
 -- Tecla prefijo
 vim.g.mapleader = ','  -- Se usa como prefijo para comandos al mapear <leader>{algo}
 
+-- Rutas en las que vim busca archivos incluidos
+--vim.o.path = vim.o.path .. ','
+
 vim.o.exrc = true      -- Usar .vimrc y .exrc locales
 vim.o.secure = true    -- Suprimir comandos inseguros en .exrc locales
 
@@ -207,7 +210,7 @@ keymap('i', '<Tab>', "luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-ju
 keymap('i', '<s-Tab>', "<cmd>lua require'luasnip'.jump(-1)<Cr>", { silent = true })
 
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 for _, lsp in pairs(servers) do
     lspconfig[lsp].setup {
