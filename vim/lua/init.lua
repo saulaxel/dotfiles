@@ -58,6 +58,7 @@ require('packer').startup(function(use)
     use 'tpope/vim-surround'              -- Encerrar/liberar secciones
     use 'jiangmiao/auto-pairs'            -- Completar pares de símbolos
     use 'tpope/vim-commentary'            -- Operador para comentar código
+    use 'tpope/vim-repeat'                -- Repetir plugins con .
     use 'jceb/vim-orgmode'                -- Organizar notas
 
     -- Servidores de revisión de código
