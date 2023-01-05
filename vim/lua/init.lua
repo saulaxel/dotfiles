@@ -114,6 +114,9 @@ local servers = { 'sumneko_lua', 'clangd', 'jedi_language_server' }
 
 local on_attach = function(client, bufnr)
     print(client)
+    vim.bo.tagfunc = 'v:lua.vim.lsp.tagfunc'
+    vim.bo.formatexpr = 'v:lua.vim.lsp.formatexpr'
+
     -- Permitir completar con <C-x><C-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
