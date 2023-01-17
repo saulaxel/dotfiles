@@ -10,6 +10,8 @@ local has = vim.fn.has
 
 -- ##### Configuración general ##### {{{
 vim.o.mouse = 'a'	-- Usar el ratón para mover/seleccionar/etc...
+vim.o.termguicolors = true
+
 
 -- Caracteres de apertura y cierre
 vim.o.showmatch = true	    -- Resaltar los paréntesis/corchetes correspondientes
@@ -324,10 +326,15 @@ end
 
 local posicion_actual_colorscheme = indexof(lista_colores, 'tender')
 
-local function setColorschemeToIndex()
+local function setColorschemeToIndex(echo)
+    echo = echo or false
     local tema = lista_colores[posicion_actual_colorscheme]
     local comando = 'colorscheme ' .. tema
     vim.cmd(comando)
+
+    if echo then
+        print(tema)
+    end
 
     if tema == 'two-firewatch' or tema == 'lucid' or tema == 'paramount' then
         vim.cmd('set background=dark')
@@ -359,7 +366,7 @@ function RotarColor()
         posicion_actual_colorscheme = 1
     end
 
-    setColorschemeToIndex()
+    setColorschemeToIndex(true)
 end
 
 -- Caracteres invisibles
@@ -1193,17 +1200,18 @@ augroup DeteccionLenguajes
 
 augroup END
 ]]
---
---augroup ConfiguracionesEspecificasLenguaje
---    autocmd!
---    " autocmd Filetype html,css,scss,sass,pug,php setlocal ts=2 sw=2 sts=2
---    " Los guiones normales forman parte del identificador en css
---    autocmd Filetype html,css,scss,sass,pug     setlocal iskeyword+=-
---    if s:usar_plugins >= 1
---        autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <buffer> <expr> <Tab> emmet#expandAbbrIntelligent("\<Tab>")
---    endif
---augroup END
---
+
+vim.cmd [[
+augroup ConfiguracionesEspecificasLenguaje
+    autocmd!
+    " autocmd Filetype html,css,scss,sass,pug,php setlocal ts=2 sw=2 sts=2
+    " Los guiones normales forman parte del identificador en css
+    autocmd Filetype html,css,scss,sass,pug     setlocal iskeyword+=-
+    " autocmd Filetype html,xml,jade,pug,htmldjango,css,scss,sass,php imap <buffer> <expr> <Tab> emmet#expandAbbrIntelligent("\<Tab>")
+    autocmd Filetype arduino lua CambiarIndentacion(2)
+augroup END
+]]
+
 --" Alternar entre archivo de ayuda y de texto (toggle text and help)
 --nnoremap <leader>tth :call AlternarAyudaYTexto()<Return>
 --function! AlternarAyudaYTexto()
@@ -1239,7 +1247,7 @@ keymap('n', '<Leader>evs', '!!' .. shell .. ' <Return>')
 keymap('x', '<Leader>evs', '!' .. shell .. ' <Return>')
 
 --- Abrir emulador de terminal (open terminal)
-keymap('n', '<Leader>ot', ':5sp<bar>te<CR>:setlocal nospell nonu<Return>A')
+keymap('n', '<Leader>ot', ':5sp<bar>te zsh<CR>:setlocal nospell nonu nornu<Return>A')
 
 --- Mandar un comando a la terminal abierta
 local terminal_new_line = "\n"
