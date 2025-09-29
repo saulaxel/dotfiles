@@ -28,7 +28,6 @@ $VIM_LIKE_APP +qall # Just run config to install plugins and exit
 cp ./snips/emmet.vim ~/.vim/plugged/emmet-vim/autoload
 cp ./snips/*.snip ~/.vim/plugged/neosnippet-snippets/neosnippets
 cp ./colors/tender.vim ~/.vim/plugged/awesome-vim-colorschemes/colors
-cp ./other_scripts/c_conceal.vim ~/.vim/plugged/c-conceal/after/syntax/c.vim
 cp ./other_scripts/clang_tidy_sangria_correcta.sh ~/.vim
 cp ../clang-format1 ~/.clang-format
 gcc ./other_scripts/quitar_espacios.c -o ~/.vim/cortar
